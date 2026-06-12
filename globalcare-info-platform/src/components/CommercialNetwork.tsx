@@ -1,6 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LanguagePack } from "../data/corporateData";
 import { Globe, Video, FileText, Compass, AlertCircle, VideoOff, Layers } from "lucide-react";
+
+interface NotionOverlay {
+  key: string;
+  youtubeUrl: string | null;
+  coverImage: string | null;
+  descEN: string;
+  descZH: string;
+  descAR: string;
+  tagsEN: string[];
+  tagsZH: string[];
+}
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  return m ? m[1] : null;
+}
 
 interface CommercialNetworkProps {
   lang: "EN" | "ZH" | "AR";
@@ -169,9 +185,29 @@ const COUNTRIES_DATA: CountryRecord[] = [
 
 export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps) {
   const [selectedKey, setSelectedKey] = useState<string>("uae");
+  const [overlays, setOverlays] = useState<Record<string, NotionOverlay>>({});
   const isRtl = lang === "AR";
 
+  useEffect(() => {
+    fetch("/api/network")
+      .then((r) => r.json())
+      .then((data: NotionOverlay[]) => {
+        const map: Record<string, NotionOverlay> = {};
+        data.forEach((o) => { map[o.key] = o; });
+        setOverlays(map);
+      })
+      .catch(() => {});
+  }, []);
+
   const activeCountry = COUNTRIES_DATA.find((c) => c.key === selectedKey) || COUNTRIES_DATA[0];
+  const overlay = overlays[selectedKey];
+  const youtubeId = overlay?.youtubeUrl ? getYouTubeId(overlay.youtubeUrl) : null;
+  const activeImage = overlay?.coverImage || activeCountry.image;
+  const activeDescEN = overlay?.descEN || activeCountry.descEN;
+  const activeDescZH = overlay?.descZH || activeCountry.descZH;
+  const activeDescAR = overlay?.descAR || activeCountry.descAR;
+  const activeTagsEN = (overlay?.tagsEN?.length ? overlay.tagsEN : activeCountry.tagsEN);
+  const activeTagsZH = (overlay?.tagsZH?.length ? overlay.tagsZH : activeCountry.tagsZH);
 
   // Helper translations for UI labels
   const labelText = {
@@ -266,18 +302,27 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
           {/* Main Large-scale Video/Image Showcase (Visual Center) - cols 7 */}
           <div className="lg:col-span-8 flex flex-col justify-between">
             <div className="relative aspect-video md:aspect-[21/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center group shadow-2xl transition-all duration-300">
-              
-              {activeCountry.image ? (
+
+              {youtubeId ? (
+                <iframe
+                  key={youtubeId}
+                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+                  title={activeCountry.nameEN}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : activeImage ? (
                 <>
                   {/* High Quality On-ground Real Evidence Image representation */}
                   <img
-                    src={activeCountry.image}
+                    src={activeImage}
                     alt={{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 pointer-events-none select-none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#030611]/90 via-[#030611]/30 to-transparent pointer-events-none" />
-                  
+
                   {/* Visual Indicator of a stream/evidence */}
                   <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#030611]/80 backdrop-blur px-3 py-1.5 rounded-full border border-brand-gold-500/20 text-[10px] font-mono font-bold text-brand-gold-400 uppercase tracking-widest">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -296,11 +341,11 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   <div className="absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
                     <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
-                    
+
                     <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/10 text-brand-gold-400/40 mb-4 shadow-xl">
                       <VideoOff className="w-8 h-8 stroke-[1.5]" />
                     </div>
-                    
+
                     <span className="text-xs sm:text-sm font-mono tracking-widest text-[#DFBA6B] uppercase font-bold animate-pulse">
                       {placeholderText}
                     </span>
@@ -330,7 +375,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                 </h3>
                 
                 <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed font-sans mb-6 min-h-[6rem] border-l-2 border-brand-gold-500/20 pl-4">
-                  {lang === "EN" ? activeCountry.descEN : lang === "ZH" ? activeCountry.descZH : activeCountry.descAR}
+                  {lang === "EN" ? activeDescEN : lang === "ZH" ? activeDescZH : activeDescAR}
                 </p>
               </div>
 
@@ -341,8 +386,8 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {({
-                    EN: activeCountry.tagsEN,
-                    ZH: activeCountry.tagsZH,
+                    EN: activeTagsEN,
+                    ZH: activeTagsZH,
                     AR: activeCountry.tagsAR
                   }[lang]).map((tag, idx) => (
                     <span

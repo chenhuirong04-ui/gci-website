@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BookOpen, FolderSync, ShieldAlert, Newspaper, ArrowRight, ArrowLeft, Layers, Sparkles, Filter, Calendar, MapPin } from "lucide-react";
 
 interface RegulatoryUpdatesProps {
@@ -227,7 +227,17 @@ const ARTICLES_DATA: Article[] = [
 export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   const [isAllView, setIsAllView] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<"all" | "regulatory" | "market" | "trade" | "gci">("all");
+  const [articles, setArticles] = useState<Article[]>(ARTICLES_DATA);
   const isRtl = lang === "AR";
+
+  useEffect(() => {
+    fetch("/api/insights")
+      .then((r) => r.json())
+      .then((data: Article[]) => {
+        if (Array.isArray(data) && data.length > 0) setArticles(data);
+      })
+      .catch(() => {});
+  }, []);
 
   const mainTitleText = {
     EN: "GCI Regulatory & Market Updates",
@@ -274,7 +284,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   }[lang];
 
   // Logic to separate first 6 articles for Featured Insights display
-  const featuredArticles = ARTICLES_DATA.slice(0, 6);
+  const featuredArticles = articles.slice(0, 6);
   // Large Featured Card is the first article
   const leadArticle = featuredArticles[0];
   // Small Companion Cards are the remaining 5
@@ -282,8 +292,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
 
   // Filtered list for "All View" mode
   const filteredArticles = activeCategory === "all"
-    ? ARTICLES_DATA
-    : ARTICLES_DATA.filter(art => art.category === activeCategory);
+    ? articles
+    : articles.filter(art => art.category === activeCategory);
 
   return (
     <section id="insights-section" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10 relative overflow-hidden">
@@ -544,7 +554,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                         <span>{lbl}</span>
                       </span>
                       <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${active ? "bg-[#030611]/10 font-bold" : "bg-brand-gold-500/5 text-brand-gold-400"}`}>
-                        {cat === "all" ? ARTICLES_DATA.length : ARTICLES_DATA.filter(a => a.category === cat).length}
+                        {cat === "all" ? articles.length : articles.filter(a => a.category === cat).length}
                       </span>
                     </button>
                   );
