@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LanguagePack } from "../data/corporateData";
 import { ArrowRight, Globe } from "lucide-react";
+import gciLogo from "../assets/gci-logo-gold.png";
 
 interface HeroProps {
   lang: "EN" | "ZH" | "AR";
@@ -129,61 +130,14 @@ export default function Hero({ lang, pack }: HeroProps) {
           {/* Left Side: Editorial positioning and CTAs */}
           <div className="lg:col-span-5 text-left flex flex-col justify-center">
             
-            {/* Majestic Centered GCI Logo Crest Block for the homepage */}
-            <div className="flex items-center gap-4 mb-8 p-4 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl max-w-md shadow-2xl backdrop-blur-md select-none">
-              <div className="p-3 bg-gradient-to-br from-brand-gold-500/10 to-brand-gold-900/30 rounded-xl border border-brand-gold-500/20 shrink-0">
-                <svg viewBox="0 0 80 80" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    {/* High-fidelity Multi-stop Metallic Gold Gradient for bright, reflecting faces */}
-                    <linearGradient id="hero-door-gold-bright" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#9E782F" />
-                      <stop offset="15%" stopColor="#DFBB6B" />
-                      <stop offset="50%" stopColor="#FFF2D1" />
-                      <stop offset="85%" stopColor="#EAD292" />
-                      <stop offset="100%" stopColor="#C59B3F" />
-                    </linearGradient>
-                    {/* Medium gold for dynamic intermediate faces */}
-                    <linearGradient id="hero-door-gold-mid" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#A88232" />
-                      <stop offset="50%" stopColor="#DFBB6B" />
-                      <stop offset="100%" stopColor="#8A6A24" />
-                    </linearGradient>
-                    {/* Deeper, richer gold/bronze for 3D depth and shadow faces */}
-                    <linearGradient id="hero-door-gold-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#3C2A08" />
-                      <stop offset="30%" stopColor="#5E4311" />
-                      <stop offset="70%" stopColor="#8A6A24" />
-                      <stop offset="100%" stopColor="#3C2A08" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Authentic 3D Premium Folded Gateway Logo (Corporate Sovereign Look) */}
-                  <g transform="translate(14, 8)">
-                    {/* Left Pillar / Outward Face (Bright high-fidelity metal) */}
-                    <path d="M 12,20 L 22,23 L 22,57 L 12,54 Z" fill="url(#hero-door-gold-bright)" />
-                    
-                    {/* Left Pillar / Inside Turn (Shadow deep bronze contrast) */}
-                    <path d="M 22,23 L 28,26 L 28,51 L 22,57 Z" fill="url(#hero-door-gold-dark)" />
-                    
-                    {/* Lintel Top Overlook (Shimmering medium gold) */}
-                    <path d="M 12,20 L 46,26 L 38,30 L 28,26 Z" fill="url(#hero-door-gold-mid)" />
-                    
-                    {/* Right Pillar / Open Leaf Portal (Bright gold showing entrance depth) */}
-                    <path d="M 46,26 L 46,55 L 34,62 L 34,31 Z" fill="url(#hero-door-gold-bright)" />
-                    
-                    {/* Deep Connecting Passageway Inside (Shadow dark metal) */}
-                    <path d="M 34,31 L 34,62 L 28,51 L 28,26 Z" fill="url(#hero-door-gold-dark)" />
-                  </g>
-                </svg>
-              </div>
-              <div>
-                <div className="text-base font-display font-bold text-brand-gold-100 tracking-wider">
-                  GCI
-                </div>
-                <div className="text-xs font-sans tracking-wide text-brand-gold-400 uppercase mt-0.5">
-                  Global Market Execution Platform
-                </div>
-              </div>
+            {/* GCI Brand Card */}
+            <div className="mb-8 p-4 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl max-w-sm shadow-2xl backdrop-blur-md select-none">
+              <img
+                src={gciLogo}
+                alt="GCI — Global Market Execution Platform"
+                className="h-14 w-auto object-contain"
+                draggable={false}
+              />
             </div>
 
             {/* Elegant Corporate Tagbadge */}

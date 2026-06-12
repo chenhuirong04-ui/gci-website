@@ -35,7 +35,7 @@ export default function Header({ lang, setLang, pack }: HeaderProps) {
           <img
             src={gciLogo}
             alt="GCI — Global Market Execution Platform"
-            className="h-12 w-auto object-contain select-none"
+            className="h-16 w-auto object-contain select-none"
             draggable={false}
           />
         </a>
