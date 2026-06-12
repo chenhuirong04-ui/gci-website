@@ -244,15 +244,24 @@ export default function Hero({ lang, pack }: HeroProps) {
                     <stop offset="100%" stopColor="#d97706" />
                   </linearGradient>
 
+                  {/* Starburst explosion gradients */}
                   <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"   stopColor="#F59E0B" stopOpacity="0.38" />
-                    <stop offset="30%"  stopColor="#DFBA6B" stopOpacity="0.18" />
-                    <stop offset="65%"  stopColor="#C5A059" stopOpacity="0.08" />
+                    <stop offset="0%"   stopColor="#FFF8DC" stopOpacity="0.95" />
+                    <stop offset="15%"  stopColor="#F59E0B" stopOpacity="0.75" />
+                    <stop offset="40%"  stopColor="#D97706" stopOpacity="0.40" />
+                    <stop offset="70%"  stopColor="#B45309" stopOpacity="0.15" />
                     <stop offset="100%" stopColor="#030611" stopOpacity="0" />
                   </radialGradient>
                   <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"   stopColor="#FFF4DB" stopOpacity="0.55" />
-                    <stop offset="50%"  stopColor="#F59E0B" stopOpacity="0.22" />
+                    <stop offset="0%"   stopColor="#FFFFFF" stopOpacity="1" />
+                    <stop offset="25%"  stopColor="#FFF4DB" stopOpacity="0.90" />
+                    <stop offset="60%"  stopColor="#F59E0B" stopOpacity="0.50" />
+                    <stop offset="100%" stopColor="#030611" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="outerBlast" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="#F59E0B" stopOpacity="0.55" />
+                    <stop offset="45%"  stopColor="#D97706" stopOpacity="0.25" />
+                    <stop offset="80%"  stopColor="#92400E" stopOpacity="0.08" />
                     <stop offset="100%" stopColor="#030611" stopOpacity="0" />
                   </radialGradient>
 
@@ -261,6 +270,16 @@ export default function Hero({ lang, pack }: HeroProps) {
                     <stop offset="100%" stopColor="#DFBA6B" stopOpacity="0" />
                   </radialGradient>
 
+                  {/* Blur filters for layered glow */}
+                  <filter id="blastBlur" x="-80%" y="-80%" width="260%" height="260%">
+                    <feGaussianBlur stdDeviation="28" />
+                  </filter>
+                  <filter id="midBlur" x="-60%" y="-60%" width="220%" height="220%">
+                    <feGaussianBlur stdDeviation="14" />
+                  </filter>
+                  <filter id="coreBlur" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur stdDeviation="5" />
+                  </filter>
                   <filter id="particleGlow" x="-200%" y="-200%" width="500%" height="500%">
                     <feGaussianBlur stdDeviation="2" result="blur" />
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -305,24 +324,47 @@ export default function Hero({ lang, pack }: HeroProps) {
                   </circle>
                 </g>
 
-                {/* Center gold halo — multi-layer, expanded */}
-                <circle cx="370" cy="250" r="154" fill="url(#centerGlow)" />
-                <circle cx="370" cy="250" r="90"  fill="url(#coreGlow)" />
-                <circle cx="370" cy="250" r="58"  fill="rgba(245,158,11,0.09)" />
-                <circle cx="370" cy="250" r="34"  fill="rgba(245,158,11,0.07)">
-                  <animate attributeName="r"       values="31;37;31" dur="3s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+                {/* ── STARBURST EXPLOSION CORE ── */}
+
+                {/* Layer 1: outermost soft blast — large diffuse amber cloud */}
+                <circle cx="370" cy="250" r="175" fill="url(#outerBlast)" filter="url(#blastBlur)" opacity="0.9">
+                  <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite" />
                 </circle>
-                {/* Second pulsing ring */}
-                <circle cx="370" cy="250" r="52" fill="none" stroke="rgba(245,158,11,0.22)" strokeWidth="1.2">
-                  <animate attributeName="r"       values="48;58;48" dur="3s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
+
+                {/* Layer 2: mid explosion — orange-amber */}
+                <circle cx="370" cy="250" r="120" fill="url(#centerGlow)" filter="url(#blastBlur)" opacity="1">
+                  <animate attributeName="opacity" values="0.85;1;0.85" dur="2.5s" repeatCount="indefinite" />
                 </circle>
-                {/* Outer pulse ring */}
-                <circle cx="370" cy="250" r="72" fill="none" stroke="rgba(197,160,89,0.14)" strokeWidth="0.8">
-                  <animate attributeName="r"       values="68;80;68" dur="4.5s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.6;0.1;0.6" dur="4.5s" repeatCount="indefinite" />
+
+                {/* Layer 3: inner bright burst — hot amber, medium blur */}
+                <circle cx="370" cy="250" r="70" fill="url(#centerGlow)" filter="url(#midBlur)" opacity="1" />
+
+                {/* Layer 4: tight core glow — warm white, soft blur */}
+                <circle cx="370" cy="250" r="38" fill="url(#coreGlow)" filter="url(#coreBlur)" opacity="1">
+                  <animate attributeName="r"       values="35;42;35" dur="2.8s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.85;1;0.85" dur="2.8s" repeatCount="indefinite" />
                 </circle>
+
+                {/* Layer 5: white-hot nucleus — no blur, sharp */}
+                <circle cx="370" cy="250" r="16" fill="url(#coreGlow)" opacity="1">
+                  <animate attributeName="r"       values="14;18;14" dur="1.8s" repeatCount="indefinite" />
+                </circle>
+
+                {/* Pulsing shock-wave rings */}
+                <circle cx="370" cy="250" r="55" fill="none" stroke="rgba(255,220,100,0.55)" strokeWidth="1.5">
+                  <animate attributeName="r"       values="50;65;50"   dur="2.2s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.9;0;0.9"  dur="2.2s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="370" cy="250" r="80" fill="none" stroke="rgba(245,158,11,0.35)" strokeWidth="1">
+                  <animate attributeName="r"       values="75;95;75"   dur="3s"   repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.7;0;0.7"  dur="3s"   repeatCount="indefinite" />
+                </circle>
+                <circle cx="370" cy="250" r="110" fill="none" stroke="rgba(197,130,50,0.18)" strokeWidth="0.8">
+                  <animate attributeName="r"       values="105;130;105" dur="4s"  repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.5;0;0.5"   dur="4s"  repeatCount="indefinite" />
+                </circle>
+
+                {/* ── END STARBURST ── */}
 
                 {/* Glowing arc traces — partial arcs that suggest orbital motion */}
                 <g className="pointer-events-none">
@@ -404,19 +446,14 @@ export default function Hero({ lang, pack }: HeroProps) {
                   onMouseEnter={() => setHoveredNode("Dubai")}
                   onMouseLeave={() => setHoveredNode(null)}
                 >
-                  {/* Outer ambient ring */}
-                  <circle cx="370" cy="250" r="42" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.18)" strokeWidth="0.8" strokeDasharray="3 6">
-                    <animateTransform attributeName="transform" type="rotate" from="0 370 250" to="360 370 250" dur="16s" repeatCount="indefinite" />
-                  </circle>
-                  {/* Main node — 40% larger: r=24 → r=34 */}
-                  <circle cx="370" cy="250" r="34" fill="rgba(245,158,11,0.22)" stroke="rgba(245,158,11,0.55)" strokeWidth="1.5" />
-                  {/* Core dot */}
-                  <circle cx="370" cy="250" r="11" fill="#F59E0B" />
-                  <circle cx="370" cy="250" r="5"  fill="#FFF4DB" />
+                  {/* Node sits on top of starburst — keep minimal so glow shows through */}
+                  <circle cx="370" cy="250" r="18" fill="rgba(255,240,180,0.15)" stroke="rgba(255,220,100,0.70)" strokeWidth="1.5" />
+                  <circle cx="370" cy="250" r="7"  fill="#FFFFFF" />
+                  <circle cx="370" cy="250" r="3.5" fill="#F59E0B" />
 
-                  <text x="370" y="302" textAnchor="middle" fontSize="11" fontWeight="800"
+                  <text x="370" y="310" textAnchor="middle" fontSize="11" fontWeight="800"
                     fill="#FFFBEF"
-                    style={{ fontFamily: 'var(--font-sans)', letterSpacing: '0.06em', filter: 'drop-shadow(0 0 6px rgba(245,158,11,0.8)) drop-shadow(0 2px 4px rgba(0,0,0,0.95))' }}>
+                    style={{ fontFamily: 'var(--font-sans)', letterSpacing: '0.06em', filter: 'drop-shadow(0 0 8px rgba(245,158,11,1)) drop-shadow(0 2px 5px rgba(0,0,0,1))' }}>
                     {lang === "ZH" ? "迪拜管理总部 (阿联酋旗舰)" : lang === "AR" ? "مقر دبي الرئيسي (الإمارات)" : "Dubai HQ / UAE Corporate Core"}
                   </text>
                 </g>
