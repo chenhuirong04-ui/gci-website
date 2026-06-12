@@ -19,34 +19,15 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
   const [submitted, setSubmitted] = useState<false | "success" | "error" | "no-endpoint">(false);
   const [sending, setSending] = useState<boolean>(false);
 
-  const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined;
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!FORMSPREE_ENDPOINT) {
-      setSubmitted("no-endpoint");
-      return;
-    }
-
-    setSending(true);
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        setSubmitted("success");
-        setFormData({ name: "", email: "", company: "", corridor: "China-UAE Corridor", message: "" });
-      } else {
-        setSubmitted("error");
-      }
-    } catch {
-      setSubmitted("error");
-    } finally {
-      setSending(false);
-    }
+    const subject = encodeURIComponent(`[GCI Inquiry] ${formData.company} — ${formData.corridor}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nCorridor: ${formData.corridor}\n\n${formData.message}`
+    );
+    window.location.href = `mailto:info@globalcareinfo.com?subject=${subject}&body=${body}`;
+    setSubmitted("success");
+    setFormData({ name: "", email: "", company: "", corridor: "China-UAE Corridor", message: "" });
   };
 
   return (
