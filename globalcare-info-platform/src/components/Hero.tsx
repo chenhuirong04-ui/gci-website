@@ -245,8 +245,14 @@ export default function Hero({ lang, pack }: HeroProps) {
                   </linearGradient>
 
                   <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"   stopColor="#F59E0B" stopOpacity="0.22" />
-                    <stop offset="40%"  stopColor="#C5A059" stopOpacity="0.10" />
+                    <stop offset="0%"   stopColor="#F59E0B" stopOpacity="0.38" />
+                    <stop offset="30%"  stopColor="#DFBA6B" stopOpacity="0.18" />
+                    <stop offset="65%"  stopColor="#C5A059" stopOpacity="0.08" />
+                    <stop offset="100%" stopColor="#030611" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="#FFF4DB" stopOpacity="0.55" />
+                    <stop offset="50%"  stopColor="#F59E0B" stopOpacity="0.22" />
                     <stop offset="100%" stopColor="#030611" stopOpacity="0" />
                   </radialGradient>
 
@@ -299,12 +305,23 @@ export default function Hero({ lang, pack }: HeroProps) {
                   </circle>
                 </g>
 
-                {/* Center gold halo — multi-layer */}
-                <circle cx="370" cy="250" r="110" fill="url(#centerGlow)" />
-                <circle cx="370" cy="250" r="48" fill="rgba(245,158,11,0.07)" />
-                <circle cx="370" cy="250" r="24" fill="rgba(245,158,11,0.05)">
-                  <animate attributeName="r" values="22;26;22" dur="3s" repeatCount="indefinite" />
+                {/* Center gold halo — multi-layer, expanded */}
+                <circle cx="370" cy="250" r="154" fill="url(#centerGlow)" />
+                <circle cx="370" cy="250" r="90"  fill="url(#coreGlow)" />
+                <circle cx="370" cy="250" r="58"  fill="rgba(245,158,11,0.09)" />
+                <circle cx="370" cy="250" r="34"  fill="rgba(245,158,11,0.07)">
+                  <animate attributeName="r"       values="31;37;31" dur="3s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+                </circle>
+                {/* Second pulsing ring */}
+                <circle cx="370" cy="250" r="52" fill="none" stroke="rgba(245,158,11,0.22)" strokeWidth="1.2">
+                  <animate attributeName="r"       values="48;58;48" dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
+                </circle>
+                {/* Outer pulse ring */}
+                <circle cx="370" cy="250" r="72" fill="none" stroke="rgba(197,160,89,0.14)" strokeWidth="0.8">
+                  <animate attributeName="r"       values="68;80;68" dur="4.5s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.6;0.1;0.6" dur="4.5s" repeatCount="indefinite" />
                 </circle>
 
                 {/* Glowing arc traces — partial arcs that suggest orbital motion */}
@@ -387,11 +404,19 @@ export default function Hero({ lang, pack }: HeroProps) {
                   onMouseEnter={() => setHoveredNode("Dubai")}
                   onMouseLeave={() => setHoveredNode(null)}
                 >
-                  <circle cx="370" cy="250" r="24" fill="rgba(245, 158, 11, 0.18)" stroke="rgba(245, 158, 11, 0.4)" strokeWidth="1.2" />
-                  <circle cx="370" cy="250" r="8" fill="#F59E0B" />
-                  <circle cx="370" cy="250" r="4" fill="#030611" />
-                  
-                  <text x="370" y="292" textAnchor="middle" className="fill-[#FFF4DB] font-sans font-bold text-[11px] tracking-wide filter drop-shadow-[0_1.5px_4px_rgba(0,0,0,0.95)]">
+                  {/* Outer ambient ring */}
+                  <circle cx="370" cy="250" r="42" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.18)" strokeWidth="0.8" strokeDasharray="3 6">
+                    <animateTransform attributeName="transform" type="rotate" from="0 370 250" to="360 370 250" dur="16s" repeatCount="indefinite" />
+                  </circle>
+                  {/* Main node — 40% larger: r=24 → r=34 */}
+                  <circle cx="370" cy="250" r="34" fill="rgba(245,158,11,0.22)" stroke="rgba(245,158,11,0.55)" strokeWidth="1.5" />
+                  {/* Core dot */}
+                  <circle cx="370" cy="250" r="11" fill="#F59E0B" />
+                  <circle cx="370" cy="250" r="5"  fill="#FFF4DB" />
+
+                  <text x="370" y="302" textAnchor="middle" fontSize="11" fontWeight="800"
+                    fill="#FFFBEF"
+                    style={{ fontFamily: 'var(--font-sans)', letterSpacing: '0.06em', filter: 'drop-shadow(0 0 6px rgba(245,158,11,0.8)) drop-shadow(0 2px 4px rgba(0,0,0,0.95))' }}>
                     {lang === "ZH" ? "迪拜管理总部 (阿联酋旗舰)" : lang === "AR" ? "مقر دبي الرئيسي (الإمارات)" : "Dubai HQ / UAE Corporate Core"}
                   </text>
                 </g>
