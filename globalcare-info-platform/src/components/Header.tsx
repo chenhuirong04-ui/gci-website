@@ -1,7 +1,7 @@
 import React from "react";
 import { LanguagePack } from "../data/corporateData";
 import { ArrowRight, Globe } from "lucide-react";
-import gciLogo from "../assets/gci-logo-header.png";
+import gciLogo from "../assets/gci-logo-header-transparent.png";
 
 interface HeaderProps {
   lang: "EN" | "ZH" | "AR";
