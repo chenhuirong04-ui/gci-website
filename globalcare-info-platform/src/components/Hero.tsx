@@ -243,6 +243,22 @@ export default function Hero({ lang, pack }: HeroProps) {
                     <stop offset="50%" stopColor="#fbbf24" />
                     <stop offset="100%" stopColor="#d97706" />
                   </linearGradient>
+
+                  <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="#F59E0B" stopOpacity="0.22" />
+                    <stop offset="40%"  stopColor="#C5A059" stopOpacity="0.10" />
+                    <stop offset="100%" stopColor="#030611" stopOpacity="0" />
+                  </radialGradient>
+
+                  <radialGradient id="orbitTrace" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stopColor="#DFBA6B" stopOpacity="0.30" />
+                    <stop offset="100%" stopColor="#DFBA6B" stopOpacity="0" />
+                  </radialGradient>
+
+                  <filter id="particleGlow" x="-200%" y="-200%" width="500%" height="500%">
+                    <feGaussianBlur stdDeviation="2" result="blur" />
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
                 </defs>
 
                 {/* Atmosphere visual ring */}
@@ -260,6 +276,72 @@ export default function Hero({ lang, pack }: HeroProps) {
                   <path d="M 370 10 A 260 260 0 0 0 370 490" fill="none" stroke="rgba(197,160,89, 0.08)" strokeWidth="0.6" />
                   <line x1="110" y1="250" x2="630" y2="250" stroke="rgba(197,160,89, 0.1)" strokeWidth="0.6" />
                 </g>
+
+                {/* ── VISUAL DEPTH LAYER ── */}
+
+                {/* Concentric orbital rings — 4 layers */}
+                <g className="pointer-events-none">
+                  {/* Ring 1 — outermost, very faint */}
+                  <circle cx="370" cy="250" r="235" fill="none" stroke="rgba(197,160,89,0.09)" strokeWidth="0.8" strokeDasharray="6 18">
+                    <animateTransform attributeName="transform" type="rotate" from="0 370 250" to="360 370 250" dur="90s" repeatCount="indefinite" />
+                  </circle>
+                  {/* Ring 2 */}
+                  <circle cx="370" cy="250" r="185" fill="none" stroke="rgba(197,160,89,0.13)" strokeWidth="0.8" strokeDasharray="4 10">
+                    <animateTransform attributeName="transform" type="rotate" from="360 370 250" to="0 370 250" dur="60s" repeatCount="indefinite" />
+                  </circle>
+                  {/* Ring 3 */}
+                  <circle cx="370" cy="250" r="130" fill="none" stroke="rgba(197,160,89,0.16)" strokeWidth="0.9" strokeDasharray="3 7">
+                    <animateTransform attributeName="transform" type="rotate" from="0 370 250" to="360 370 250" dur="38s" repeatCount="indefinite" />
+                  </circle>
+                  {/* Ring 4 — innermost, amber, tightest */}
+                  <circle cx="370" cy="250" r="72" fill="none" stroke="rgba(245,158,11,0.22)" strokeWidth="1" strokeDasharray="2 5">
+                    <animateTransform attributeName="transform" type="rotate" from="360 370 250" to="0 370 250" dur="22s" repeatCount="indefinite" />
+                  </circle>
+                </g>
+
+                {/* Center gold halo — multi-layer */}
+                <circle cx="370" cy="250" r="110" fill="url(#centerGlow)" />
+                <circle cx="370" cy="250" r="48" fill="rgba(245,158,11,0.07)" />
+                <circle cx="370" cy="250" r="24" fill="rgba(245,158,11,0.05)">
+                  <animate attributeName="r" values="22;26;22" dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+                </circle>
+
+                {/* Glowing arc traces — partial arcs that suggest orbital motion */}
+                <g className="pointer-events-none">
+                  <path d="M 370 80 A 170 170 0 0 1 520 350" fill="none" stroke="rgba(197,160,89,0.10)" strokeWidth="1.2" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="5s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 180 180 A 200 200 0 0 1 560 320" fill="none" stroke="rgba(197,160,89,0.08)" strokeWidth="1" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.2;0.6;0.2" dur="7s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 220 390 A 160 160 0 0 0 540 150" fill="none" stroke="rgba(245,158,11,0.07)" strokeWidth="0.8" strokeLinecap="round">
+                    <animate attributeName="opacity" values="0.1;0.5;0.1" dur="6s" repeatCount="indefinite" />
+                  </path>
+                </g>
+
+                {/* Floating particles */}
+                <g className="pointer-events-none" filter="url(#particleGlow)">
+                  {([
+                    { cx: 210, cy: 128, dur: "3.1s", delay: "0s"   },
+                    { cx: 530, cy: 108, dur: "4.4s", delay: "0.8s"  },
+                    { cx: 158, cy: 318, dur: "2.9s", delay: "1.5s"  },
+                    { cx: 586, cy: 356, dur: "3.8s", delay: "0.3s"  },
+                    { cx: 455, cy: 155, dur: "5.2s", delay: "2.1s"  },
+                    { cx: 285, cy: 385, dur: "2.5s", delay: "0.6s"  },
+                    { cx: 488, cy: 408, dur: "4.0s", delay: "1.9s"  },
+                    { cx: 248, cy: 195, dur: "3.5s", delay: "1.2s"  },
+                    { cx: 440, cy: 78,  dur: "4.8s", delay: "0.4s"  },
+                    { cx: 615, cy: 230, dur: "3.2s", delay: "2.7s"  },
+                  ] as { cx: number; cy: number; dur: string; delay: string }[]).map((p, i) => (
+                    <circle key={i} cx={p.cx} cy={p.cy} r="1.8" fill="rgba(223,186,107,0.85)">
+                      <animate attributeName="opacity" values="0;0.9;0" dur={p.dur} begin={p.delay} repeatCount="indefinite" />
+                      <animate attributeName="r" values="1.2;2.2;1.2" dur={p.dur} begin={p.delay} repeatCount="indefinite" />
+                    </circle>
+                  ))}
+                </g>
+
+                {/* ── END VISUAL DEPTH LAYER ── */}
 
                 {/* Connecting Arcs with pulse animation from Dubai Core (370, 250) */}
                 {nodes.map((node, idx) => {
