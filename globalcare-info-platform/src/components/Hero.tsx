@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LanguagePack } from "../data/corporateData";
 import { ArrowRight, Globe } from "lucide-react";
-import gciLogo from "../assets/gci-logo-header-transparent.png";
+import gciDoorIcon from "../assets/gci-door-icon.png";
 
 interface HeroProps {
   lang: "EN" | "ZH" | "AR";
@@ -131,45 +131,18 @@ export default function Hero({ lang, pack }: HeroProps) {
           <div className="lg:col-span-5 text-left flex flex-col justify-center">
             
             {/* Platform Badge */}
-            <div className="inline-flex items-center gap-4 mb-8 px-5 py-4 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl shadow-2xl backdrop-blur-md select-none">
-              {/* Door icon extracted from GCI logo */}
-              <svg viewBox="0 0 54 70" className="w-9 h-11 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="badge-gold-bright" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#9E782F" />
-                    <stop offset="20%" stopColor="#DFBB6B" />
-                    <stop offset="55%" stopColor="#FFF2D1" />
-                    <stop offset="85%" stopColor="#EAD292" />
-                    <stop offset="100%" stopColor="#C59B3F" />
-                  </linearGradient>
-                  <linearGradient id="badge-gold-mid" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#A88232" />
-                    <stop offset="50%" stopColor="#DFBB6B" />
-                    <stop offset="100%" stopColor="#8A6A24" />
-                  </linearGradient>
-                  <linearGradient id="badge-gold-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3C2A08" />
-                    <stop offset="40%" stopColor="#5E4311" />
-                    <stop offset="100%" stopColor="#3C2A08" />
-                  </linearGradient>
-                </defs>
-                {/* Left outer face */}
-                <path d="M 2,8 L 14,12 L 14,58 L 2,54 Z" fill="url(#badge-gold-bright)" />
-                {/* Left inner turn */}
-                <path d="M 14,12 L 22,16 L 22,52 L 14,58 Z" fill="url(#badge-gold-dark)" />
-                {/* Top lintel */}
-                <path d="M 2,8 L 46,16 L 36,20 L 22,16 Z" fill="url(#badge-gold-mid)" />
-                {/* Right leaf */}
-                <path d="M 46,16 L 46,56 L 32,64 L 32,24 Z" fill="url(#badge-gold-bright)" />
-                {/* Right inner depth */}
-                <path d="M 32,24 L 32,64 L 22,52 L 22,16 Z" fill="url(#badge-gold-dark)" />
-              </svg>
-              {/* Platform text */}
-              <div className="flex flex-col">
-                <span className="text-[11px] font-sans font-bold tracking-[0.18em] text-brand-gold-200 uppercase leading-tight">
+            <div className="inline-flex items-center gap-5 mb-8 px-6 py-5 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl shadow-2xl backdrop-blur-md select-none">
+              <img
+                src={gciDoorIcon}
+                alt="GCI Door Icon"
+                className="h-14 w-auto object-contain shrink-0"
+                draggable={false}
+              />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
                   Global Market
                 </span>
-                <span className="text-[11px] font-sans font-bold tracking-[0.18em] text-brand-gold-200 uppercase leading-tight">
+                <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
                   Execution Platform
                 </span>
               </div>
