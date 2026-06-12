@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Cinzel", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Custom GCI Corporate Colors */
+  --color-brand-navy-950: #030611; /* Even deeper sovereign night */
+  --color-brand-navy-900: #070d1e;
+  --color-brand-navy-800: #0d1730;
+  --color-brand-navy-700: #142346;
+  --color-brand-navy-600: #1f3565;
+  --color-brand-gold-100: #fdfaf2;
+  --color-brand-gold-200: #f5edd1;
+  --color-brand-gold-300: #ebd4a0;
+  --color-brand-gold-400: #dfb256;
+  --color-brand-gold-500: #c29c53; /* Prestigious consulting satin gold */
+  --color-brand-gold-600: #a37f3a;
+  --color-brand-gold-700: #826227;
+  --color-brand-gold-800: #5c4317;
+  --color-brand-gold-900: #36260a;
+}
+
+/* Custom global styles for the Dubai Chamber / WEF aesthetic */
+html, body {
+  background-color: #030611; /* Absolute deep rich navy-black */
+  color: #f1f5f9;
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}
+
+/* Typography styles */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Gold Gradient utilities */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #fbf0d5 0%, #dfb256 50%, #a7823e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-border {
+  border-image: linear-gradient(135deg, rgba(223, 178, 86, 0.4) 0%, rgba(167, 130, 62, 0.05) 100%) 1;
+}
+
+.navy-gold-card {
+  background: linear-gradient(145deg, rgba(13, 23, 48, 0.55) 0%, rgba(4, 8, 18, 0.85) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.navy-gold-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navy-gold-card-hover:hover {
+  border-color: rgba(197, 160, 89, 0.3);
+  box-shadow: 0 15px 40px rgba(197, 160, 89, 0.03);
+  transform: translateY(-3px);
+}
+
+/* Elegant corporate lines */
+.corporate-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.2) 20%, rgba(197, 160, 89, 0.2) 80%, transparent);
+}
+
+/* Interactive Connection Line Animation */
+@keyframes flow {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow-line {
+  stroke-dasharray: 8 4;
+  animation: flow 20s linear infinite;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #030611;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.35);
+}

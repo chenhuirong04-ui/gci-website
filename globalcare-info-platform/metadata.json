@@ -1,0 +1,6 @@
+{
+  "name": "GlobalCare Info Platform",
+  "description": "GCI is a Global Market Execution Platform, connecting resources, entering markets and executing projects across the Middle East, Africa and selected global markets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
