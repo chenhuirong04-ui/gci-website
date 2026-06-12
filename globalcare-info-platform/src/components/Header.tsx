@@ -1,6 +1,7 @@
 import React from "react";
 import { LanguagePack } from "../data/corporateData";
 import { ArrowRight, Globe } from "lucide-react";
+import gciLogo from "../assets/gci-logo-gold.png";
 
 interface HeaderProps {
   lang: "EN" | "ZH" | "AR";
@@ -31,64 +32,12 @@ export default function Header({ lang, setLang, pack }: HeaderProps) {
         
         {/* Brand Logo & Corporate Mark */}
         <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 group focus:outline-none select-none">
-          <svg viewBox="0 0 320 80" className="h-[46px] w-[200px] sm:w-[220px]" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <defs>
-              {/* High-fidelity Multi-stop Metallic Gold Gradient for bright, reflecting faces */}
-              <linearGradient id="header-gci-gold-bright" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#9E782F" />
-                <stop offset="15%" stopColor="#DFBB6B" />
-                <stop offset="50%" stopColor="#FFF2D1" />
-                <stop offset="85%" stopColor="#EAD292" />
-                <stop offset="100%" stopColor="#C59B3F" />
-              </linearGradient>
-              {/* Medium gold for dynamic intermediate faces */}
-              <linearGradient id="header-gci-gold-mid" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#A88232" />
-                <stop offset="50%" stopColor="#DFBB6B" />
-                <stop offset="100%" stopColor="#8A6A24" />
-              </linearGradient>
-              {/* Deeper, richer gold/bronze for 3D depth and shadow faces */}
-              <linearGradient id="header-gci-gold-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3C2A08" />
-                <stop offset="30%" stopColor="#5E4311" />
-                <stop offset="70%" stopColor="#8A6A24" />
-                <stop offset="100%" stopColor="#3C2A08" />
-              </linearGradient>
-            </defs>
-
-            {/* Authentic 3D Premium Folded Gateway Logo (Corporate Sovereign Look) */}
-            <g transform="translate(6, 2)">
-              {/* Left Pillar / Outward Face (Bright high-fidelity metal) */}
-              <path d="M 12,20 L 22,23 L 22,57 L 12,54 Z" fill="url(#header-gci-gold-bright)" />
-              
-              {/* Left Pillar / Inside Turn (Shadow deep bronze contrast) */}
-              <path d="M 22,23 L 28,26 L 28,51 L 22,57 Z" fill="url(#header-gci-gold-dark)" />
-              
-              {/* Lintel Top Overlook (Shimmering medium gold) */}
-              <path d="M 12,20 L 46,26 L 38,30 L 28,26 Z" fill="url(#header-gci-gold-mid)" />
-              
-              {/* Right Pillar / Open Leaf Portal (Bright gold showing entrance depth) */}
-              <path d="M 46,26 L 46,55 L 34,62 L 34,31 Z" fill="url(#header-gci-gold-bright)" />
-              
-              {/* Deep Connecting Passageway Inside (Shadow dark metal) */}
-              <path d="M 34,31 L 34,62 L 28,51 L 28,26 Z" fill="url(#header-gci-gold-dark)" />
-            </g>
-
-            {/* "GCI" Branding Display */}
-            <text x="64" y="34" fill="url(#header-gci-gold-bright)" fontWeight="800" fontSize="24" letterSpacing="0.05em" style={{ fontFamily: 'var(--font-display)', textTransform: 'uppercase' }}>
-              GCI
-            </text>
-
-            {/* Subtitle match */}
-            <text x="64" y="47" fill="#dfbb5a" fontSize="7" fontWeight="600" letterSpacing="0.08em" opacity="0.9" style={{ fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-              Global Market Execution Platform
-            </text>
-
-            {/* Elegant Golden Divider Line with Diamond Center */}
-            <line x1="8" y1="58" x2="148" y2="58" stroke="#dfb256" strokeWidth="0.8" opacity="0.4" />
-            <polygon points="152,58 155,55 158,58 155,61" fill="url(#header-gci-gold-bright)" />
-            <line x1="162" y1="58" x2="310" y2="58" stroke="#dfb256" strokeWidth="0.8" opacity="0.4" />
-          </svg>
+          <img
+            src={gciLogo}
+            alt="GCI — Global Market Execution Platform"
+            className="h-12 w-auto object-contain select-none"
+            draggable={false}
+          />
         </a>
 
         {/* Corporate Desktop Navigation */}
