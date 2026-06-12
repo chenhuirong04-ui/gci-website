@@ -16,25 +16,37 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
     corridor: "China-UAE Corridor",
     message: ""
   });
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<false | "success" | "error" | "no-endpoint">(false);
   const [sending, setSending] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!FORMSPREE_ENDPOINT) {
+      setSubmitted("no-endpoint");
+      return;
+    }
+
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      setSubmitted(true);
-      // Reset form fields
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        corridor: "China-UAE Corridor",
-        message: ""
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
       });
-      setTimeout(() => setSubmitted(false), 8000);
-    }, 1500);
+      if (res.ok) {
+        setSubmitted("success");
+        setFormData({ name: "", email: "", company: "", corridor: "China-UAE Corridor", message: "" });
+      } else {
+        setSubmitted("error");
+      }
+    } catch {
+      setSubmitted("error");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -62,7 +74,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
           
           {/* Left Block: Premium Corporate Form */}
           <div className="lg:col-span-7 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 p-6 md:p-8 flex flex-col justify-between">
-            {submitted ? (
+            {submitted === "success" ? (
               <div className="flex-1 flex flex-col items-center justify-center py-12 text-center select-none animate-in fade-in duration-300">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mb-6">
                   <Check className="w-8 h-8 stroke-[3]" />
@@ -70,9 +82,28 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                 <h4 className="text-lg font-serif text-brand-gold-100 font-bold mb-3">
                   {lang === "ZH" ? "商业意向安全送达" : "Inbound Inquiry Transmitted"}
                 </h4>
-                <p className="text-xs text-brand-gold-250 max-w-md leading-relaxed">
+                <p className="text-xs text-brand-gold-300/80 max-w-md leading-relaxed">
                   {pack.contactFormSuccess}
                 </p>
+              </div>
+            ) : submitted === "no-endpoint" || submitted === "error" ? (
+              <div className="flex-1 flex flex-col items-center justify-center py-12 text-center select-none">
+                <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mb-6">
+                  <span className="text-2xl">⚠</span>
+                </div>
+                <h4 className="text-base font-serif text-brand-gold-100 font-bold mb-3">
+                  {submitted === "error" ? "Submission Failed" : "Form Not Configured"}
+                </h4>
+                <p className="text-xs text-brand-gold-300/70 max-w-sm leading-relaxed mb-6">
+                  Please contact us directly by email or WhatsApp, or configure the Formspree endpoint.
+                </p>
+                <div className="flex flex-col gap-2 text-xs text-brand-gold-400">
+                  <a href="mailto:info@globalcareinfo.com" className="underline underline-offset-2 hover:text-brand-gold-200">info@globalcareinfo.com</a>
+                  <a href="https://wa.me/971507188306" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-brand-gold-200">WhatsApp +971 50 718 8306</a>
+                </div>
+                <button onClick={() => setSubmitted(false)} className="mt-6 text-xs text-brand-gold-500/60 hover:text-brand-gold-400 underline underline-offset-2 cursor-pointer">
+                  Try again
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5 text-left">

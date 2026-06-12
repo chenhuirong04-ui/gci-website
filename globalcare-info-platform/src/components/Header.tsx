@@ -30,7 +30,7 @@ export default function Header({ lang, setLang, pack }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Brand Logo & Corporate Mark */}
-        <a href="#" className="flex items-center gap-3 group focus:outline-none select-none">
+        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 group focus:outline-none select-none">
           <svg viewBox="0 0 320 80" className="h-[46px] w-[200px] sm:w-[220px]" fill="none" xmlns="http://www.w3.org/2000/svg">
              <defs>
               {/* High-fidelity Multi-stop Metallic Gold Gradient for bright, reflecting faces */}
