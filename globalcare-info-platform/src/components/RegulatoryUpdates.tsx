@@ -307,7 +307,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
         <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
           <div className="flex items-center gap-2 mb-4 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500/80" />
-            <span className="text-sm tracking-widest font-sans text-brand-gold-400 font-medium uppercase font-mono">
+            <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
               {lang === "EN" ? "Market Intelligence Center" : lang === "ZH" ? "在岸市场特约情报中心" : "مركز الاستشارات والمؤشرات"}
             </span>
           </div>
@@ -388,7 +388,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
 
                   {/* High quality footer action */}
                   <div className="border-t border-brand-gold-500/10 pt-5 flex items-center justify-between text-xs font-bold text-[#DFBB6B] group-hover:text-brand-gold-300">
-                    <span className="tracking-widest uppercase">{readMoreText}</span>
+                    <span className={`uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>{readMoreText}</span>
                     <div className="w-8 h-8 rounded-full bg-brand-gold-500/5 group-hover:bg-brand-gold-500/15 flex items-center justify-center transition-colors">
                       <ArrowRight className={`w-4 h-4 stroke-[2] ${isRtl ? "rotate-180" : "group-hover:translate-x-0.5 transition-transform"}`} />
                     </div>
@@ -513,7 +513,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   // Scroll to top of the section nicely
                   window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
                 }}
-                className="px-8 py-4 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] font-sans font-bold text-sm tracking-widest uppercase rounded-xl transition-all duration-300 shadow-lg shadow-brand-gold-500/10 hover:shadow-brand-gold-500/25 active:scale-95 cursor-pointer flex items-center gap-3 animate-pulse"
+                className={`px-8 py-4 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] font-sans font-bold text-sm ${lang === "EN" ? "tracking-widest" : "tracking-normal"} uppercase rounded-xl transition-all duration-300 shadow-lg shadow-brand-gold-500/10 hover:shadow-brand-gold-500/25 active:scale-95 cursor-pointer flex items-center gap-3 animate-pulse`}
               >
                 <span>{viewAllButtonText}</span>
               </button>
@@ -543,7 +543,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className={`px-4 py-3 rounded-xl text-xs font-sans font-semibold tracking-wider transition-all duration-300 cursor-pointer active:scale-98 flex items-center justify-between gap-3 border ${
+                      className={`px-4 py-3 rounded-xl text-xs font-sans font-semibold ${lang === "EN" ? "tracking-wider" : "tracking-normal"} transition-all duration-300 cursor-pointer active:scale-98 flex items-center justify-between gap-3 border ${
                         active 
                           ? "bg-[#DFBB6B] text-[#030611] border-[#C59B3F] font-bold shadow-md shadow-brand-gold-500/10" 
                           : "bg-[#030611]/80 text-brand-gold-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-[#f9f5eb]"
@@ -564,7 +564,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
               {/* Subcategories indicators to preserve the high industrial feeling */}
               {activeCategory !== "all" && (
                 <div className="flex flex-wrap items-center gap-2 mt-4 bg-[#050a15]/30 p-3 rounded-xl border border-brand-gold-500/5">
-                  <span className="text-[10px] font-mono font-bold text-brand-gold-400 uppercase tracking-widest flex items-center gap-1.5 mr-2">
+                  <span className={`text-[10px] font-mono font-bold text-brand-gold-400 uppercase flex items-center gap-1.5 mr-2 ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
                     <Sparkles className="w-3 h-3 text-brand-gold-500" />
                     <span>{lang === "EN" ? "Covered Dimensions" : lang === "ZH" ? "覆盖业务维度" : "النطاقات المغطاة"}:</span>
                   </span>

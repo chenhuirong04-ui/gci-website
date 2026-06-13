@@ -273,8 +273,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "合作伙伴引荐",
       "商业落地支持"
     ],
-    service1Footer: "Business Development",
-    
+    service1Footer: "业务开发",
+
     service2Title: "2. Trade & Supply Chain Solutions",
     service2Desc: "通过协同采购、物流与分销支持，将中国供应资源与区域市场需求相连接。",
     service2Bullets: [
@@ -285,8 +285,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "仓储资源对接",
       "贸易便利化支持"
     ],
-    service2Footer: "Supply Chain Network",
-    
+    service2Footer: "供应链网络",
+
     service3Title: "3. Project & Living Solutions",
     service3Desc: "通过集成式的项目供应解决方案，支持酒店、住宅、办公及商业项目的建设与交付。",
     service3Bullets: [
@@ -297,8 +297,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "酒店及文旅项目交付",
       "办公与企业空间规划"
     ],
-    service3Footer: "Explore COOLHOME GCC →",
-    
+    service3Footer: "探索 COOLHOME GCC →",
+
     service4Title: "4. Digital & AI Solutions",
     service4Desc: "通过自主研发的 AI 赋能工作流系统，帮助企业提升销售业绩、优化日常运营并增强执行管理。",
     service4Bullets: [
@@ -309,8 +309,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "数字化日常运营管理",
       "决策层高管看板集成"
     ],
-    service4Footer: "Explore AsoraCore →",
-    
+    service4Footer: "探索 AsoraCore →",
+
     whereWeOperateLabel: "市场网络",
     whereWeOperateTitle: "双向极速合规走廊",
     whereWeOperateSubtitle: "考察我们在中东海湾国家、中国主要起运地和全球高成长转运枢纽的自营网点，畅享一站式出海极速通途。",
@@ -401,8 +401,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "التعريف والربط المباشر بالشركاء",
       "تقديم الدعم التجاري والتشغيلي"
     ],
-    service1Footer: "Business Development",
-    
+    service1Footer: "تطوير الأعمال",
+
     service2Title: "2. Trade & Supply Chain Solutions",
     service2Desc: "ربط مصادر الإمداد الصينية بالطلب في الأسواق الإقليمية من خلال تنسيق التوريد والخدمات اللوجستية والدعم التوزيعي.",
     service2Bullets: [
@@ -413,8 +413,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "توجيه وتسهيل موارد التخزين المتنوعة",
       "دعم وتسهيل انسيابية الحركة التجارية"
     ],
-    service2Footer: "Supply Chain Network",
-    
+    service2Footer: "شبكة سلسلة التوريد",
+
     service3Title: "3. Project & Living Solutions",
     service3Desc: "دعم مشاريع الضيافة، الحلول السكنية، المساحات المكتبية والمنشآت التجارية عبر حلول التوريد المتكاملة للمشاريع.",
     service3Bullets: [
@@ -425,8 +425,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "دعم توريد مشاريع الضيافة والفنادق",
       "حلول وتخطيط المساحات المكتبية والبيئات"
     ],
-    service3Footer: "Explore COOLHOME GCC →",
-    
+    service3Footer: "استكشف COOLHOME GCC ←",
+
     service4Title: "4. Digital & AI Solutions",
     service4Desc: "تمكين الشركات من رفع مبيعاتها وتحسين عملياتها اليومية والإدارية من خلال أنظمة ذكية لإدارة سير العمل.",
     service4Bullets: [
@@ -437,8 +437,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "الرقابة الرقمية على العمليات والتشغيل",
       "لوحات بيانات القيادة لصناع القرار"
     ],
-    service4Footer: "Explore AsoraCore →",
-    
+    service4Footer: "استكشف AsoraCore ←",
+
     whereWeOperateLabel: "مواقع عملياتنا",
     whereWeOperateTitle: "الممرات النشطة والشبكة العالمية",
     whereWeOperateSubtitle: "نربط موارد الصين بسوق مجلس التعاون الخليجي، وموانئ شرق إفريقيا، ومناطق التوسع الصاعدة بالبرازيل والمغرب.",

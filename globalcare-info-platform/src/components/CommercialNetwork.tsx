@@ -254,7 +254,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
         <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
           <div className="flex items-center gap-2 mb-4 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
-            <span className="text-sm tracking-widest font-sans text-brand-gold-400 font-medium uppercase font-mono">
+            <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
               {labelText}
             </span>
           </div>
@@ -324,7 +324,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   <div className="absolute inset-0 bg-gradient-to-t from-[#030611]/90 via-[#030611]/30 to-transparent pointer-events-none" />
 
                   {/* Visual Indicator of a stream/evidence */}
-                  <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#030611]/80 backdrop-blur px-3 py-1.5 rounded-full border border-brand-gold-500/20 text-[10px] font-mono font-bold text-brand-gold-400 uppercase tracking-widest">
+                  <div className={`absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#030611]/80 backdrop-blur px-3 py-1.5 rounded-full border border-brand-gold-500/20 text-[10px] font-mono font-bold text-brand-gold-400 uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span>{liveFeedText}</span>
                   </div>
@@ -346,10 +346,10 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                       <VideoOff className="w-8 h-8 stroke-[1.5]" />
                     </div>
 
-                    <span className="text-xs sm:text-sm font-mono tracking-widest text-[#DFBA6B] uppercase font-bold animate-pulse">
+                    <span className={`text-xs sm:text-sm font-mono text-[#DFBA6B] uppercase font-bold animate-pulse ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
                       {placeholderText}
                     </span>
-                    <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-widest mt-1 block font-medium">
+                    <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-wider mt-1 block font-medium">
                       GCI Commercial Network Asset Deck
                     </span>
                   </div>
