@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { BookOpen, FolderSync, ShieldAlert, Newspaper, ArrowRight, ArrowLeft, Layers, Sparkles, Filter, MapPin } from "lucide-react";
 
+// Vite production-safe image imports (raw /src/assets paths break after build hashing)
+import imgSolarRiyadh from "../assets/images/case_solar_riyadh_1780768308627.png";
+import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268.png";
+import imgMedicalMombasa from "../assets/images/case_medical_mombasa_1780768328334.png";
+import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
+import imgPortShenzhen from "../assets/images/case_port_shenzhen_1780768345006.png";
+
+const IMG_MAP: Record<string, string> = {
+  "/src/assets/images/case_solar_riyadh_1780768308627.png": imgSolarRiyadh,
+  "/src/assets/images/case_robotics_dubai_1780768291268.png": imgRoboticsDubai,
+  "/src/assets/images/case_medical_mombasa_1780768328334.png": imgMedicalMombasa,
+  "/src/assets/images/gci_global_hub_connection_1780768265492.png": imgGlobalHub,
+  "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
+};
+function resolveImg(path: string): string {
+  return IMG_MAP[path] ?? path;
+}
+
 interface RegulatoryUpdatesProps {
   lang: "EN" | "ZH" | "AR";
 }
@@ -345,23 +363,22 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
               <div 
                 className="lg:col-span-2 group flex flex-col justify-between bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-3xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-gold-500/5 min-h-[440px]"
               >
-                {/* Visual Cover Image with Gradient Mask Overlay */}
-                <div className="relative w-full h-64 sm:h-80 overflow-hidden border-b border-brand-gold-500/10">
+                {/* Visual Cover Image — fixed h-52, fallback placeholder if broken */}
+                <div className="relative w-full h-52 shrink-0 overflow-hidden border-b border-brand-gold-500/10 bg-[#0a1428]">
                   <img
-                    src={leadArticle.coverImage}
-                    alt={lang === "EN" ? leadArticle.titleEN : lang === "ZH" ? leadArticle.titleZH : leadArticle.titleAR}
-                    referrerPolicy="no-referrer"
+                    src={resolveImg(leadArticle.coverImage)}
+                    alt=""
                     className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 select-none pointer-events-none"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070e20] via-transparent to-transparent" />
-                  
-                  {/* Category Pill Tag Overlay inside the Cover Area */}
-                  <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
-                    <span className="text-[10px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
+                  {/* Category + location badges — bottom of image, never overlaps title */}
+                  <div className="absolute bottom-3 left-4 z-10 flex flex-wrap gap-2">
+                    <span className="text-[10px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-2.5 py-1 rounded-md uppercase tracking-wider shadow-lg">
                       {categoryLabels[leadArticle.category][lang]}
                     </span>
-                    <span className="text-[10px] font-sans font-bold bg-[#030611]/80 backdrop-blur text-brand-gold-200 border border-brand-gold-500/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                      <MapPin className="w-3 h-3 text-brand-gold-400" />
+                    <span className="text-[10px] font-sans font-bold bg-[#030611]/85 backdrop-blur text-brand-gold-200 border border-brand-gold-500/20 px-2.5 py-1 rounded-md flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-brand-gold-400 shrink-0" />
                       {lang === "EN" ? leadArticle.countryEN : lang === "ZH" ? leadArticle.countryZH : leadArticle.countryAR}
                     </span>
                   </div>
@@ -407,31 +424,29 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                       key={article.id}
                       className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm flex-1"
                     >
-                      <div className="flex gap-4 items-start mb-3">
-                        {/* Compact card mini visual image preview */}
-                        <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-brand-gold-500/10 bg-[#030611] relative">
-                          <img
-                            src={article.coverImage}
-                            alt={title}
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
+                      {/* Image strip at top of card — fixed h-28 */}
+                      <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 border border-brand-gold-500/10 bg-[#0a1428] shrink-0">
+                        <img
+                          src={resolveImg(article.coverImage)}
+                          alt=""
+                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 select-none pointer-events-none"
+                          onError={(e) => { e.currentTarget.style.display = "none"; }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/70 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                      {/* Meta + title — always below image, never overlapping */}
+                      <div className="mb-3">
+                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                          <span className="text-[9px] font-mono bg-brand-gold-500/10 text-brand-gold-400 border border-brand-gold-500/15 px-2 py-0.5 rounded font-bold uppercase">
+                            {country}
+                          </span>
+                          <span className="text-[9px] font-mono text-slate-500">
+                            {article.date}
+                          </span>
                         </div>
-                        
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2 mb-1.5">
-                            <span className="text-[9px] font-mono bg-brand-gold-500/10 text-brand-gold-400 border border-brand-gold-500/15 px-2 py-0.5 rounded font-bold uppercase">
-                              {country}
-                            </span>
-                            <span className="text-[9px] font-mono text-slate-500">
-                              {article.date}
-                            </span>
-                          </div>
-
-                          <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-2 leading-tight">
-                            {title}
-                          </h4>
-                        </div>
+                        <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-3 leading-snug break-words">
+                          {title}
+                        </h4>
                       </div>
 
                       <p className="text-xs text-brand-gold-200/60 font-sans font-light line-clamp-2 mb-3">
@@ -461,18 +476,16 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     key={article.id}
                     className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
                   >
-                    {/* Visual Card Image Cover Header */}
-                    <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#030611]">
+                    {/* Visual Card Image — fixed h-40, bottom label overlay */}
+                    <div className="relative w-full h-40 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
                       <img
-                        src={article.coverImage}
-                        alt={title}
-                        referrerPolicy="no-referrer"
+                        src={resolveImg(article.coverImage)}
+                        alt=""
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 select-none pointer-events-none"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#070e20] via-transparent to-transparent" />
-                      
-                      {/* Compact Label Float */}
-                      <span className="absolute bottom-2 left-2 z-15 text-[9px] font-mono bg-[#030611]/85 backdrop-blur text-brand-gold-300 border border-brand-gold-500/15 px-2 py-1 rounded">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
+                      <span className="absolute bottom-2 left-2 z-10 text-[9px] font-mono bg-[#030611]/85 backdrop-blur text-brand-gold-300 border border-brand-gold-500/15 px-2 py-1 rounded">
                         {country}
                       </span>
                     </div>
@@ -591,18 +604,16 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     key={article.id}
                     className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/12 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
                   >
-                    {/* Card Header Cover Image */}
-                    <div className="relative w-full h-44 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#030611]">
+                    {/* Card Header Cover Image — fixed h-44, category badge at bottom */}
+                    <div className="relative w-full h-44 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
                       <img
-                        src={article.coverImage}
-                        alt={title}
-                        referrerPolicy="no-referrer"
+                        src={resolveImg(article.coverImage)}
+                        alt=""
                         className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 select-none pointer-events-none"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#070e20] via-transparent to-transparent" />
-                      
-                      {/* Floating Category Indicator */}
-                      <span className="absolute top-2 left-2 z-10 text-[9px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-2 py-1 rounded">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
+                      <span className="absolute bottom-2 left-2 z-10 text-[9px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-2 py-1 rounded">
                         {categoryLabels[article.category][lang]}
                       </span>
                     </div>
@@ -614,7 +625,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                         <span>{article.date}</span>
                       </div>
 
-                      <h4 className="text-base font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors leading-snug mb-3">
+                      <h4 className="text-base font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors leading-snug mb-3 break-words">
                         {title}
                       </h4>
 
