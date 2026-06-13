@@ -33,7 +33,8 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       title: pack.service3Title,
       desc: pack.service3Desc,
       bullets: pack.service3Bullets || [],
-      footer: pack.service3Footer
+      footer: pack.service3Footer,
+      footerUrl: "https://www.coolhomegcc.com"
     },
     {
       idx: "04",
@@ -41,7 +42,8 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       title: pack.service4Title,
       desc: pack.service4Desc,
       bullets: pack.service4Bullets || [],
-      footer: pack.service4Footer
+      footer: pack.service4Footer,
+      footerUrl: "https://asoracore.com"
     }
   ];
 
@@ -105,10 +107,22 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
               </div>
 
               {/* Minimal Bottom Hover Element */}
-              <div className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
-                <span>{svc.footer}</span>
-              </div>
+              {svc.footerUrl ? (
+                <a
+                  href={svc.footerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
+                  <span>{svc.footer}</span>
+                </a>
+              ) : (
+                <div className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
+                  <span>{svc.footer}</span>
+                </div>
+              )}
 
             </div>
           ))}
