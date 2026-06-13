@@ -258,10 +258,12 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                 {pack.contactOffice}
               </span>
               <p className="text-sm text-brand-gold-200 font-light leading-relaxed mb-1.5">
-                Dubai Silicon Oasis, HQ Building, Wing D, Office 504
+                {lang === "ZH"
+                  ? "迪拜 Jebel Ali，Dubai Traders Market，504 办公室"
+                  : "Dubai Traders Market, Office 504, Jebel Ali"}
               </p>
               <p className="text-xs font-sans font-medium text-brand-gold-500">
-                Dubai, United Arab Emirates
+                {lang === "ZH" ? "阿联酋迪拜" : "Dubai, United Arab Emirates"}
               </p>
             </div>
 

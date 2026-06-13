@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookOpen, FolderSync, ShieldAlert, Newspaper, ArrowRight, ArrowLeft, Layers, Sparkles, Filter, Calendar, MapPin } from "lucide-react";
+import { BookOpen, FolderSync, ShieldAlert, Newspaper, ArrowRight, ArrowLeft, Layers, Sparkles, Filter, MapPin } from "lucide-react";
 
 interface RegulatoryUpdatesProps {
   lang: "EN" | "ZH" | "AR";
@@ -372,7 +372,6 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   <div>
                     {/* Meta line */}
                     <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 mb-3 uppercase tracking-wider">
-                      <Calendar className="w-3.5 h-3.5 text-brand-gold-500/60" />
                       <span>{dateLabel}:</span>
                       <span>{leadArticle.date}</span>
                     </div>

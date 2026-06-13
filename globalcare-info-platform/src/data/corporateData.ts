@@ -263,7 +263,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whatWeDoTitle: "四大核心业务能力",
     whatWeDoSubtitle: "GCI通过四大核心业务能力，对接资源，协同执行，支持区域及全球市场的业务增长。",
     
-    service1Title: "1. Market Entry & Business Services",
+    service1Title: "1. 市场进入与商务拓展",
     service1Desc: "帮助企业在区域及国际市场建立市场存在并开拓商业机会。",
     service1Bullets: [
       "市场机会评估",
@@ -275,7 +275,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service1Footer: "业务开发",
 
-    service2Title: "2. Trade & Supply Chain Solutions",
+    service2Title: "2. 贸易与供应链解决方案",
     service2Desc: "通过协同采购、物流与分销支持，将中国供应资源与区域市场需求相连接。",
     service2Bullets: [
       "供应商资源开发",
@@ -287,7 +287,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service2Footer: "供应链网络",
 
-    service3Title: "3. Project & Living Solutions",
+    service3Title: "3. 项目与生活方式解决方案",
     service3Desc: "通过集成式的项目供应解决方案，支持酒店、住宅、办公及商业项目的建设与交付。",
     service3Bullets: [
       "空间软装解决方案 (FF&E Solutions)",
@@ -299,7 +299,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service3Footer: "探索 COOLHOME GCC →",
 
-    service4Title: "4. Digital & AI Solutions",
+    service4Title: "4. 数字化与 AI 解决方案",
     service4Desc: "通过自主研发的 AI 赋能工作流系统，帮助企业提升销售业绩、优化日常运营并增强执行管理。",
     service4Bullets: [
       "AI 销售线索管理",
@@ -357,7 +357,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     contactWhatsApp: "WhatsApp 在岸直连",
     contactEmailUs: "咨询邮箱 (Email)",
     contactCallUs: "迪拜总部电话 (Dubai HQ)",
-    contactOffice: "迪拜管理总部物理定位"
+    contactOffice: "迪拜总部地址"
   },
   AR: {
     navHome: "الرئيسية",

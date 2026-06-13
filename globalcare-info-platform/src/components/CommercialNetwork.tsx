@@ -216,7 +216,11 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
     AR: "خطوط العمل الإقليمية"
   }[lang];
 
-  const titleText = "COMMERCIAL NETWORK";
+  const titleText = {
+    EN: "COMMERCIAL NETWORK",
+    ZH: "全球商业网络",
+    AR: "COMMERCIAL NETWORK"
+  }[lang];
 
   const subtitleText = {
     EN: "A regional business network built through local partnerships, commercial resources and years of market execution across regional and global markets.",
@@ -366,7 +370,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
             <div className="text-left flex flex-col justify-between h-full" dir={isRtl ? "rtl" : "ltr"}>
               <div>
                 {/* Selected Country Flag Icon watermark & title */}
-                <span className="text-[10px] font-mono text-brand-gold-400 uppercase tracking-widest bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold mb-4 inline-block">
+                <span className={`text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold mb-4 inline-block ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
                   {lang === "EN" ? activeCountry.nameEN : lang === "ZH" ? activeCountry.nameZH : activeCountry.nameAR}
                 </span>
 

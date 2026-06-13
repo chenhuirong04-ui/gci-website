@@ -202,15 +202,15 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
       <div className="max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Upper Title Block */}
-        <div id="about-gci-header" className="text-center max-w-3xl mx-auto mb-16">
-          <div className="flex items-center justify-center gap-2 mb-4">
+        <div id="about-gci-header" className="text-center max-w-3xl mx-auto mb-10">
+          <div className="flex items-center justify-center gap-2 mb-3">
             <span className="h-[1px] w-6 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">
               {pack.whoWeAreLabel}
             </span>
             <span className="h-[1px] w-6 bg-brand-gold-500" />
           </div>
-          <h2 id="whoweare-title" className="text-3xl md:text-5xl font-display font-semibold text-brand-gold-100 tracking-wide leading-tight whitespace-pre-line">
+          <h2 id="whoweare-title" className={`font-display font-semibold text-brand-gold-100 tracking-wide leading-tight whitespace-pre-line ${lang === "ZH" ? "text-2xl md:text-3xl" : "text-3xl md:text-5xl"}`}>
             {pack.whoWeAreTitle}
           </h2>
         </div>
