@@ -2,6 +2,23 @@ import React, { useState, useEffect } from "react";
 import { LanguagePack } from "../data/corporateData";
 import { Globe, Video, FileText, Compass, AlertCircle, VideoOff, Layers } from "lucide-react";
 
+// Vite production-safe imports — /src/assets/ paths break after build hashing
+import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268.png";
+import imgSolarRiyadh from "../assets/images/case_solar_riyadh_1780768308627.png";
+import imgMedicalMombasa from "../assets/images/case_medical_mombasa_1780768328334.png";
+import imgPortShenzhen from "../assets/images/case_port_shenzhen_1780768345006.png";
+
+const CN_IMG_MAP: Record<string, string> = {
+  "/src/assets/images/case_robotics_dubai_1780768291268.png": imgRoboticsDubai,
+  "/src/assets/images/case_solar_riyadh_1780768308627.png": imgSolarRiyadh,
+  "/src/assets/images/case_medical_mombasa_1780768328334.png": imgMedicalMombasa,
+  "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
+};
+function resolveCnImg(path: string | null): string | null {
+  if (!path) return null;
+  return CN_IMG_MAP[path] ?? path;
+}
+
 interface NotionOverlay {
   key: string;
   youtubeUrl: string | null;
@@ -202,7 +219,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   const activeCountry = COUNTRIES_DATA.find((c) => c.key === selectedKey) || COUNTRIES_DATA[0];
   const overlay = overlays[selectedKey];
   const youtubeId = overlay?.youtubeUrl ? getYouTubeId(overlay.youtubeUrl) : null;
-  const activeImage = overlay?.coverImage || activeCountry.image;
+  const activeImage = resolveCnImg(overlay?.coverImage || activeCountry.image);
   const activeDescEN = overlay?.descEN || activeCountry.descEN;
   const activeDescZH = overlay?.descZH || activeCountry.descZH;
   const activeDescAR = overlay?.descAR || activeCountry.descAR;
@@ -318,22 +335,33 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                 />
               ) : activeImage ? (
                 <>
-                  {/* High Quality On-ground Real Evidence Image representation */}
+                  {/* Cover image — alt="" prevents broken-image alt text from overlapping badges */}
                   <img
                     src={activeImage}
-                    alt={{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
-                    referrerPolicy="no-referrer"
+                    alt=""
                     className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 pointer-events-none select-none"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#030611]/90 via-[#030611]/30 to-transparent pointer-events-none" />
 
-                  {/* Visual Indicator of a stream/evidence */}
-                  <div className={`absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#030611]/80 backdrop-blur px-3 py-1.5 rounded-full border border-brand-gold-500/20 text-[10px] font-mono font-bold text-brand-gold-400 uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>{liveFeedText}</span>
+                  {/* TOP-LEFT: Country name badge — separate from live feed */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className={`inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full ${lang === "EN" ? "tracking-wide uppercase" : "tracking-normal"}`}>
+                      <Globe className="w-3 h-3 shrink-0 text-brand-gold-400" />
+                      {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                    </span>
                   </div>
 
-                  <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                  {/* BOTTOM-LEFT: Live feed status badge — never overlaps country name */}
+                  <div className="absolute bottom-4 left-4 z-20">
+                    <div className={`inline-flex items-center gap-2 bg-[#030611]/80 backdrop-blur-sm border border-brand-gold-500/20 text-brand-gold-400 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                      <span>{liveFeedText}</span>
+                    </div>
+                  </div>
+
+                  {/* Center play icon hint */}
+                  <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                     <div className="w-14 h-14 rounded-full bg-brand-gold-500/10 border border-brand-gold-500/30 flex items-center justify-center backdrop-blur text-brand-gold-400 group-hover:scale-110 group-hover:bg-brand-gold-500/15 group-hover:border-brand-gold-500/50 transition-all duration-300">
                       <Video className="w-6 h-6 stroke-[1.8]" />
                     </div>
