@@ -15,8 +15,31 @@ const IMG_MAP: Record<string, string> = {
   "/src/assets/images/gci_global_hub_connection_1780768265492.png": imgGlobalHub,
   "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
 };
+
+// Country → local warm-gold image (overrides any external URL from Notion)
+const COUNTRY_COVER_MAP: Record<string, string> = {
+  "Saudi Arabia":  imgSolarRiyadh,
+  "UAE / Dubai":   imgRoboticsDubai,
+  "Kenya":         imgMedicalMombasa,
+  "Tanzania":      imgMedicalMombasa,
+  "Nigeria":       imgMedicalMombasa,
+  "Morocco":       imgGlobalHub,
+  "Qatar":         imgSolarRiyadh,
+  "Bahrain":       imgRoboticsDubai,
+  "Oman":          imgRoboticsDubai,
+  "Kuwait":        imgSolarRiyadh,
+  "China":         imgPortShenzhen,
+  "Brazil":        imgPortShenzhen,
+  "Global":        imgGlobalHub,
+};
+
 function resolveImg(path: string): string {
   return IMG_MAP[path] ?? path;
+}
+
+function resolveArticleImg(coverImage: string, countryEN: string): string {
+  // Always prefer country-mapped local image for visual consistency
+  return COUNTRY_COVER_MAP[countryEN] ?? resolveImg(coverImage);
 }
 
 interface RegulatoryUpdatesProps {
@@ -246,8 +269,26 @@ const ARTICLES_DATA: Article[] = [
   }
 ];
 
+// All intelligence markets — order matters for display
+const INTELLIGENCE_MARKETS = [
+  { key: "UAE / Dubai",   labelEN: "UAE / Dubai",    labelZH: "阿联酋·迪拜",  labelAR: "الإمارات / دبي",    region: "GCC" },
+  { key: "Saudi Arabia",  labelEN: "Saudi Arabia",   labelZH: "沙特阿拉伯",   labelAR: "المملكة العربية السعودية", region: "GCC" },
+  { key: "Qatar",         labelEN: "Qatar",          labelZH: "卡塔尔",       labelAR: "قطر",               region: "GCC" },
+  { key: "Bahrain",       labelEN: "Bahrain",        labelZH: "巴林",         labelAR: "البحرين",           region: "GCC" },
+  { key: "Oman",          labelEN: "Oman",           labelZH: "阿曼",         labelAR: "سلطنة عُمان",       region: "GCC" },
+  { key: "Kuwait",        labelEN: "Kuwait",         labelZH: "科威特",       labelAR: "الكويت",            region: "GCC" },
+  { key: "Kenya",         labelEN: "Kenya",          labelZH: "肯尼亚",       labelAR: "كينيا",             region: "Africa" },
+  { key: "Tanzania",      labelEN: "Tanzania",       labelZH: "坦桑尼亚",     labelAR: "تنزانيا",           region: "Africa" },
+  { key: "Nigeria",       labelEN: "Nigeria",        labelZH: "尼日利亚",     labelAR: "نيجيريا",           region: "Africa" },
+  { key: "Morocco",       labelEN: "Morocco",        labelZH: "摩洛哥",       labelAR: "المغرب",            region: "Africa" },
+  { key: "China",         labelEN: "China",          labelZH: "中国",         labelAR: "الصين",             region: "Asia" },
+  { key: "Brazil",        labelEN: "Brazil",         labelZH: "巴西",         labelAR: "البرازيل",          region: "LatAm" },
+  { key: "Global",        labelEN: "Global",         labelZH: "全球",         labelAR: "عالمي",             region: "Global" },
+];
+
 export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   const [isAllView, setIsAllView] = useState<boolean>(false);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<"all" | "regulatory" | "market" | "trade" | "gci">("all");
   const [articles, setArticles] = useState<Article[]>(ARTICLES_DATA);
   const isRtl = lang === "AR";
@@ -347,12 +388,18 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             {isAllView && (
               <button
                 onClick={() => {
-                  setIsAllView(false);
+                  if (selectedCountry) {
+                    setSelectedCountry(null);
+                  } else {
+                    setIsAllView(false);
+                  }
                   window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
                 }}
                 className="text-xs sm:text-sm font-sans font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors flex items-center gap-2 cursor-pointer self-start"
               >
-                {backToFeaturedText}
+                {selectedCountry
+                  ? (lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ الأسواق" : "← All Markets")
+                  : backToFeaturedText}
               </button>
             )}
           </div>
@@ -374,7 +421,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 {/* Visual Cover Image — fixed h-52, fallback placeholder if broken */}
                 <div className="relative w-full h-52 shrink-0 overflow-hidden border-b border-brand-gold-500/10 bg-[#0a1428]">
                   <img
-                    src={resolveImg(leadArticle.coverImage)}
+                    src={resolveArticleImg(leadArticle.coverImage, leadArticle.countryEN)}
                     alt=""
                     className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 select-none pointer-events-none"
                     onError={(e) => { e.currentTarget.style.display = "none"; }}
@@ -435,7 +482,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                       {/* Image strip at top of card — fixed h-28 */}
                       <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 border border-brand-gold-500/10 bg-[#0a1428] shrink-0">
                         <img
-                          src={resolveImg(article.coverImage)}
+                          src={resolveArticleImg(article.coverImage, article.countryEN)}
                           alt=""
                           className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 select-none pointer-events-none"
                           onError={(e) => { e.currentTarget.style.display = "none"; }}
@@ -487,7 +534,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     {/* Visual Card Image — fixed h-40, bottom label overlay */}
                     <div className="relative w-full h-40 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
                       <img
-                        src={resolveImg(article.coverImage)}
+                        src={resolveArticleImg(article.coverImage, article.countryEN)}
                         alt=""
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 select-none pointer-events-none"
                         onError={(e) => { e.currentTarget.style.display = "none"; }}
@@ -541,129 +588,210 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
           </div>
         )}
 
-        {/* MODE 2: COMPLETE INSIGHTS DIRECTORY LIST (all articles, category filtering tabs) */}
+        {/* MODE 2: COUNTRY GRID → ARTICLE LIST (two-level navigation) */}
         {isAllView && (
           <div>
-            {/* Tab Filter Block Selector */}
-            <div className="mb-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 bg-[#050a15]/80 border border-brand-gold-500/10 p-2.5 rounded-2xl backdrop-blur">
-                {(["all", "regulatory", "market", "trade", "gci"] as const).map((cat) => {
-                  const active = activeCategory === cat;
-                  const lbl = categoryLabels[cat][lang];
-                  
-                  const getIcon = () => {
-                    if (cat === "all") return <Layers className="w-3.5 h-3.5" />;
-                    if (cat === "regulatory") return <BookOpen className="w-3.5 h-3.5" />;
-                    if (cat === "market") return <Newspaper className="w-3.5 h-3.5" />;
-                    if (cat === "trade") return <FolderSync className="w-3.5 h-3.5" />;
-                    return <ShieldAlert className="w-3.5 h-3.5" />;
-                  };
 
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`px-4 py-3 rounded-xl text-xs font-sans font-semibold ${lang === "EN" ? "tracking-wider" : "tracking-normal"} transition-all duration-300 cursor-pointer active:scale-98 flex items-center justify-between gap-3 border ${
-                        active 
-                          ? "bg-[#DFBB6B] text-[#030611] border-[#C59B3F] font-bold shadow-md shadow-brand-gold-500/10" 
-                          : "bg-[#030611]/80 text-brand-gold-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-[#f9f5eb]"
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        {getIcon()}
-                        <span>{lbl}</span>
-                      </span>
-                      <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${active ? "bg-[#030611]/10 font-bold" : "bg-brand-gold-500/5 text-brand-gold-400"}`}>
-                        {cat === "all" ? articles.length : articles.filter(a => a.category === cat).length}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+            {/* ── LEVEL 1: Country Grid (no country selected) ── */}
+            {!selectedCountry && (
+              <div>
+                <p className="text-xs font-mono text-brand-gold-400/60 uppercase tracking-widest mb-8">
+                  {lang === "ZH" ? "选择市场，查看该国最新情报" : lang === "AR" ? "اختر السوق لعرض أحدث التقارير" : "Select a market to browse its intelligence reports"}
+                </p>
 
-              {/* Subcategories indicators to preserve the high industrial feeling */}
-              {activeCategory !== "all" && (
-                <div className="flex flex-wrap items-center gap-2 mt-4 bg-[#050a15]/30 p-3 rounded-xl border border-brand-gold-500/5">
-                  <span className={`text-[10px] font-mono font-bold text-brand-gold-400 uppercase flex items-center gap-1.5 mr-2 ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
-                    <Sparkles className="w-3 h-3 text-brand-gold-500" />
-                    <span>{lang === "EN" ? "Covered Dimensions" : lang === "ZH" ? "覆盖业务维度" : "النطاقات المغطاة"}:</span>
-                  </span>
-                  {CATEGORIES[activeCategory].subcategories[lang].map((sub, idx) => (
-                    <span
-                      key={idx}
-                      className="text-[10px] sm:text-xs font-sans text-brand-gold-200/90 bg-[#030611]/60 border border-brand-gold-500/12 rounded-lg px-2.5 py-1"
-                    >
-                      {sub}
-                    </span>
-                  ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+                  {INTELLIGENCE_MARKETS.map((market) => {
+                    const countArticles = articles.filter(a => a.countryEN === market.key).length;
+                    const label = lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : market.labelEN;
+                    const coverImg = COUNTRY_COVER_MAP[market.key] ?? imgGlobalHub;
+
+                    return (
+                      <button
+                        key={market.key}
+                        onClick={() => {
+                          setSelectedCountry(market.key);
+                          setActiveCategory("all");
+                          window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
+                        }}
+                        className="group relative overflow-hidden rounded-2xl border border-brand-gold-500/15 hover:border-brand-gold-500/50 bg-[#070e20]/60 hover:bg-[#0c1834]/80 transition-all duration-300 cursor-pointer text-left shadow-xl hover:shadow-brand-gold-500/10 active:scale-[0.98]"
+                      >
+                        {/* Country image */}
+                        <div className="relative w-full h-32 overflow-hidden">
+                          <img
+                            src={coverImg}
+                            alt=""
+                            className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 select-none pointer-events-none"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#070e20] via-[#070e20]/40 to-transparent pointer-events-none" />
+                          {/* Region badge */}
+                          <span className="absolute top-2 right-2 text-[9px] font-mono bg-[#030611]/80 backdrop-blur text-brand-gold-400 border border-brand-gold-500/20 px-2 py-0.5 rounded">
+                            {market.region}
+                          </span>
+                        </div>
+
+                        {/* Country name + article count */}
+                        <div className="p-4">
+                          <h3 className="text-sm font-serif font-bold text-[#f9f5eb] group-hover:text-white transition-colors leading-snug mb-1">
+                            {label}
+                          </h3>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono text-brand-gold-400/70">
+                              {countArticles > 0
+                                ? `${countArticles} ${lang === "ZH" ? "篇情报" : lang === "AR" ? "تقرير" : "reports"}`
+                                : lang === "ZH" ? "即将更新" : lang === "AR" ? "قريباً" : "Coming soon"}
+                            </span>
+                            <ArrowRight className="w-3.5 h-3.5 text-brand-gold-500/50 group-hover:text-brand-gold-400 group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
-            </div>
 
-            {/* Grid Layout of ALL Filtered Articles (Visual focus is Card Header Image + Title) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mb-12">
-              {filteredArticles.map((article) => {
-                const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
-                const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
-                const summary = { EN: article.summaryEN, ZH: article.summaryZH, AR: article.summaryAR }[lang];
-
-                return (
-                  <div
-                    key={article.id}
-                    className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/12 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
+                {/* Back to Featured */}
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => {
+                      setIsAllView(false);
+                      window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
+                    }}
+                    className="px-6 py-3.5 bg-[#030611]/80 hover:bg-[#070e20] border border-brand-gold-500/30 text-brand-gold-300 hover:text-brand-gold-200 font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all duration-300 cursor-pointer flex items-center gap-2 active:scale-98"
                   >
-                    {/* Card Header Cover Image — fixed h-44, category badge at bottom */}
-                    <div className="relative w-full h-44 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
-                      <img
-                        src={resolveImg(article.coverImage)}
-                        alt=""
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 select-none pointer-events-none"
-                        onError={(e) => { e.currentTarget.style.display = "none"; }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
-                      <span className="absolute bottom-2 left-2 z-10 text-[9px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-2 py-1 rounded">
-                        {categoryLabels[article.category][lang]}
-                      </span>
-                    </div>
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>{backToFeaturedText}</span>
+                  </button>
+                </div>
+              </div>
+            )}
 
-                    <div>
-                      {/* Meta line */}
-                      <div className="flex items-center justify-between gap-2 text-[9px] font-mono text-slate-500 mb-2.5">
-                        <span className="text-brand-gold-400 font-semibold">{country}</span>
-                        <span>{article.date}</span>
-                      </div>
+            {/* ── LEVEL 2: Articles for selected country ── */}
+            {selectedCountry && (() => {
+              const market = INTELLIGENCE_MARKETS.find(m => m.key === selectedCountry)!;
+              const countryLabel = lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : market.labelEN;
+              const countryArticles = articles.filter(a => a.countryEN === selectedCountry);
+              const filteredByCategory = activeCategory === "all"
+                ? countryArticles
+                : countryArticles.filter(a => a.category === activeCategory);
 
-                      <h4 className="text-base font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors leading-snug mb-3 break-words">
-                        {title}
-                      </h4>
+              return (
+                <div>
+                  {/* Breadcrumb */}
+                  <div className="flex items-center gap-2 text-xs font-mono text-brand-gold-400/60 mb-6">
+                    <button
+                      onClick={() => {
+                        setSelectedCountry(null);
+                        window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
+                      }}
+                      className="hover:text-brand-gold-300 transition-colors cursor-pointer"
+                    >
+                      {lang === "ZH" ? "全部市场" : lang === "AR" ? "كل الأسواق" : "All Markets"}
+                    </button>
+                    <span>/</span>
+                    <span className="text-brand-gold-300 font-bold">{countryLabel}</span>
+                    <span className="ml-2 bg-brand-gold-500/10 border border-brand-gold-500/20 text-brand-gold-400 px-2 py-0.5 rounded text-[9px]">
+                      {countryArticles.length} {lang === "ZH" ? "篇" : lang === "AR" ? "تقرير" : "reports"}
+                    </span>
+                  </div>
 
-                      <p className="text-xs sm:text-sm text-brand-gold-200/60 font-sans font-light leading-relaxed mb-4 line-clamp-3">
-                        {summary}
-                      </p>
-                    </div>
-
-                    <div className="border-t border-brand-gold-500/10 pt-3 flex items-center justify-between text-xs font-semibold text-brand-gold-400 group-hover:text-brand-gold-300 mt-auto">
-                      <span>{readMoreText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  {/* Category Tab Filter */}
+                  <div className="mb-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 bg-[#050a15]/80 border border-brand-gold-500/10 p-2 rounded-2xl backdrop-blur">
+                      {(["all", "regulatory", "market", "trade", "gci"] as const).map((cat) => {
+                        const active = activeCategory === cat;
+                        const lbl = categoryLabels[cat][lang];
+                        const count = cat === "all" ? countryArticles.length : countryArticles.filter(a => a.category === cat).length;
+                        const getIcon = () => {
+                          if (cat === "all") return <Layers className="w-3.5 h-3.5" />;
+                          if (cat === "regulatory") return <BookOpen className="w-3.5 h-3.5" />;
+                          if (cat === "market") return <Newspaper className="w-3.5 h-3.5" />;
+                          if (cat === "trade") return <FolderSync className="w-3.5 h-3.5" />;
+                          return <ShieldAlert className="w-3.5 h-3.5" />;
+                        };
+                        return (
+                          <button
+                            key={cat}
+                            onClick={() => setActiveCategory(cat)}
+                            className={`px-3 py-2.5 rounded-xl text-xs font-sans font-semibold transition-all duration-300 cursor-pointer flex items-center justify-between gap-2 border ${
+                              active
+                                ? "bg-[#DFBB6B] text-[#030611] border-[#C59B3F] font-bold shadow-md"
+                                : "bg-[#030611]/80 text-brand-gold-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-[#f9f5eb]"
+                            }`}
+                          >
+                            <span className="flex items-center gap-1.5">{getIcon()}<span>{lbl}</span></span>
+                            <span className={`text-[9px] font-mono px-1 py-0.5 rounded ${active ? "bg-[#030611]/10" : "bg-brand-gold-500/5 text-brand-gold-400"}`}>{count}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
-                );
-              })}
-            </div>
 
-            {/* Bottom Navigation Return Path link */}
-            <div className="flex justify-center mt-12">
-              <button
-                onClick={() => {
-                  setIsAllView(false);
-                  window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
-                }}
-                className="px-6 py-3.5 bg-[#030611]/80 hover:bg-[#070e20] border border-brand-gold-500/30 text-brand-gold-300 hover:text-brand-gold-200 font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all duration-300 cursor-pointer flex items-center gap-2 active:scale-98"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>{backToFeaturedText}</span>
-              </button>
-            </div>
+                  {/* Article Grid */}
+                  {filteredByCategory.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mb-12">
+                      {filteredByCategory.map((article) => {
+                        const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
+                        const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
+                        const summary = { EN: article.summaryEN, ZH: article.summaryZH, AR: article.summaryAR }[lang];
+                        return (
+                          <div
+                            key={article.id}
+                            className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/12 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
+                          >
+                            <div className="relative w-full h-44 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
+                              <img
+                                src={resolveArticleImg(article.coverImage, article.countryEN)}
+                                alt=""
+                                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 select-none pointer-events-none"
+                                onError={(e) => { e.currentTarget.style.display = "none"; }}
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
+                              <span className="absolute bottom-2 left-2 z-10 text-[9px] font-mono font-bold bg-[#C59B3F] text-[#030611] px-2 py-1 rounded">
+                                {categoryLabels[article.category][lang]}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="flex items-center justify-between gap-2 text-[9px] font-mono text-slate-500 mb-2.5">
+                                <span className="text-brand-gold-400 font-semibold">{country}</span>
+                                <span>{article.date}</span>
+                              </div>
+                              <h4 className="text-base font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors leading-snug mb-3 break-words">
+                                {title}
+                              </h4>
+                              <p className="text-xs sm:text-sm text-brand-gold-200/60 font-sans font-light leading-relaxed mb-4 line-clamp-3">
+                                {summary}
+                              </p>
+                            </div>
+                            <div className="border-t border-brand-gold-500/10 pt-3 flex items-center justify-between text-xs font-semibold text-brand-gold-400 group-hover:text-brand-gold-300 mt-auto">
+                              <span>{readMoreText}</span>
+                              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="text-center py-20 text-brand-gold-400/40 font-mono text-sm">
+                      {lang === "ZH" ? "该类别暂无文章" : lang === "AR" ? "لا توجد تقارير في هذه الفئة" : "No reports in this category yet"}
+                    </div>
+                  )}
+
+                  {/* Back to country grid */}
+                  <div className="flex justify-center mt-8">
+                    <button
+                      onClick={() => {
+                        setSelectedCountry(null);
+                        window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
+                      }}
+                      className="px-6 py-3.5 bg-[#030611]/80 hover:bg-[#070e20] border border-brand-gold-500/30 text-brand-gold-300 hover:text-brand-gold-200 font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all duration-300 cursor-pointer flex items-center gap-2 active:scale-98"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      <span>{lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ العودة إلى الأسواق" : "← Back to Markets"}</span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
+
           </div>
         )}
 
