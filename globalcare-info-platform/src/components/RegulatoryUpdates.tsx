@@ -21,14 +21,14 @@ const COUNTRY_GRID_IMG: Record<string, string> = {
   "UAE / Dubai":  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",  // Dubai Marina aerial
   "Saudi Arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80",  // Riyadh KAFD skyline
   "Qatar":        "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",      // Doha skyline
-  "Bahrain":      "https://images.unsplash.com/photo-1611095973362-88e8f57ea1b2?w=600&q=80",   // Manama financial district
-  "Oman":         "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80",   // Muscat harbour / Oman coast
-  "Kuwait":       "https://images.unsplash.com/photo-1580834341580-8c17a3a630ca?w=600&q=80",   // Kuwait towers
+  "Bahrain":      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=80",   // Bahrain/Gulf modern architecture
+  "Oman":         "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",      // Muscat Sultan Qaboos mosque
+  "Kuwait":       "https://images.unsplash.com/photo-1563201515-adbe35c669c5?w=600&q=80",      // Kuwait City modern skyline
   "Kenya":        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80",      // Nairobi skyline
-  "Tanzania":     "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80",   // East Africa coast
-  "Nigeria":      "https://images.unsplash.com/photo-1618505985581-cf32b6fc23c3?w=600&q=80",   // Lagos business district
-  "Morocco":      "https://images.unsplash.com/photo-1539020140153-e479b8f22986?w=600&q=80",   // Casablanca / Morocco
-  "China":        "https://images.unsplash.com/photo-1547981986-1de3f2e3fcf3?w=600&q=80",      // Shanghai port / Pudong
+  "Tanzania":     "https://images.unsplash.com/photo-1615209853186-e4bd66602508?w=600&q=80",   // Dar es Salaam port / East Africa trade
+  "Nigeria":      "https://images.unsplash.com/photo-1583416750470-965b2707b355?w=600&q=80",   // Lagos business district
+  "Morocco":      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",      // Casablanca / Morocco cityscape
+  "China":        "https://images.unsplash.com/photo-1474990349564-ca4de5c8bb0f?w=600&q=80",   // Shanghai Pudong / port
   "Brazil":       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80",   // Rio de Janeiro / Santos port
   "Global":       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",   // Earth from space
 };
@@ -638,6 +638,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                             src={coverImg}
                             alt=""
                             className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 select-none pointer-events-none"
+                            onError={(e) => { e.currentTarget.src = COUNTRY_COVER_MAP[market.key] ?? imgGlobalHub; }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#070e20] via-[#070e20]/40 to-transparent pointer-events-none" />
                           {/* Region badge */}
