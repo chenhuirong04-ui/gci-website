@@ -16,6 +16,23 @@ const IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
 };
 
+// Country → unique Unsplash image for the country grid (Level 1 — each country must be distinct)
+const COUNTRY_GRID_IMG: Record<string, string> = {
+  "UAE / Dubai":  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",  // Dubai Marina aerial
+  "Saudi Arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80",  // Riyadh KAFD skyline
+  "Qatar":        "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",      // Doha skyline
+  "Bahrain":      "https://images.unsplash.com/photo-1611095973362-88e8f57ea1b2?w=600&q=80",   // Manama financial district
+  "Oman":         "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80",   // Muscat harbour / Oman coast
+  "Kuwait":       "https://images.unsplash.com/photo-1580834341580-8c17a3a630ca?w=600&q=80",   // Kuwait towers
+  "Kenya":        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80",      // Nairobi skyline
+  "Tanzania":     "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80",   // East Africa coast
+  "Nigeria":      "https://images.unsplash.com/photo-1618505985581-cf32b6fc23c3?w=600&q=80",   // Lagos business district
+  "Morocco":      "https://images.unsplash.com/photo-1539020140153-e479b8f22986?w=600&q=80",   // Casablanca / Morocco
+  "China":        "https://images.unsplash.com/photo-1547981986-1de3f2e3fcf3?w=600&q=80",      // Shanghai port / Pudong
+  "Brazil":       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80",   // Rio de Janeiro / Santos port
+  "Global":       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",   // Earth from space
+};
+
 // Country → local warm-gold image (overrides any external URL from Notion)
 const COUNTRY_COVER_MAP: Record<string, string> = {
   "Saudi Arabia":  imgSolarRiyadh,
@@ -603,7 +620,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   {INTELLIGENCE_MARKETS.map((market) => {
                     const countArticles = articles.filter(a => a.countryEN === market.key).length;
                     const label = lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : market.labelEN;
-                    const coverImg = COUNTRY_COVER_MAP[market.key] ?? imgGlobalHub;
+                    const coverImg = COUNTRY_GRID_IMG[market.key] ?? COUNTRY_COVER_MAP[market.key] ?? imgGlobalHub;
 
                     return (
                       <button
