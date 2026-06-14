@@ -256,7 +256,11 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
     fetch("/api/insights")
       .then((r) => r.json())
       .then((data: Article[]) => {
-        if (Array.isArray(data) && data.length > 0) setArticles(data);
+        if (Array.isArray(data) && data.length > 0) {
+          const notionIds = new Set(data.map((a: Article) => a.id));
+          const fallback = ARTICLES_DATA.filter(a => !notionIds.has(a.id));
+          setArticles([...data, ...fallback]);
+        }
       })
       .catch(() => {});
   }, []);

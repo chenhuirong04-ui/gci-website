@@ -275,8 +275,8 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
           </div>
         </div>
 
-        {/* Section 2: Where We Operate (业务区域) - Compact Dashboard & Network Flow (Replacing old tall list) */}
-        <div id="about-gci-operate">
+        {/* Section 2: Where We Operate — removed (content covered by Hero map + Commercial Network) */}
+        <div id="about-gci-operate" className="hidden">
           <div className="flex items-center gap-3 mb-8 justify-center md:justify-start">
             <div className="p-2 bg-brand-gold-500/5 rounded-lg border border-brand-gold-500/10">
               <Landmark className="w-5 h-5 text-brand-gold-400" />
