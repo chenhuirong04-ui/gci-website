@@ -23,14 +23,32 @@ export default function Hero({ lang, pack }: HeroProps) {
       curveY: 265, 
       info: lang === "ZH" ? "利雅得在岸运营办公室：直接跑腿承办在岸商用牌照、本地实力批发商对接及通港代码登记。" : lang === "AR" ? "مكتب الرياض التشغيلي لتسليم التراخيص المحلية ومطابقة المنتجات بجمعيات الشراء." : "Riyadh direct commercial hub facilitating in-country municipal setups, dealer clearance, and large-scale wholesale procurement contracts." 
     },
-    { 
-      name: "Bahrain", 
-      x: 295, 
-      y: 215, 
-      label: lang === "ZH" ? "巴林" : lang === "AR" ? "البحرين" : "Bahrain", 
-      curveX: 332, 
-      curveY: 232, 
-      info: lang === "ZH" ? "巴林关税及前置物流分拨节点：缩短高能重工机械与绿色基配在波斯湾海港的滞港盘存时间。" : lang === "AR" ? "منفذ البحرين لتسهيل التخليص واستخلاص الشهادات جمركياً لقطاع التوريد." : "Customs classification clearing gate. Minimizes transit holds for heavy machinery and solar parts shipping into upper GCC regions." 
+    {
+      name: "Qatar",
+      x: 275,
+      y: 248,
+      label: lang === "ZH" ? "卡塔尔" : lang === "AR" ? "قطر" : "Qatar",
+      curveX: 320,
+      curveY: 248,
+      info: lang === "ZH" ? "卡塔尔核心情报市场：纳入 GCI Intelligence Engine 每日政策监控，监测投资政策、自贸区及基础设施法规动态。" : lang === "AR" ? "سوق قطر الأساسي للذكاء: مشمول بالرصد اليومي لمحرك ذكاء GCI لسياسات الاستثمار والمناطق الحرة." : "Qatar Core Intelligence Market: monitored daily under GCI Intelligence Engine for investment policy, free zones and infrastructure regulations."
+    },
+    {
+      name: "Kuwait",
+      x: 260,
+      y: 195,
+      label: lang === "ZH" ? "科威特" : lang === "AR" ? "الكويت" : "Kuwait",
+      curveX: 315,
+      curveY: 220,
+      info: lang === "ZH" ? "科威特核心情报市场：纳入 GCI Intelligence Engine 每日政策监控，监测贸易法规、关税及进口政策变化。" : lang === "AR" ? "سوق الكويت الأساسي للذكاء: رصد يومي لسياسات التجارة والجمارك والاستيراد عبر محرك ذكاء GCI." : "Kuwait Core Intelligence Market: monitored daily under GCI Intelligence Engine for trade regulations, customs and import policy changes."
+    },
+    {
+      name: "Bahrain",
+      x: 295,
+      y: 215,
+      label: lang === "ZH" ? "巴林" : lang === "AR" ? "البحرين" : "Bahrain",
+      curveX: 332,
+      curveY: 232,
+      info: lang === "ZH" ? "巴林关税及前置物流分拨节点：缩短高能重工机械与绿色基配在波斯湾海港的滞港盘存时间。" : lang === "AR" ? "منفذ البحرين لتسهيل التخليص واستخلاص الشهادات جمركياً لقطاع التوريد." : "Customs classification clearing gate. Minimizes transit holds for heavy machinery and solar parts shipping into upper GCC regions."
     },
     { 
       name: "Oman", 
@@ -41,14 +59,32 @@ export default function Hero({ lang, pack }: HeroProps) {
       curveY: 285, 
       info: lang === "ZH" ? "阿曼苏哈尔及马斯喀特节点：配合 COOLHOME GCC 调配阿曼湾海运集散，缩短印大洋过境物料放行周期。" : lang === "AR" ? "منفذ عُمان اللوجستي لربط دفعات التوريد المائي عبر بحر العرب والخليج." : "Oman Muscat/Sohar node coordinates maritime feeds with COOLHOME GCC, streamlining transit holds across Indian Ocean channels." 
     },
-    { 
-      name: "Kenya", 
-      x: 290, 
-      y: 410, 
-      label: lang === "ZH" ? "肯尼亚 / 蒙巴萨" : lang === "AR" ? "كينيا" : "Kenya", 
-      curveX: 330, 
-      curveY: 330, 
-      info: lang === "ZH" ? "东非出海干线：连接蒙巴萨保税港口与内陆多式联运大件运输，服务东非国家重点厂房和基配交付。" : lang === "AR" ? "بوابة شرق إفريقيا عبر مومباسا ونيروبي لربط السلع الصينية بالوكلاء والمتاجر." : "East African port terminal connecting Chinese industrial tools and machinery directly to local retailers and rail logistics lines in East Africa." 
+    {
+      name: "Tanzania",
+      x: 310,
+      y: 435,
+      label: lang === "ZH" ? "坦桑尼亚" : lang === "AR" ? "تنزانيا" : "Tanzania",
+      curveX: 340,
+      curveY: 360,
+      info: lang === "ZH" ? "坦桑尼亚非洲成长情报市场：纳入 GCI Intelligence Engine 每日监控，覆盖港口政策、贸易法规及进口关税变化。" : lang === "AR" ? "سوق تنزانيا النامي في أفريقيا: رصد يومي لسياسات الموانئ والتجارة والجمارك عبر محرك ذكاء GCI." : "Tanzania Africa Growth Intelligence Market: monitored daily for port policy, trade regulations and import tariff changes."
+    },
+    {
+      name: "Nigeria",
+      x: 130,
+      y: 340,
+      label: lang === "ZH" ? "尼日利亚" : lang === "AR" ? "نيجيريا" : "Nigeria",
+      curveX: 230,
+      curveY: 310,
+      info: lang === "ZH" ? "尼日利亚西非成长情报市场：西非最大经济体，纳入 GCI Intelligence Engine 每日政策及贸易监控。" : lang === "AR" ? "سوق نيجيريا النامي في غرب أفريقيا: أكبر اقتصاد في غرب أفريقيا، مشمول بالرصد اليومي لمحرك ذكاء GCI." : "Nigeria West Africa Growth Intelligence Market: largest West African economy, monitored daily under GCI Intelligence Engine."
+    },
+    {
+      name: "Kenya",
+      x: 290,
+      y: 410,
+      label: lang === "ZH" ? "肯尼亚 / 蒙巴萨" : lang === "AR" ? "كينيا" : "Kenya",
+      curveX: 330,
+      curveY: 330,
+      info: lang === "ZH" ? "东非出海干线：连接蒙巴萨保税港口与内陆多式联运大件运输，服务东非国家重点厂房和基配交付。" : lang === "AR" ? "بوابة شرق إفريقيا عبر مومباسا ونيروبي لربط السلع الصينية بالوكلاء والمتاجر." : "East African port terminal connecting Chinese industrial tools and machinery directly to local retailers and rail logistics lines in East Africa."
     },
     { 
       name: "China", 
@@ -66,7 +102,7 @@ export default function Hero({ lang, pack }: HeroProps) {
       label: lang === "ZH" ? "越南 / 拼箱转船" : lang === "AR" ? "فيتنام" : "Vietnam", 
       curveX: 495, 
       curveY: 230, 
-      info: lang === "ZH" ? "东南亚中专集拼商道：协同东南亚二级制造货品，实现多国散装拼箱前置清关，顺畅汇流迪拜大盘。" : lang === "AR" ? "إعادة توجيه وتسييل دفعات المنتجات المصنعة في جنوب شرق آسيا لموانئ الخليج." : "Handles cross-border trade flow originating from Southeast Asian secondary manufacturing hubs directly into Gulf wholesale corridors." 
+      info: lang === "ZH" ? "东南亚网络覆盖节点（不纳入每日政策监控）：协同东南亚二级制造货品，实现多国散装拼箱前置清关，汇流迪拜大盘。" : lang === "AR" ? "عقدة تغطية شبكة جنوب شرق آسيا (غير مشمول بالرصد اليومي): إعادة توجيه منتجات التصنيع لموانئ الخليج." : "Southeast Asia Network Coverage node (not in daily policy monitoring): coordinates manufacturing trade flow from SE Asia into Gulf wholesale corridors."
     },
     { 
       name: "Cambodia", 
@@ -75,7 +111,7 @@ export default function Hero({ lang, pack }: HeroProps) {
       label: lang === "ZH" ? "柬埔寨 / 零部件" : lang === "AR" ? "كمبوديا" : "Cambodia", 
       curveX: 490, 
       curveY: 270, 
-      info: lang === "ZH" ? "轻工拼货与装配辅件支线：拼装货栈快速发运至迪拜综合样机陈列中心，现场提供区域行家及代理看样。" : lang === "AR" ? "ممر شحن وتجميع قطع ومكونات الصناعات الخفيفة إلى مراكز التوزيع دبي." : "Funnels light manufacturing goods and industrial components to Dubai visual showrooms for rapid Gulf distribution." 
+      info: lang === "ZH" ? "东南亚网络覆盖节点（不纳入每日政策监控）：轻工拼货与装配辅件，服务迪拜综合样机陈列中心及区域分销网络。" : lang === "AR" ? "عقدة تغطية شبكة جنوب شرق آسيا (غير مشمول بالرصد اليومي): شحن وتجميع قطع الصناعات الخفيفة إلى مراكز التوزيع." : "Southeast Asia Network Coverage node (not in daily policy monitoring): light manufacturing and components supply to Dubai showrooms and regional distribution."
     },
     { 
       name: "Indonesia", 
@@ -84,7 +120,7 @@ export default function Hero({ lang, pack }: HeroProps) {
       label: lang === "ZH" ? "印尼 / 航海重箱" : lang === "AR" ? "إندونيسيا" : "Indonesia", 
       curveX: 510, 
       curveY: 320, 
-      info: lang === "ZH" ? "海运大宗重工及矿产配套：协同 GCC 重大基建承销网，调配海港重箱散货堆存及常态极速卸货。" : lang === "AR" ? "تأمين ونقل المواد اللوجستية الثقيلة للخليج والموافقة عليها جمركيا بالتنسيق." : "Coordinates raw mineral components and high-demand maritime supplies with GCC project bidders and infrastructure developers." 
+      info: lang === "ZH" ? "东南亚网络覆盖节点（不纳入每日政策监控）：海运大宗重工及矿产配套，协同 GCC 重大基建承销网与海港重箱分拨。" : lang === "AR" ? "عقدة تغطية شبكة جنوب شرق آسيا (غير مشمول بالرصد اليومي): تأمين ونقل المواد اللوجستية الثقيلة للخليج." : "Southeast Asia Network Coverage node (not in daily policy monitoring): coordinates bulk maritime supplies and heavy logistics with GCC infrastructure networks."
     },
     { 
       name: "Morocco", 
@@ -200,7 +236,7 @@ export default function Hero({ lang, pack }: HeroProps) {
             <div className="w-full max-w-2xl mx-auto flex items-center justify-between border-b border-brand-gold-500/15 pb-3 mb-5 text-xs font-sans text-brand-gold-300 select-none">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium tracking-wide">Global Connectivity Model (11 Ground Desks)</span>
+                <span className="font-medium tracking-wide">12 Intelligence Markets + 6 Network Coverage</span>
               </div>
               <span>
                 {hoveredNode ? (

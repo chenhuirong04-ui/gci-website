@@ -148,48 +148,48 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
     ZH: {
       mapLabel: "双边执行走廊与枢纽分布 (点击或悬停切换廊道亮点)",
       allTitle: "GCI 环球双边在岸执网",
-      allDesc: "以迪拜总部为协调中枢，连接中国单一源头供应，深度下沉辐射 GCC、东南亚、东非、北非及南美等 11 大在岸执行市场与供应链节点。",
+      allDesc: "以迪拜总部为协调中枢，连接中国单一源头供应，深度覆盖 12 个 Core Intelligence Markets（政策监控）及 6 个东南亚 Network Coverage 市场。",
       chinaTitle: "中国供应侧总源 (Supply Origin)",
       chinaDesc: "GCI 坚守的唯一战略供应大盘与制造腹地。承引大国顶尖资源、设备与产品，保障海量且标准统一的供应链源泉。",
-      gccTitle: "GCC 海湾核心市场 (Core Markets)",
-      gccDesc: "深耕阿联酋、沙特阿拉伯、巴林、阿曼。建置本地持牌实体、保税调配与实地谈判代表，常态承托项目落地与常态交易闭环。",
-      aseanTitle: "东南亚核心市场 (Core Markets)",
-      aseanDesc: "深度下沉越南、柬埔寨、印度尼西亚。依托其蓬勃的中游产能与商贸基座，协助建立地缘弹性的常态运营通路。",
-      africaTitle: "高潜新兴及非洲门户 (Africa & Emerging)",
-      africaDesc: "以肯尼亚为关键门户，并包含摩洛哥、巴西业务接口，统合跨非与大西洋两岸多式联运和大宗分销。",
-      coreMarketsHeader: "11 在岸执行市场及制造节点",
+      gccTitle: "GCC 核心情报市场 (Core Intelligence)",
+      gccDesc: "深耕阿联酋、沙特阿拉伯、卡塔尔、巴林、阿曼、科威特。纳入 GCI Intelligence Engine 每日政策监控，建置本地持牌实体与在岸执行网络。",
+      aseanTitle: "东南亚网络覆盖 (Network Coverage)",
+      aseanDesc: "越南、柬埔寨、印度尼西亚、新加坡、马来西亚、泰国作为商业网络覆盖展示。不纳入每日政策监控，为商业渠道与供应链延伸节点。",
+      africaTitle: "非洲成长情报市场 (Africa Growth Intelligence)",
+      africaDesc: "肯尼亚、坦桑尼亚、尼日利亚、摩洛哥纳入 GCI Intelligence Engine 每日政策监控。巴西作为南美供应链情报市场同步覆盖。",
+      coreMarketsHeader: "12 个核心情报市场",
       supplyHeader: "1 唯一供应源头轴心",
       hoverPlaceholder: "提示：鼠标悬停任意网络区域，亮起特定双边通路..."
     },
     EN: {
       mapLabel: "Bilateral Corridor & Operational Nodes (Hover/Click to highlight)",
       allTitle: "GCI Global Execution Web",
-      allDesc: "With Dubai Headquarter coordinate deck, GCI maps China's single-origin supply to 11 active market & supply nodes spanning GCC, Southeast Asia, East Africa, North Africa, and South America.",
+      allDesc: "With Dubai HQ as the coordination hub, GCI covers 12 Core Intelligence Markets (daily policy monitoring) and 6 Southeast Asia Network Coverage markets across GCC, Africa, and supply chain corridors.",
       chinaTitle: "China (The Sole Supply Origin)",
       chinaDesc: "GCI's defining origin node and logistics bedrock. Anchoring manufacturing plants, technology and standardized resources to supply global projects.",
-      gccTitle: "GCC (Central Execution Markets)",
-      gccDesc: "Active operations across UAE, Saudi Arabia, Bahrain, and Oman. We deploy onshore staff, physical delivery hubs, and regulatory access.",
-      aseanTitle: "Southeast Asia (Growth Execution Markets)",
-      aseanDesc: "On-ground operations in Vietnam, Cambodia, and Indonesia. Integrating growing middle-markets and manufacturing centers directly.",
-      africaTitle: "Africa & Emerging Markets",
-      africaDesc: "Centering Kenya as our main gateway. Includes Casablanca (Morocco) and São Paulo (Brazil) cargo flow channels directly into our network.",
-      coreMarketsHeader: "11 Market & Supply Nodes",
+      gccTitle: "GCC Core Intelligence Markets",
+      gccDesc: "Active operations across UAE, Saudi Arabia, Qatar, Bahrain, Oman and Kuwait. All 6 GCC markets are monitored daily under the GCI Intelligence Engine.",
+      aseanTitle: "Southeast Asia — Network Coverage",
+      aseanDesc: "Vietnam, Cambodia, Indonesia, Singapore, Malaysia and Thailand serve as commercial network coverage. Not in daily policy monitoring — supply chain and distribution nodes.",
+      africaTitle: "Africa Growth Intelligence Markets",
+      africaDesc: "Kenya, Tanzania, Nigeria and Morocco are monitored under GCI Intelligence Engine. Brazil covers Latin America as a supply chain intelligence market.",
+      coreMarketsHeader: "12 Core Intelligence Markets",
       supplyHeader: "1 Sole Supply Backbone",
       hoverPlaceholder: "Tip: Hover on regions to preview bilateral corridors and operational metrics..."
     },
     AR: {
       mapLabel: "ممرات التنفيذ الثنائية وتوزيع العقد (مرر أو انقر للتسليط)",
       allTitle: "شبكة عمليات GCI العالمية",
-      allDesc: "من خلال مقرنا الرئيسي في دبي، نربط الصين كعصب إمداد وحيد بـ 11 من الممرات اللوجستية والأسواق التشغيلية في الخليج العربي وجنوب شرق آسيا وشرق إفريقيا والمغرب والبرازيل.",
+      allDesc: "من مقرنا في دبي، نغطي 12 سوقاً للذكاء الأساسي (رصد السياسات اليومي) و6 أسواق تغطية شبكة في جنوب شرق آسيا، عبر الخليج وأفريقيا وممرات سلاسل الإمداد.",
       chinaTitle: "الصين (مصدر الإمداد الوحيد)",
       chinaDesc: "قاعدة التوريد والدعم اللوجستي الإستراتيجية لـ GCI. تأمين تدفق السلع والمعدات القياسية لخدمة كافة المشاريع الإقليمية.",
-      gccTitle: "الخليج العربي (الأسواق التشغيلية الرئيسية)",
-      gccDesc: "حضور كامل في الإمارات، السعودية، البحرين، وعُمان. نوفر موظفين على الأرض، ومخازن، وننسق العقود التجارية.",
-      aseanTitle: "جنوب شرق آسيا (الأسواق التشغيلية الصاعدة)",
-      aseanDesc: "عمليات مباشرة في فيتنام، كمبوديا، وإندونيسيا. ندمج هذه الأسواق الحيوية في ممرات التجارة والتوريد مباشرة.",
-      africaTitle: "إفريقيا والأسواق الصاعدة",
-      africaDesc: "بوابة كينيا اللوجستية، وحضور فاعل في الدار البيضاء (المغرب) وساو باولو (البرازيل) لربط ممرات الجنوب.",
-      coreMarketsHeader: "11 عقود لوجستية وأسواق تشغيلية",
+      gccTitle: "أسواق الذكاء الأساسية في الخليج",
+      gccDesc: "حضور كامل في الإمارات، السعودية، قطر، البحرين، عُمان، والكويت. جميع أسواق الخليج الست مشمولة بالرصد اليومي عبر محرك ذكاء GCI.",
+      aseanTitle: "جنوب شرق آسيا — تغطية الشبكة",
+      aseanDesc: "تخدم فيتنام وكمبوديا وإندونيسيا وسنغافورة وماليزيا وتايلاند كتغطية للشبكة التجارية. غير مشمولة بالرصد اليومي للسياسات — عقد سلاسل الإمداد والتوزيع.",
+      africaTitle: "أسواق الذكاء النامية في أفريقيا",
+      africaDesc: "كينيا وتنزانيا ونيجيريا والمغرب مشمولة برصد محرك ذكاء GCI. والبرازيل تغطي أمريكا اللاتينية كسوق ذكاء لسلاسل الإمداد.",
+      coreMarketsHeader: "12 سوقاً للذكاء الأساسي",
       supplyHeader: "1 مصدر الإمداد الوحيد والعصب المشترك",
       hoverPlaceholder: "تلميح: مرر المؤشر لاستكشاف البيانات المباشرة للممرات..."
     }
@@ -462,19 +462,19 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
                     onMouseEnter={() => setActiveCorridor("GCC")}
                     className={`px-2 py-0.5 text-[9px] font-sans rounded-full border transition-all ${activeCorridor === "GCC" ? "bg-brand-gold-500/15 text-brand-gold-300 border-brand-gold-500/30 font-bold" : "bg-transparent text-brand-gold-200/50 border-brand-gold-500/5"}`}
                   >
-                    GCC (Core Market)
+                    GCC (6 Intelligence Markets)
                   </button>
-                  <button 
+                  <button
                     onMouseEnter={() => setActiveCorridor("ASEAN")}
                     className={`px-2 py-0.5 text-[9px] font-sans rounded-full border transition-all ${activeCorridor === "ASEAN" ? "bg-brand-gold-500/15 text-brand-gold-300 border-brand-gold-500/30 font-bold" : "bg-transparent text-brand-gold-200/50 border-brand-gold-500/5"}`}
                   >
-                    SE ASIA (Core Market)
+                    SE ASIA (Network Coverage)
                   </button>
-                  <button 
+                  <button
                     onMouseEnter={() => setActiveCorridor("AFRICA")}
                     className={`px-2 py-0.5 text-[9px] font-sans rounded-full border transition-all ${activeCorridor === "AFRICA" ? "bg-brand-gold-500/15 text-brand-gold-300 border-brand-gold-500/30 font-bold" : "bg-transparent text-brand-gold-200/50 border-brand-gold-500/5"}`}
                   >
-                    AFRICA & GLOBAL (Core)
+                    AFRICA & LATAM (Intelligence)
                   </button>
                 </div>
               </div>
@@ -502,7 +502,7 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
                         <div>
                           <span className="text-[10px] uppercase font-mono text-brand-gold-400 font-bold block">{dbTrans.coreMarketsHeader}</span>
                           <span className="text-xs font-sans font-semibold text-[#f9f5eb] leading-tight block mt-1">
-                            UAE · SA · BH · OM · KE · VN · KH · ID · MA · BR
+                            UAE · SA · QA · BH · OM · KW · KE · TZ · NG · MA · CN · BR
                           </span>
                         </div>
                       </div>
@@ -532,8 +532,8 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
                       </div>
                       <p className="text-sm text-brand-gold-200/80 leading-relaxed font-light">{dbTrans.gccDesc}</p>
                       
-                      <div className="grid grid-cols-4 gap-2 mt-2">
-                        {["UAE", "Saudi Arabia", "Bahrain", "Oman"].map((c, i) => (
+                      <div className="grid grid-cols-3 gap-2 mt-2">
+                        {["UAE", "Saudi Arabia", "Qatar", "Bahrain", "Oman", "Kuwait"].map((c, i) => (
                           <span key={i} className="text-[11px] font-sans text-brand-gold-100 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/10 rounded px-2 py-1 text-center">{c}</span>
                         ))}
                       </div>
@@ -549,10 +549,11 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
                       <p className="text-sm text-brand-gold-200/80 leading-relaxed font-light">{dbTrans.aseanDesc}</p>
                       
                       <div className="grid grid-cols-3 gap-2 mt-2">
-                        {["Vietnam", "Cambodia", "Indonesia"].map((c, i) => (
-                          <span key={i} className="text-[11px] font-sans text-brand-gold-100 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/10 rounded px-2 py-1 text-center">{c}</span>
+                        {["Vietnam", "Cambodia", "Indonesia", "Singapore", "Malaysia", "Thailand"].map((c, i) => (
+                          <span key={i} className="text-[11px] font-sans text-brand-gold-100/60 font-semibold bg-brand-gold-500/3 border border-brand-gold-500/8 rounded px-2 py-1 text-center">{c}</span>
                         ))}
                       </div>
+                      <p className="text-[10px] font-mono text-brand-gold-400/60 mt-2">Network Coverage only — not in daily policy monitoring</p>
                     </div>
                   )}
 
@@ -565,7 +566,7 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
                       <p className="text-sm text-brand-gold-200/80 leading-relaxed font-light">{dbTrans.africaDesc}</p>
                       
                       <div className="grid grid-cols-3 gap-2 mt-2">
-                        {["Kenya", "Morocco", "Brazil"].map((c, i) => (
+                        {["Kenya", "Tanzania", "Nigeria", "Morocco", "Brazil"].map((c, i) => (
                           <span key={i} className="text-[11px] font-sans text-brand-gold-100 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/10 rounded px-2 py-1 text-center">{c}</span>
                         ))}
                       </div>

@@ -129,7 +129,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreTargetTitle: "Who We Serve",
     whoWeAreTargets: ["Manufacturers", "Brand Owners", "Project Developers", "Trading Companies", "Investors", "Strategic Partners"],
     whoWeAreMarketTitle: "Where We Operate",
-    whoWeAreMarkets: ["UAE", "Saudi Arabia", "Bahrain", "Oman", "Kenya", "China", "Vietnam", "Cambodia", "Indonesia", "Morocco", "Brazil"],
+    whoWeAreMarkets: ["UAE", "Saudi Arabia", "Qatar", "Bahrain", "Oman", "Kuwait", "Kenya", "Tanzania", "Nigeria", "Morocco", "China", "Brazil"],
 
     whatWeDoLabel: "Capabilities",
     whatWeDoTitle: "FOUR CORE BUSINESS CAPABILITIES",
@@ -257,7 +257,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreTargetTitle: "服务对象",
     whoWeAreTargets: ["制造商", "品牌商", "项目开发商", "贸易公司", "投资者", "战略合作伙伴"],
     whoWeAreMarketTitle: "业务区域",
-    whoWeAreMarkets: ["阿联酋", "沙特阿拉伯", "巴林", "阿曼", "肯尼亚", "中国", "越南", "柬埔寨", "印尼", "摩洛哥", "巴西"],
+    whoWeAreMarkets: ["阿联酋", "沙特阿拉伯", "卡塔尔", "巴林", "阿曼", "科威特", "肯尼亚", "坦桑尼亚", "尼日利亚", "摩洛哥", "中国", "巴西"],
 
     whatWeDoLabel: "服务能力",
     whatWeDoTitle: "四大核心业务能力",
@@ -385,7 +385,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreTargetTitle: "من نخدمهم",
     whoWeAreTargets: ["الشركات المصنعة", "أصحاب العلامات التجارية", "مطورو المشاريع", "شركات التجارة", "المستثمرون", "الشركاء الاستراتيجيون"],
     whoWeAreMarketTitle: "نطاق عملياتنا",
-    whoWeAreMarkets: ["الإمارات العربية المتحدة", "المملكة العربية السعودية", "البحرين", "سلطنة عُمان", "كينيا", "الصين", "فيتنام", "كمبوديا", "إندونيسيا", "المغرب", "البرازيل"],
+    whoWeAreMarkets: ["الإمارات العربية المتحدة", "المملكة العربية السعودية", "قطر", "البحرين", "سلطنة عُمان", "الكويت", "كينيا", "تنزانيا", "نيجيريا", "المغرب", "الصين", "البرازيل"],
 
     whatWeDoLabel: "مستويات الخدمة",
     whatWeDoTitle: "أربع قدرات تجارية أساسية",
