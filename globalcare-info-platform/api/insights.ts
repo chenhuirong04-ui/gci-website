@@ -40,20 +40,31 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       const summaryEN = p["Summary EN"]?.rich_text?.[0]?.plain_text || "";
       const summaryZH = p["Summary ZH"]?.rich_text?.[0]?.plain_text || summaryEN;
       const countryEN = p.Country?.select?.name || "Global";
+
+      // Optional fields — silently empty if the Notion DB doesn't have them yet
+      const titleAR = p["Title AR"]?.rich_text?.[0]?.plain_text || titleEN;
+      const summaryAR = p["Summary AR"]?.rich_text?.[0]?.plain_text || summaryEN;
+      const sourceUrl = p["Source URL"]?.url || undefined;
+      const businessImpact = p["Business Impact"]?.rich_text?.[0]?.plain_text || undefined;
+      const gciRecommendation = p["GCI Recommendation"]?.rich_text?.[0]?.plain_text || undefined;
+
       return {
         id: page.id,
         category: mapCategory(p.Category?.select?.name),
         titleEN,
         titleZH: p["Title ZH"]?.rich_text?.[0]?.plain_text || titleEN,
-        titleAR: titleEN,
+        titleAR,
         countryEN,
         countryZH: countryEN,
         countryAR: countryEN,
         date: p.Date?.date?.start || "",
         summaryEN,
         summaryZH,
-        summaryAR: summaryEN,
+        summaryAR,
         coverImage: p["Cover Image URL"]?.url || "",
+        ...(sourceUrl && { sourceUrl }),
+        ...(businessImpact && { businessImpact }),
+        ...(gciRecommendation && { gciRecommendation }),
       };
     });
 

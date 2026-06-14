@@ -37,6 +37,10 @@ interface Article {
   summaryZH: string;
   summaryAR: string;
   coverImage: string;
+  // Optional fields — present when Notion DB has them, undefined otherwise
+  sourceUrl?: string;
+  businessImpact?: string;
+  gciRecommendation?: string;
 }
 
 const CATEGORIES = {
