@@ -28,7 +28,7 @@ export default function Header({ lang, setLang, pack }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 bg-[#030611]/90 backdrop-blur-md border-b border-brand-gold-500/10 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="max-w-7xl mx-auto px-6 h-[6.5rem] flex items-center pt-5 justify-between" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Brand Logo & Corporate Mark */}
         <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 group focus:outline-none select-none">
