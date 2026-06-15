@@ -14,6 +14,7 @@ export interface Opportunity {
   tagsZH: string[];
   tagsAR: string[];
   image: string;
+  youtubeUrl: string;
   overviewEN: string;
   overviewZH: string;
   overviewAR: string;
@@ -45,6 +46,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tagsZH: ["房地产", "供应商开发", "投资"],
     tagsAR: ["العقارات", "تطوير الموردين", "الاستثمار"],
     image: "/images/countries/country-morocco.jpg",
+    youtubeUrl: "",
     overviewEN: "GCI is actively facilitating connections and commercial coordination for a development opportunity in Morocco. This engagement focuses on supporting real estate-linked supply chain requirements and identifying qualified suppliers for large-scale project delivery. Morocco's accelerating infrastructure development, combined with its strategic position as a gateway between Africa and Europe, creates significant upstream and downstream commercial opportunities for qualified partners.",
     overviewZH: "GCI 正积极促进摩洛哥一项开发机会的商业联络与协调工作。本项目重点支持与房地产相关的供应链需求，并为大型项目交付寻找合格供应商。摩洛哥持续加速的基础设施建设，加之其作为非洲与欧洲之间战略门户的独特地位，为合格合作伙伴创造了重要的上下游商业机遇。",
     overviewAR: "تعمل GCI بنشاط على تسهيل الاتصالات والتنسيق التجاري لفرصة تطوير في المغرب. يركز هذا التعاون على دعم متطلبات سلسلة التوريد المرتبطة بالعقارات وتحديد موردين مؤهلين لتنفيذ مشاريع واسعة النطاق.",
@@ -119,6 +121,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tagsZH: ["工业园区", "制造业", "投资"],
     tagsAR: ["منطقة صناعية", "تصنيع", "استثمار"],
     image: "/images/opportunities/cambodia-industrial.jpg",
+    youtubeUrl: "",
     overviewEN: "GCI is supporting commercial coordination and partner matching for an active industrial park development opportunity in Cambodia. This engagement targets manufacturers and industrial operators seeking to establish or expand production facilities in Southeast Asia, taking advantage of Cambodia's competitive manufacturing environment, preferential trade agreements, and growing regional demand. The opportunity covers factory setup, supply chain integration, and go-to-market coordination.",
     overviewZH: "GCI 正为柬埔寨一项进行中的工业园开发机会提供商业协调和合作伙伴匹配支持。本项目面向希望在东南亚建立或扩大生产设施的制造商和工业运营商，借助柬埔寨具有竞争力的制造环境、优惠贸易协定及不断增长的区域需求。机会涵盖工厂设立、供应链整合和市场进入协调。",
     overviewAR: "تدعم GCI التنسيق التجاري ومطابقة الشركاء لفرصة تطوير منطقة صناعية نشطة في كمبوديا. تستهدف هذه المشاركة المصنعين والمشغلين الصناعيين الراغبين في إنشاء أو توسيع مرافق الإنتاج في جنوب شرق آسيا.",
@@ -193,6 +196,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tagsZH: ["清真产业", "食品加工", "投资"],
     tagsAR: ["الصناعة الحلال", "معالجة الأغذية", "الاستثمار"],
     image: "/images/opportunities/cambodia-halal.jpg",
+    youtubeUrl: "",
     overviewEN: "GCI is coordinating commercial engagement for a dedicated Halal Industrial Park opportunity in Cambodia, designed specifically for food processing, packaging, and halal-certified manufacturing operations. With increasing demand for halal products across Southeast Asia, the Middle East, and global Muslim markets, this opportunity positions manufacturers and food processors to tap into a rapidly growing supply chain ecosystem with access to ASEAN trade corridors and GCC export pathways.",
     overviewZH: "GCI 正为柬埔寨一个专属清真工业园机会协调商业接触，该工业园专为食品加工、包装及清真认证制造业设计。随着东南亚、中东及全球穆斯林市场对清真产品需求持续增长，该机会帮助制造商和食品加工企业进入快速成长的供应链生态系统，并可接入东盟贸易走廊及海湾国家出口通道。",
     overviewAR: "تنسق GCI التعاون التجاري لفرصة منطقة صناعية حلال مخصصة في كمبوديا، مصممة خصيصاً لعمليات معالجة الأغذية والتعبئة والتصنيع المعتمد حلالاً. مع تزايد الطلب على المنتجات الحلال عبر جنوب شرق آسيا والشرق الأوسط والأسواق الإسلامية العالمية.",
@@ -267,6 +271,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tagsZH: ["土地", "工业", "物流"],
     tagsAR: ["أراضي", "صناعي", "لوجستيات"],
     image: "/images/countries/country-uae.jpg",
+    youtubeUrl: "",
     overviewEN: "GCI is facilitating preliminary commercial coordination around a land opportunity in Dubai suitable for industrial, logistics, or light manufacturing use. Dubai's world-class logistics infrastructure, free zone ecosystem, and connectivity to global trade routes make it an ideal location for companies seeking a Middle East operational hub. GCI is supporting qualified parties in understanding the opportunity framework and coordinating appropriate commercial introductions.",
     overviewZH: "GCI 正在围绕迪拜一块适合工业、物流或轻型制造用途的土地机会进行初步商业协调。迪拜世界一流的物流基础设施、自由区生态系统及与全球贸易路线的连接，使其成为寻求中东运营枢纽的企业的理想选址。GCI 正在协助合格方了解机会框架并协调适当的商业对接。",
     overviewAR: "تسهل GCI التنسيق التجاري الأولي حول فرصة أراضٍ في دبي مناسبة للاستخدام الصناعي أو اللوجستي أو التصنيع الخفيف. تجعل البنية التحتية اللوجستية على مستوى عالمي لدبي ونظام المناطق الحرة واتصالها بطرق التجارة العالمية منها موقعاً مثالياً.",
@@ -341,6 +346,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tagsZH: ["建筑", "工业资产", "投资"],
     tagsAR: ["البناء", "الأصول الصناعية", "الاستثمار"],
     image: "/images/opportunities/concrete-plant.jpg",
+    youtubeUrl: "",
     overviewEN: "GCI is coordinating an opportunity involving a concrete batching plant asset in the UAE, targeting investors, operators, or construction companies looking to acquire or operate industrial construction infrastructure. The UAE's sustained construction activity — driven by major development programs, expo legacies, and Vision 2031 infrastructure targets — continues to generate strong demand for concrete production assets strategically positioned within the market.",
     overviewZH: "GCI 正在协调阿联酋一项涉及混凝土搅拌站资产的机会，面向希望收购或运营工业建筑基础设施的投资者、运营商或建筑公司。阿联酋在重大开发计划、世博遗产及2031愿景基础设施目标的推动下，持续旺盛的建筑活动为战略性布局市场的混凝土生产资产创造了强劲需求。",
     overviewAR: "تنسق GCI فرصة تتعلق بأصل محطة خلط الخرسانة في الإمارات، تستهدف المستثمرين أو المشغلين أو شركات البناء الراغبين في الاستحواذ على بنية تحتية صناعية للبناء أو تشغيلها.",

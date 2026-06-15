@@ -1,5 +1,10 @@
 import { useState, MouseEvent } from "react";
-import { VideoOff, Briefcase } from "lucide-react";
+import { VideoOff, Briefcase, Play } from "lucide-react";
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  return m ? m[1] : null;
+}
 import { OPPORTUNITIES, Opportunity } from "../data/opportunitiesData";
 
 interface BusinessOpportunitiesProps {
@@ -217,7 +222,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
   };
 
   return (
-    <section id="business-opportunities" className="pt-28 pb-24 md:pt-36 md:pb-28 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
+    <section id="business-opportunities" className="pt-28 pb-16 md:pt-36 md:pb-20 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/4 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
 
@@ -271,47 +276,64 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
 
               {/* Left: video / image area */}
               <div className="lg:col-span-8 flex flex-col">
-                <div className="relative aspect-video md:aspect-[21/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center shadow-2xl">
+                <div className="relative w-full h-full min-h-[320px] rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center shadow-2xl">
 
-                  {activeOpp.image && (
+                  {/* YouTube embed — highest priority */}
+                  {activeOpp.youtubeUrl && getYouTubeId(activeOpp.youtubeUrl) ? (
+                    <iframe
+                      key={activeOpp.id}
+                      src={`https://www.youtube.com/embed/${getYouTubeId(activeOpp.youtubeUrl)}?rel=0&modestbranding=1`}
+                      title={activeOpp.titleEN}
+                      className="absolute inset-0 w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : activeOpp.image ? (
                     <>
                       <img
                         key={activeOpp.id}
                         src={activeOpp.image}
                         alt=""
-                        className="w-full h-full object-cover pointer-events-none select-none"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                        }}
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#030611]/80 via-[#030611]/20 to-transparent pointer-events-none" />
+                      {/* Country badge top-left */}
                       <div className="absolute top-4 left-4 z-20">
                         <span className="inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full tracking-wide uppercase">
                           {getCountry(activeOpp, lang)}
                         </span>
                       </div>
+                      {/* Status badge bottom-left */}
                       <div className="absolute bottom-4 left-4 z-20">
                         <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${statusStyle(activeOpp.status)}`}>
                           {getStatus(activeOpp, lang)}
                         </span>
                       </div>
+                      {/* Video coming soon badge bottom-right */}
+                      <div className="absolute bottom-4 right-4 z-20">
+                        <span className="inline-flex items-center gap-1.5 bg-[#030611]/80 backdrop-blur-sm border border-brand-gold-500/20 text-brand-gold-400/70 text-[10px] font-mono px-3 py-1.5 rounded-full">
+                          <Play className="w-2.5 h-2.5" />
+                          {t.placeholderText[lang]}
+                        </span>
+                      </div>
                     </>
-                  )}
-
-                  {/* Placeholder */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex-col items-center justify-center p-6 text-center select-none overflow-hidden ${activeOpp.image ? "hidden" : "flex"}`}>
-                    <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
-                    <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
-                    <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/10 text-brand-gold-400/40 mb-4 shadow-xl">
-                      <VideoOff className="w-8 h-8 stroke-[1.5]" />
+                  ) : (
+                    /* No image, no video — full placeholder */
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden">
+                      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
+                      <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
+                      <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/10 text-brand-gold-400/40 mb-4 shadow-xl">
+                        <VideoOff className="w-8 h-8 stroke-[1.5]" />
+                      </div>
+                      <span className="text-xs sm:text-sm font-mono text-[#DFBA6B] uppercase font-bold animate-pulse tracking-widest">
+                        {t.placeholderText[lang]}
+                      </span>
+                      <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-wider mt-1 block font-medium">
+                        GCI Business Opportunity
+                      </span>
                     </div>
-                    <span className="text-xs sm:text-sm font-mono text-[#DFBA6B] uppercase font-bold animate-pulse tracking-widest">
-                      {t.placeholderText[lang]}
-                    </span>
-                    <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-wider mt-1 block font-medium">
-                      GCI Business Opportunity
-                    </span>
-                  </div>
+                  )}
                 </div>
               </div>
 
