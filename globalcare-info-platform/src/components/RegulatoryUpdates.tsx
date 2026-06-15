@@ -164,7 +164,7 @@ const ARTICLES_DATA: Article[] = [
     titleEN: "Mombasa Port Quarantine & East Africa Standards Bureau Regulatory Updates",
     titleZH: "蒙巴萨港口检疫限制与东非标准局(KEBS)进口合规指引",
     titleAR: "لوائح الحجر الصحي في ميناء مومباسا ومتطلبات هيئة المواصفات الكينية KEBS",
-    countryEN: "Kenya",
+    countryEN: "GCC Region",
     countryZH: "肯尼亚",
     countryAR: "كينيا",
     date: "2026-05-28",
