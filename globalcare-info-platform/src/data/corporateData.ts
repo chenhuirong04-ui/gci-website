@@ -143,7 +143,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "Channel Development",
       "Business Visit Coordination",
       "Partner Introductions",
-      "Commercial Support"
+      "Commercial Support",
+      "Tax & Compliance Advisory"
     ],
     service1Footer: "Business Development",
     
@@ -271,7 +272,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "渠道开发建设",
       "商务考察协调",
       "合作伙伴引荐",
-      "商业落地支持"
+      "商业落地支持",
+      "财税与合规支持"
     ],
     service1Footer: "业务开发",
 
@@ -399,7 +401,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "تطوير القنوات وشبكات التوزيع",
       "تنسيق الزيارات والوفود الاستكشافية",
       "التعريف والربط المباشر بالشركاء",
-      "تقديم الدعم التجاري والتشغيلي"
+      "تقديم الدعم التجاري والتشغيلي",
+      "الاستشارات الضريبية والامتثال التنظيمي"
     ],
     service1Footer: "تطوير الأعمال",
 
