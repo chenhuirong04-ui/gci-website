@@ -190,6 +190,7 @@ function DetailView({
 export default function BusinessOpportunities({ lang }: BusinessOpportunitiesProps) {
   const [selectedId, setSelectedId] = useState<string>(OPPORTUNITIES[0].id);
   const [showDetail, setShowDetail] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const isRtl = lang === "AR";
 
   const activeOpp = OPPORTUNITIES.find((o) => o.id === selectedId) ?? OPPORTUNITIES[0];
@@ -197,6 +198,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
   const handleTabClick = (id: string) => {
     setSelectedId(id);
     setShowDetail(false);
+    setExpanded(false);
   };
 
   const handleViewDetail = () => {
@@ -215,7 +217,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
   };
 
   return (
-    <section id="business-opportunities" className="py-20 md:py-24 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
+    <section id="business-opportunities" className="pt-28 pb-24 md:pt-36 md:pb-28 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/4 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
 
@@ -333,9 +335,19 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                       {getTitle(activeOpp, lang)}
                     </h3>
 
-                    <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed mb-6 border-l-2 border-brand-gold-500/20 pl-4 min-h-[5rem]">
-                      {getOverview(activeOpp, lang)}
-                    </p>
+                    <div className="mb-6 border-l-2 border-brand-gold-500/20 pl-4">
+                      <p className={`text-sm text-brand-gold-200/95 font-light leading-relaxed ${expanded ? "" : "line-clamp-4"}`}>
+                        {getOverview(activeOpp, lang)}
+                      </p>
+                      <button
+                        onClick={() => setExpanded(!expanded)}
+                        className="mt-2 text-xs text-brand-gold-400 hover:text-brand-gold-300 font-medium transition-colors duration-200"
+                      >
+                        {expanded
+                          ? (lang === "ZH" ? "收起 ↑" : lang === "AR" ? "↑ طي" : "Read Less ↑")
+                          : (lang === "ZH" ? "阅读更多 ↓" : lang === "AR" ? "↓ اقرأ المزيد" : "Read More ↓")}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Tags */}
