@@ -158,22 +158,6 @@ const ARTICLES_DATA: Article[] = [
     summaryAR: "تفصيل شامل لتعديلات السياسة الجمركية ومتطلبات التخليص الثنائي. Article to be updated.",
     coverImage: "/src/assets/images/case_robotics_dubai_1780768291268.png"
   },
-  {
-    id: "reg-3",
-    category: "regulatory",
-    titleEN: "Mombasa Port Quarantine & East Africa Standards Bureau Regulatory Updates",
-    titleZH: "蒙巴萨港口检疫限制与东非标准局(KEBS)进口合规指引",
-    titleAR: "لوائح الحجر الصحي في ميناء مومباسا ومتطلبات هيئة المواصفات الكينية KEBS",
-    countryEN: "GCC Region",
-    countryZH: "肯尼亚",
-    countryAR: "كينيا",
-    date: "2026-05-28",
-    summaryEN: "Detailed review of critical product entry declarations and compliance validation steps. Article to be updated.",
-    summaryZH: "针对跨境机电设备与大宗农用器具检疫通关规则的重要指引。Article to be updated。",
-    summaryAR: "مراجعة مفصلة لتصديق المنتجات وإجراءات التحقق من المطابقة لشرق إفريقيا. Article to be updated.",
-    coverImage: "/src/assets/images/case_medical_mombasa_1780768328334.png"
-  },
-
   // 2. Market News
   {
     id: "mkt-1",
