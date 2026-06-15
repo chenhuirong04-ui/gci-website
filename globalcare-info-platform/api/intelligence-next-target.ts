@@ -43,13 +43,20 @@ function extractCountry(p: any): string {
   ).trim();
 }
 
-async function queryAllPublished(token: string): Promise<string[]> {
-  const countries: string[] = [];
+interface PageSummary {
+  country: string;
+  sourceUrl: string;
+  title: string;
+}
+
+async function queryAllPublished(token: string): Promise<PageSummary[]> {
+  const pages: PageSummary[] = [];
   let cursor: string | undefined;
 
   do {
     const body: Record<string, unknown> = {
       filter: { property: "Published", checkbox: { equals: true } },
+      sorts: [{ property: "Date", direction: "descending" }],
       page_size: 100,
     };
     if (cursor) body.start_cursor = cursor;
@@ -68,13 +75,18 @@ async function queryAllPublished(token: string): Promise<string[]> {
     if (!data.results) break;
 
     for (const page of data.results) {
-      countries.push(extractCountry(page.properties));
+      const p = page.properties;
+      pages.push({
+        country: extractCountry(p),
+        sourceUrl: p["Source URL"]?.url || "",
+        title: p.Title?.title?.[0]?.plain_text || "",
+      });
     }
 
     cursor = data.has_more ? data.next_cursor : undefined;
   } while (cursor);
 
-  return countries;
+  return pages;
 }
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
@@ -82,30 +94,37 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
   if (!token) return res.status(500).json({ error: "NOTION_TOKEN not set" });
 
   try {
-    const allCountries = await queryAllPublished(token);
+    const allPages = await queryAllPublished(token);
 
     // Build count map — initialize all pool countries to 0
     const counts: Record<string, number> = {};
     for (const c of COUNTRY_POOL) counts[c] = 0;
-    for (const c of allCountries) {
-      if (c in counts) counts[c]++;
+    for (const { country } of allPages) {
+      if (country in counts) counts[country]++;
     }
 
     const allAboveThreshold = COUNTRY_POOL.every(c => counts[c] >= PHASE1_THRESHOLD);
     const phase = allAboveThreshold ? "balanced_rotation" : "database_building";
     const priority = allAboveThreshold ? PHASE2_PRIORITY : PHASE1_PRIORITY;
 
-    // Find minimum count among pool countries
     const minCount = Math.min(...COUNTRY_POOL.map(c => counts[c]));
-
-    // Among countries tied at minCount, pick by priority order
     const target = priority.find(c => counts[c] === minCount) ?? priority[0];
+
+    // Dedup helpers for Make.com — most recent 100 articles, no blanks
+    const existing_source_urls = [...new Set(
+      allPages.slice(0, 100).map(p => p.sourceUrl).filter(Boolean)
+    )];
+    const existing_titles = [...new Set(
+      allPages.slice(0, 100).map(p => p.title).filter(Boolean)
+    )];
 
     return res.status(200).json({
       target_country: target,
       phase,
       current_count: counts[target],
       counts,
+      existing_source_urls,
+      existing_titles,
     });
   } catch (err) {
     return res.status(500).json({ error: String(err) });
