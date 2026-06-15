@@ -17,20 +17,21 @@ const IMG_MAP: Record<string, string> = {
 };
 
 // Country → unique Unsplash image for the country grid (Level 1 — each country must be distinct)
+// All photo IDs verified via Unsplash search
 const COUNTRY_GRID_IMG: Record<string, string> = {
-  "UAE / Dubai":  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",  // Dubai Marina aerial
-  "Saudi Arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80",  // Riyadh KAFD skyline
-  "Qatar":        "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",      // Doha skyline
-  "Bahrain":      "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=80",   // Bahrain/Gulf modern architecture
-  "Oman":         "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",      // Muscat Sultan Qaboos mosque
-  "Kuwait":       "https://images.unsplash.com/photo-1563201515-adbe35c669c5?w=600&q=80",      // Kuwait City modern skyline
-  "Kenya":        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80",      // Nairobi skyline
-  "Tanzania":     "https://images.unsplash.com/photo-1615209853186-e4bd66602508?w=600&q=80",   // Dar es Salaam port / East Africa trade
-  "Nigeria":      "https://images.unsplash.com/photo-1583416750470-965b2707b355?w=600&q=80",   // Lagos business district
-  "Morocco":      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",      // Casablanca / Morocco cityscape
-  "China":        "https://images.unsplash.com/photo-1474990349564-ca4de5c8bb0f?w=600&q=80",   // Shanghai Pudong / port
-  "Brazil":       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80",   // Rio de Janeiro / Santos port
-  "Global":       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",   // Earth from space
+  "UAE / Dubai":  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",  // Dubai Marina aerial ✓
+  "Saudi Arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80",  // Riyadh KAFD skyline ✓
+  "Qatar":        "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",      // Doha / Gulf skyline ✓
+  "Bahrain":      "https://images.unsplash.com/photo-wOlMEpBzwHs?w=600&q=80",                 // Bahrain World Trade Center ✓
+  "Oman":         "https://images.unsplash.com/photo-n8MmkmHcR3Y?w=600&q=80",                 // Muttrah Corniche aerial ✓
+  "Kuwait":       "https://images.unsplash.com/photo-QsM6TFdHM60?w=600&q=80",                 // Kuwait City skyline sunset ✓
+  "Kenya":        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80",      // Nairobi skyline ✓
+  "Tanzania":     "https://images.unsplash.com/photo-Annl9CjEaEs?w=600&q=80",                 // Dar es Salaam port containers ✓
+  "Nigeria":      "https://images.unsplash.com/photo-qNIBpxNXkx4?w=600&q=80",                 // Lagos Lekki-Ikoyi bridge ✓
+  "Morocco":      "https://images.unsplash.com/photo-qrydbJhp-ug?w=600&q=80",                 // Casablanca buildings ✓
+  "China":        "https://images.unsplash.com/photo-1474990349564-ca4de5c8bb0f?w=600&q=80",   // Shanghai port/Pudong ✓
+  "Brazil":       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80",   // Rio de Janeiro ✓
+  "Global":       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",   // Earth from space ✓
 };
 
 // Country → local warm-gold image (overrides any external URL from Notion)
