@@ -1,11 +1,10 @@
 import { useState, MouseEvent } from "react";
+import { VideoOff, Briefcase } from "lucide-react";
 import { OPPORTUNITIES, Opportunity } from "../data/opportunitiesData";
 
 interface BusinessOpportunitiesProps {
   lang: "EN" | "ZH" | "AR";
 }
-
-type ViewState = "home" | "list" | "detail";
 
 const t = {
   sectionLabel: { EN: "BUSINESS OPPORTUNITIES HUB", ZH: "商业机会平台", AR: "منصة فرص الأعمال" },
@@ -15,15 +14,15 @@ const t = {
     ZH: "探索 GCI 正在参与、推动及协调的国际商业机会。",
     AR: "استكشف الفرص التجارية النشطة التي تطورها GCI أو تدعمها أو تيسرها حالياً عبر الأسواق العالمية."
   },
-  viewAll: { EN: "View All Opportunities →", ZH: "查看全部机会 →", AR: "← عرض جميع الفرص" },
-  backToAll: { EN: "← All Opportunities", ZH: "← 全部机会", AR: "جميع الفرص →" },
-  exploreBtn: { EN: "Explore Opportunity →", ZH: "了解详情 →", AR: "← استكشف الفرصة" },
-  contactBtn: { EN: "Contact GCI to Explore This Opportunity →", ZH: "联系 GCI 了解此机会 →", AR: "← تواصل مع GCI لاستكشاف هذه الفرصة" },
-  overviewTitle: { EN: "Opportunity Overview", ZH: "机会概述", AR: "نظرة عامة على الفرصة" },
+  placeholderText: { EN: "Video Coming Soon", ZH: "视频即将发布", AR: "الفيديو قريباً" },
+  tagsLabel: { EN: "Key Sectors", ZH: "核心领域", AR: "القطاعات الرئيسية" },
+  contactBtn: { EN: "Contact GCI to Explore →", ZH: "联系 GCI 了解详情 →", AR: "← تواصل مع GCI" },
+  detailBtn: { EN: "View Full Details →", ZH: "查看完整详情 →", AR: "← عرض التفاصيل" },
+  backToAll: { EN: "← Back to Opportunities", ZH: "← 返回机会列表", AR: "العودة للفرص →" },
+  overviewTitle: { EN: "Opportunity Overview", ZH: "机会概述", AR: "نظرة عامة" },
   currentFocusTitle: { EN: "Current Focus", ZH: "当前重点", AR: "التركيز الحالي" },
   potentialTitle: { EN: "Potential Opportunities", ZH: "潜在合作机会", AR: "الفرص المحتملة" },
-  whoTitle: { EN: "Who Should Contact Us", ZH: "适合参与企业", AR: "من يجب أن يتصل بنا" },
-  allOppsTitle: { EN: "ALL BUSINESS OPPORTUNITIES", ZH: "全部商业机会", AR: "جميع فرص الأعمال" },
+  whoTitle: { EN: "Who Should Contact Us", ZH: "适合参与企业", AR: "من يجب التواصل" },
 };
 
 function getTitle(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
@@ -57,77 +56,12 @@ function statusStyle(status: Opportunity["status"]) {
   return "text-brand-gold-400 bg-brand-gold-400/10 border border-brand-gold-400/30";
 }
 
-interface OpportunityCardProps {
-  key?: string | number;
-  opp: Opportunity;
-  lang: "EN" | "ZH" | "AR";
-  onSelect: (opp: Opportunity) => void;
-}
-
-function OpportunityCard({
-  opp,
-  lang,
-  onSelect,
-}: OpportunityCardProps) {
-  const isRtl = lang === "AR";
-  return (
-    <div
-      className="group bg-[#070d1d] border border-brand-gold-500/10 hover:border-brand-gold-500/40 rounded-xl overflow-hidden flex flex-col transition-all duration-300 cursor-pointer"
-      dir={isRtl ? "rtl" : "ltr"}
-      onClick={() => onSelect(opp)}
-    >
-      {/* Card image */}
-      <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[#070d1d] to-[#0d1a35]">
-        <img
-          src={opp.image}
-          alt={getTitle(opp, lang)}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-            const parent = e.currentTarget.parentElement;
-            if (parent) {
-              parent.classList.add("bg-gradient-to-br", "from-[#070d1d]", "to-[#0d1a35]");
-            }
-          }}
-        />
-        {/* Country overlay */}
-        <div className="absolute top-3 left-3">
-          <span className="text-xs font-medium tracking-wide text-brand-gold-300 bg-[#030611]/70 backdrop-blur-sm px-2 py-1 rounded">
-            {getCountry(opp, lang)}
-          </span>
-        </div>
-        {/* Status badge */}
-        <div className="absolute top-3 right-3">
-          <span className={`text-xs font-medium px-2 py-1 rounded ${statusStyle(opp.status)}`}>
-            {getStatus(opp, lang)}
-          </span>
-        </div>
-      </div>
-
-      {/* Card body */}
-      <div className="flex flex-col flex-1 p-5 gap-3">
-        <h3 className="text-white font-semibold text-base leading-snug group-hover:text-brand-gold-300 transition-colors duration-200">
-          {getTitle(opp, lang)}
-        </h3>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {getTags(opp, lang).slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[11px] text-brand-gold-400/70 bg-brand-gold-500/5 border border-brand-gold-500/15 px-2 py-0.5 rounded">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Explore button */}
-        <div className="mt-auto pt-2">
-          <span className="text-sm text-brand-gold-400 font-medium group-hover:text-brand-gold-300 transition-colors duration-200">
-            {t.exploreBtn[lang]}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    const pos = el.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({ top: pos, behavior: "smooth" });
+  }
 }
 
 function DetailView({
@@ -143,17 +77,11 @@ function DetailView({
 
   const handleContactClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const el = document.getElementById("contact-section");
-    if (el) {
-      const offset = 80;
-      const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top: pos, behavior: "smooth" });
-    }
+    scrollToSection("contact-section");
   };
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"}>
-      {/* Back button */}
       <button
         onClick={onBack}
         className="mb-8 text-sm text-brand-gold-400 hover:text-brand-gold-300 transition-colors duration-200 flex items-center gap-1"
@@ -161,16 +89,13 @@ function DetailView({
         {t.backToAll[lang]}
       </button>
 
-      {/* Hero banner */}
       <div className="relative rounded-xl overflow-hidden mb-10 bg-gradient-to-br from-[#070d1d] to-[#0d1a35] border border-brand-gold-500/10">
         <div className="relative h-48 sm:h-64">
           <img
             src={opp.image}
             alt={getTitle(opp, lang)}
             className="w-full h-full object-cover opacity-40"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#030611] via-[#030611]/60 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
@@ -189,11 +114,8 @@ function DetailView({
         </div>
       </div>
 
-      {/* Content sections */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main content */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Overview */}
           <div>
             <h3 className="text-brand-gold-400 font-semibold text-sm uppercase tracking-widest mb-3">
               {t.overviewTitle[lang]}
@@ -202,8 +124,6 @@ function DetailView({
               {getOverview(opp, lang)}
             </p>
           </div>
-
-          {/* Current Focus */}
           <div>
             <h3 className="text-brand-gold-400 font-semibold text-sm uppercase tracking-widest mb-3">
               {t.currentFocusTitle[lang]}
@@ -217,8 +137,6 @@ function DetailView({
               ))}
             </ul>
           </div>
-
-          {/* Potential Opportunities */}
           <div>
             <h3 className="text-brand-gold-400 font-semibold text-sm uppercase tracking-widest mb-3">
               {t.potentialTitle[lang]}
@@ -234,9 +152,7 @@ function DetailView({
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-6">
-          {/* Who Should Contact */}
           <div className="bg-[#070d1d] border border-brand-gold-500/10 rounded-xl p-5">
             <h3 className="text-brand-gold-400 font-semibold text-sm uppercase tracking-widest mb-4">
               {t.whoTitle[lang]}
@@ -250,8 +166,6 @@ function DetailView({
               ))}
             </ul>
           </div>
-
-          {/* Tags */}
           <div className="bg-[#070d1d] border border-brand-gold-500/10 rounded-xl p-5">
             <div className="flex flex-wrap gap-2">
               {getTags(opp, lang).map((tag) => (
@@ -261,8 +175,6 @@ function DetailView({
               ))}
             </div>
           </div>
-
-          {/* CTA */}
           <button
             onClick={handleContactClick}
             className="w-full bg-gradient-to-r from-brand-gold-600 to-brand-gold-400 hover:from-brand-gold-500 hover:to-brand-gold-300 text-[#030611] px-5 py-3 rounded-lg text-sm font-bold tracking-wide transition-all duration-300 shadow-md shadow-brand-gold-500/10 active:scale-95 text-center"
@@ -275,125 +187,194 @@ function DetailView({
   );
 }
 
-function ListView({
-  lang,
-  onSelect,
-  onBack,
-}: {
-  lang: "EN" | "ZH" | "AR";
-  onSelect: (opp: Opportunity) => void;
-  onBack: () => void;
-}) {
-  const isRtl = lang === "AR";
-  return (
-    <div dir={isRtl ? "rtl" : "ltr"}>
-      <button
-        onClick={onBack}
-        className="mb-8 text-sm text-brand-gold-400 hover:text-brand-gold-300 transition-colors duration-200"
-      >
-        {t.backToAll[lang]}
-      </button>
-      <div className="mb-10">
-        <p className="text-brand-gold-400 text-xs font-medium tracking-widest uppercase mb-2">
-          {t.sectionLabel[lang]}
-        </p>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white uppercase">
-          {t.allOppsTitle[lang]}
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {OPPORTUNITIES.map((opp) => (
-          <OpportunityCard key={opp.id} opp={opp} lang={lang} onSelect={onSelect} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function BusinessOpportunities({ lang }: BusinessOpportunitiesProps) {
-  const [view, setView] = useState<ViewState>("home");
-  const [selectedOpp, setSelectedOpp] = useState<Opportunity | null>(null);
+  const [selectedId, setSelectedId] = useState<string>(OPPORTUNITIES[0].id);
+  const [showDetail, setShowDetail] = useState(false);
   const isRtl = lang === "AR";
 
-  const handleSelectOpp = (opp: Opportunity) => {
-    setSelectedOpp(opp);
-    setView("detail");
-    // Scroll to section top
-    setTimeout(() => {
-      const el = document.getElementById("business-opportunities");
-      if (el) {
-        const offset = 80;
-        const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: pos, behavior: "smooth" });
-      }
-    }, 50);
+  const activeOpp = OPPORTUNITIES.find((o) => o.id === selectedId) ?? OPPORTUNITIES[0];
+
+  const handleTabClick = (id: string) => {
+    setSelectedId(id);
+    setShowDetail(false);
+  };
+
+  const handleViewDetail = () => {
+    setShowDetail(true);
+    setTimeout(() => scrollToSection("business-opportunities"), 50);
   };
 
   const handleBack = () => {
-    if (view === "detail") {
-      setView("list");
-      setSelectedOpp(null);
-    } else {
-      setView("home");
-    }
-    setTimeout(() => {
-      const el = document.getElementById("business-opportunities");
-      if (el) {
-        const offset = 80;
-        const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: pos, behavior: "smooth" });
-      }
-    }, 50);
+    setShowDetail(false);
+    setTimeout(() => scrollToSection("business-opportunities"), 50);
+  };
+
+  const handleContactClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    scrollToSection("contact-section");
   };
 
   return (
-    <section id="business-opportunities" className="bg-[#030611] py-20 sm:py-28 border-t border-brand-gold-500/8">
-      <div className="max-w-7xl mx-auto px-6">
-        {view === "home" && (
-          <div dir={isRtl ? "rtl" : "ltr"}>
-            {/* Section header */}
-            <div className="mb-12">
-              <p className="text-brand-gold-400 text-xs font-medium tracking-widest uppercase mb-3">
-                {t.sectionLabel[lang]}
-              </p>
-              <h2 className="text-4xl sm:text-5xl font-bold text-white uppercase mb-4 leading-tight">
-                {t.sectionTitle[lang]}
-              </h2>
-              <p className="text-slate-400 text-base max-w-2xl leading-relaxed">
-                {t.subtitle[lang]}
-              </p>
-            </div>
+    <section id="business-opportunities" className="py-20 md:py-24 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/4 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
 
-            {/* Cards grid — 3 + 2 layout */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {OPPORTUNITIES.slice(0, 3).map((opp) => (
-                <OpportunityCard key={opp.id} opp={opp} lang={lang} onSelect={handleSelectOpp} />
-              ))}
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12 lg:max-w-[66.666%]">
-              {OPPORTUNITIES.slice(3, 5).map((opp) => (
-                <OpportunityCard key={opp.id} opp={opp} lang={lang} onSelect={handleSelectOpp} />
-              ))}
-            </div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10" dir={isRtl ? "rtl" : "ltr"}>
 
-            {/* View all button */}
-            <div className={`flex ${isRtl ? "justify-end" : "justify-start"}`}>
-              <button
-                onClick={() => setView("list")}
-                className="inline-flex items-center gap-2 border border-brand-gold-500/30 hover:border-brand-gold-500/60 text-brand-gold-400 hover:text-brand-gold-300 px-6 py-3 rounded-lg text-sm font-medium tracking-wide transition-all duration-300"
-              >
-                {t.viewAll[lang]}
-              </button>
-            </div>
+        {/* Section header */}
+        <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="h-[1px] w-8 bg-brand-gold-500" />
+            <span className="text-sm font-mono text-brand-gold-400 font-medium uppercase tracking-widest">
+              {t.sectionLabel[lang]}
+            </span>
           </div>
-        )}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold text-brand-gold-100 tracking-tight leading-none uppercase">
+            {t.sectionTitle[lang]}
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
+            {t.subtitle[lang]}
+          </p>
+        </div>
 
-        {view === "list" && (
-          <ListView lang={lang} onSelect={handleSelectOpp} onBack={handleBack} />
-        )}
+        {showDetail ? (
+          <DetailView opp={activeOpp} lang={lang} onBack={handleBack} />
+        ) : (
+          <>
+            {/* Tab selector */}
+            <div className="mb-10">
+              <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-3 bg-[#030611]/50 border border-brand-gold-500/10 p-2 sm:p-3 rounded-2xl backdrop-blur-md">
+                {OPPORTUNITIES.map((opp) => {
+                  const isActive = opp.id === selectedId;
+                  return (
+                    <button
+                      key={opp.id}
+                      onClick={() => handleTabClick(opp.id)}
+                      className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center gap-2 border ${
+                        isActive
+                          ? "bg-brand-gold-500 text-[#030611] border-brand-gold-400 font-bold shadow-md shadow-brand-gold-500/10"
+                          : "bg-[#030611]/60 text-slate-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-brand-gold-300"
+                      }`}
+                    >
+                      <Briefcase className={`w-3.5 h-3.5 shrink-0 ${isActive ? "text-[#030611]" : "text-brand-gold-500/60"}`} />
+                      <span>{getTitle(opp, lang)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-        {view === "detail" && selectedOpp && (
-          <DetailView opp={selectedOpp} lang={lang} onBack={handleBack} />
+            {/* Main content area */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+
+              {/* Left: video / image area */}
+              <div className="lg:col-span-8 flex flex-col">
+                <div className="relative aspect-video md:aspect-[21/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center shadow-2xl">
+
+                  {activeOpp.image && (
+                    <>
+                      <img
+                        key={activeOpp.id}
+                        src={activeOpp.image}
+                        alt=""
+                        className="w-full h-full object-cover pointer-events-none select-none"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#030611]/80 via-[#030611]/20 to-transparent pointer-events-none" />
+                      <div className="absolute top-4 left-4 z-20">
+                        <span className="inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full tracking-wide uppercase">
+                          {getCountry(activeOpp, lang)}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-4 left-4 z-20">
+                        <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${statusStyle(activeOpp.status)}`}>
+                          {getStatus(activeOpp, lang)}
+                        </span>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Placeholder */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex-col items-center justify-center p-6 text-center select-none overflow-hidden ${activeOpp.image ? "hidden" : "flex"}`}>
+                    <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
+                    <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
+                    <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/10 text-brand-gold-400/40 mb-4 shadow-xl">
+                      <VideoOff className="w-8 h-8 stroke-[1.5]" />
+                    </div>
+                    <span className="text-xs sm:text-sm font-mono text-[#DFBA6B] uppercase font-bold animate-pulse tracking-widest">
+                      {t.placeholderText[lang]}
+                    </span>
+                    <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-wider mt-1 block font-medium">
+                      GCI Business Opportunity
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: info panel */}
+              <div className="lg:col-span-4 flex flex-col justify-between p-6 sm:p-8 bg-[#070e20] rounded-2xl border border-brand-gold-500/10 shadow-xl relative overflow-hidden backdrop-blur-md">
+                <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-brand-gold-500/5 pointer-events-none rounded-tr-2xl" />
+
+                <div className="flex flex-col h-full" dir={isRtl ? "rtl" : "ltr"}>
+                  <div className="flex-1">
+                    {/* Country + status badges */}
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                      <span className="text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold tracking-widest">
+                        {getCountry(activeOpp, lang)}
+                      </span>
+                      <span className={`text-[10px] font-mono font-bold px-3 py-1 rounded-lg ${statusStyle(activeOpp.status)}`}>
+                        {getStatus(activeOpp, lang)}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-serif text-brand-gold-100 font-extrabold tracking-tight mb-4 leading-snug">
+                      {getTitle(activeOpp, lang)}
+                    </h3>
+
+                    <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed mb-6 border-l-2 border-brand-gold-500/20 pl-4 min-h-[5rem]">
+                      {getOverview(activeOpp, lang)}
+                    </p>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="border-t border-brand-gold-500/10 pt-5 mb-5">
+                    <span className="text-[10px] uppercase font-mono tracking-wider text-brand-gold-400 block mb-3 font-semibold">
+                      {t.tagsLabel[lang]}
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {getTags(activeOpp, lang).map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[11px] font-sans text-brand-gold-200 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/12 rounded-lg px-2.5 py-1.5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA buttons */}
+                  <div className="flex flex-col gap-3">
+                    <button
+                      onClick={handleViewDetail}
+                      className="w-full border border-brand-gold-500/30 hover:border-brand-gold-500/60 text-brand-gold-400 hover:text-brand-gold-300 px-5 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-300 text-center"
+                    >
+                      {t.detailBtn[lang]}
+                    </button>
+                    <button
+                      onClick={handleContactClick}
+                      className="w-full bg-gradient-to-r from-brand-gold-600 to-brand-gold-400 hover:from-brand-gold-500 hover:to-brand-gold-300 text-[#030611] px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all duration-300 shadow-md shadow-brand-gold-500/10 active:scale-95 text-center"
+                    >
+                      {t.contactBtn[lang]}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </>
         )}
       </div>
     </section>

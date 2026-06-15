@@ -112,7 +112,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navWhyGCI: "Projects",
     navMedia: "Commercial Network",
     navInsights: "Insights",
-    navBusinessOpportunities: "Business Opportunities",
+    navBusinessOpportunities: "Opportunities",
     navContact: "Contact",
     contactBtn: "Book Consultation",
     
