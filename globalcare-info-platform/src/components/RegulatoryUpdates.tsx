@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { BookOpen, FolderSync, ShieldAlert, Newspaper, ArrowRight, ArrowLeft, Layers, Sparkles, Filter, MapPin } from "lucide-react";
 
 // Vite production-safe image imports (raw /src/assets paths break after build hashing)
@@ -16,22 +16,21 @@ const IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
 };
 
-// Country → unique Unsplash image for the country grid (Level 1 — each country must be distinct)
-// All photo IDs verified via Unsplash search
+// Country → local images in /public/images/countries/ (verified city photos, committed to repo)
 const COUNTRY_GRID_IMG: Record<string, string> = {
-  "UAE / Dubai":  "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",  // Dubai Marina aerial ✓
-  "Saudi Arabia": "https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&q=80",  // Riyadh KAFD skyline ✓
-  "Qatar":        "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80",      // Doha / Gulf skyline ✓
-  "Bahrain":      "https://images.unsplash.com/photo-wOlMEpBzwHs?w=600&q=80",                 // Bahrain World Trade Center ✓
-  "Oman":         "https://images.unsplash.com/photo-n8MmkmHcR3Y?w=600&q=80",                 // Muttrah Corniche aerial ✓
-  "Kuwait":       "https://images.unsplash.com/photo-QsM6TFdHM60?w=600&q=80",                 // Kuwait City skyline sunset ✓
-  "Kenya":        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80",      // Nairobi skyline ✓
-  "Tanzania":     "https://images.unsplash.com/photo-Annl9CjEaEs?w=600&q=80",                 // Dar es Salaam port containers ✓
-  "Nigeria":      "https://images.unsplash.com/photo-qNIBpxNXkx4?w=600&q=80",                 // Lagos Lekki-Ikoyi bridge ✓
-  "Morocco":      "https://images.unsplash.com/photo-qrydbJhp-ug?w=600&q=80",                 // Casablanca buildings ✓
-  "China":        "https://images.unsplash.com/photo-1474990349564-ca4de5c8bb0f?w=600&q=80",   // Shanghai port/Pudong ✓
-  "Brazil":       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80",   // Rio de Janeiro ✓
-  "Global":       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",   // Earth from space ✓
+  "UAE / Dubai":  "/images/countries/country-uae.jpg",      // Dubai Marina aerial
+  "Saudi Arabia": "/images/countries/country-saudi.jpg",    // Riyadh KAFD skyline
+  "Qatar":        "/images/countries/country-qatar.jpg",    // The Pearl, Doha (NOT Dubai)
+  "Bahrain":      "/images/countries/country-bahrain.jpg",  // Bahrain World Trade Center
+  "Oman":         "/images/countries/country-oman.jpg",     // Muttrah Corniche, Muscat
+  "Kuwait":       "/images/countries/country-kuwait.jpg",   // Kuwait City skyline
+  "Kenya":        "/images/countries/country-kenya.jpg",    // Nairobi skyline
+  "Tanzania":     "/images/countries/country-tanzania.jpg", // Dar es Salaam port
+  "Nigeria":      "/images/countries/country-nigeria.jpg",  // Lagos Lekki bridge
+  "Morocco":      "/images/countries/country-morocco.jpg",  // Casablanca Hassan II mosque
+  "China":        "/images/countries/country-china.jpg",    // Shanghai Bund skyline
+  "Brazil":       "/images/countries/country-brazil.jpg",   // Rio de Janeiro
+  "Global":       "/images/countries/country-global.jpg",   // Earth from space
 };
 
 // Country → local warm-gold image (overrides any external URL from Notion)
