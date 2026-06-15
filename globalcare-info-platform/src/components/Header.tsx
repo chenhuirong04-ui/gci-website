@@ -42,20 +42,24 @@ export default function Header({ lang, setLang, pack }: HeaderProps) {
 
         {/* Corporate Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
-          <a onClick={(e) => handleNavClick(e, "who-we-are")} href="#who-we-are" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navWhoWeAre}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
           <a onClick={(e) => handleNavClick(e, "what-we-do")} href="#what-we-do" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
             {pack.navWhatWeDo}
+            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
+          </a>
+          <a onClick={(e) => handleNavClick(e, "insights-section")} href="#insights-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
+            {pack.navInsights}
+            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
+          </a>
+          <a onClick={(e) => handleNavClick(e, "business-opportunities")} href="#business-opportunities" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
+            {pack.navBusinessOpportunities}
             <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
           </a>
           <a onClick={(e) => handleNavClick(e, "media-section")} href="#media-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
             {pack.navMedia}
             <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
           </a>
-          <a onClick={(e) => handleNavClick(e, "insights-section")} href="#insights-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navInsights}
+          <a onClick={(e) => handleNavClick(e, "who-we-are")} href="#who-we-are" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
+            {pack.navWhoWeAre}
             <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
           </a>
           <a onClick={(e) => handleNavClick(e, "contact-section")} href="#contact-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">

@@ -9,6 +9,7 @@ export interface LanguagePack {
   navWhyGCI: string;
   navMedia: string;
   navInsights: string;
+  navBusinessOpportunities: string;
   navContact: string;
   contactBtn: string;
   
@@ -111,6 +112,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navWhyGCI: "Projects",
     navMedia: "Commercial Network",
     navInsights: "Insights",
+    navBusinessOpportunities: "Business Opportunities",
     navContact: "Contact",
     contactBtn: "Book Consultation",
     
@@ -240,6 +242,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navWhyGCI: "执行案例",
     navMedia: "商业网络",
     navInsights: "法规与市场动态",
+    navBusinessOpportunities: "商业机会",
     navContact: "联系我们",
     contactBtn: "预订商务会谈",
     
@@ -369,6 +372,7 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navWhyGCI: "لماذا GCI",
     navMedia: "الشبكة التجارية",
     navInsights: "التحديثات واللوائح",
+    navBusinessOpportunities: "فرص الأعمال",
     navContact: "اتصل بنا",
     contactBtn: "حجز استشارة",
     

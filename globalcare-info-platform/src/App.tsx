@@ -6,6 +6,7 @@ import WhoWeAre from "./components/WhoWeAre";
 import WhatWeDo from "./components/WhatWeDo";
 import CommercialNetwork from "./components/CommercialNetwork";
 import RegulatoryUpdates from "./components/RegulatoryUpdates";
+import BusinessOpportunities from "./components/BusinessOpportunities";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -24,19 +25,22 @@ export default function App() {
         {/* 1. Hero with connected trade sphere */}
         <Hero lang={lang} pack={pack} />
 
-        {/* 2. Who We Are */}
-        <WhoWeAre lang={lang} pack={pack} />
-
-        {/* 3. What We Do Triad */}
+        {/* 2. What We Do Triad */}
         <WhatWeDo lang={lang} pack={pack} />
 
-        {/* 4. Commercial Network dynamic selector showcase */}
-        <CommercialNetwork lang={lang} pack={pack} />
-
-        {/* 5. GCI Regulatory & Market Updates */}
+        {/* 3. GCI Regulatory & Market Updates */}
         <RegulatoryUpdates lang={lang} />
 
-        {/* 6. Contact CTA & Consultations */}
+        {/* 4. Business Opportunities Hub */}
+        <BusinessOpportunities lang={lang} />
+
+        {/* 5. Commercial Network dynamic selector showcase */}
+        <CommercialNetwork lang={lang} pack={pack} />
+
+        {/* 6. Who We Are */}
+        <WhoWeAre lang={lang} pack={pack} />
+
+        {/* 7. Contact CTA & Consultations */}
         <ContactSection lang={lang} pack={pack} />
       </main>
 
