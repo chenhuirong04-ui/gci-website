@@ -39,7 +39,12 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       const titleEN = p.Title?.title?.[0]?.plain_text || "";
       const summaryEN = p["Summary EN"]?.rich_text?.[0]?.plain_text || "";
       const summaryZH = p["Summary ZH"]?.rich_text?.[0]?.plain_text || summaryEN;
-      const countryEN = p.Country?.select?.name || "Global";
+      const countryEN = (
+        p.Country?.select?.name ||
+        p.Country?.multi_select?.[0]?.name ||
+        p.Country?.rich_text?.[0]?.plain_text ||
+        "Global"
+      ).trim();
 
       // Optional fields — silently empty if the Notion DB doesn't have them yet
       const titleAR = p["Title AR"]?.rich_text?.[0]?.plain_text || titleEN;
