@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { VideoOff, Briefcase, Play } from "lucide-react";
 
 function getYouTubeId(url: string): string | null {
@@ -192,13 +192,34 @@ function DetailView({
   );
 }
 
+interface NotionOverlay {
+  slug: string;
+  youtubeUrl: string | null;
+  coverImageUrl: string | null;
+}
+
 export default function BusinessOpportunities({ lang }: BusinessOpportunitiesProps) {
   const [selectedId, setSelectedId] = useState<string>(OPPORTUNITIES[0].id);
   const [showDetail, setShowDetail] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [overlays, setOverlays] = useState<Record<string, NotionOverlay>>({});
   const isRtl = lang === "AR";
 
+  useEffect(() => {
+    fetch("/api/opportunities")
+      .then((r) => r.json())
+      .then((data: NotionOverlay[]) => {
+        const map: Record<string, NotionOverlay> = {};
+        data.forEach((o) => { map[o.slug] = o; });
+        setOverlays(map);
+      })
+      .catch(() => {});
+  }, []);
+
   const activeOpp = OPPORTUNITIES.find((o) => o.id === selectedId) ?? OPPORTUNITIES[0];
+  const activeOverlay = overlays[activeOpp.id];
+  const activeYoutubeUrl = activeOverlay?.youtubeUrl || activeOpp.youtubeUrl || "";
+  const activeImage = activeOverlay?.coverImageUrl || activeOpp.image;
 
   const handleTabClick = (id: string) => {
     setSelectedId(id);
@@ -279,20 +300,20 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                 <div className="relative w-full h-full min-h-[320px] rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center shadow-2xl">
 
                   {/* YouTube embed — highest priority */}
-                  {activeOpp.youtubeUrl && getYouTubeId(activeOpp.youtubeUrl) ? (
+                  {activeYoutubeUrl && getYouTubeId(activeYoutubeUrl) ? (
                     <iframe
-                      key={activeOpp.id}
-                      src={`https://www.youtube.com/embed/${getYouTubeId(activeOpp.youtubeUrl)}?rel=0&modestbranding=1`}
+                      key={activeOpp.id + "-yt"}
+                      src={`https://www.youtube.com/embed/${getYouTubeId(activeYoutubeUrl)}?rel=0&modestbranding=1`}
                       title={activeOpp.titleEN}
                       className="absolute inset-0 w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
-                  ) : activeOpp.image ? (
+                  ) : activeImage ? (
                     <>
                       <img
-                        key={activeOpp.id}
-                        src={activeOpp.image}
+                        key={activeOpp.id + "-img"}
+                        src={activeImage}
                         alt=""
                         className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                         onError={(e) => { e.currentTarget.style.display = "none"; }}
@@ -319,7 +340,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                       </div>
                     </>
                   ) : (
-                    /* No image, no video — full placeholder */
+                    /* No image, no video — placeholder */
                     <div className="absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden">
                       <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
                       <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
