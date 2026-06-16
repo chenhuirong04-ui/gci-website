@@ -45,6 +45,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       };
     });
 
+    res.setHeader("Cache-Control", "no-store");
     return res.status(200).json(countries);
   } catch {
     return res.status(200).json([]);
