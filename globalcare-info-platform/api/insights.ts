@@ -52,7 +52,12 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       const sourceUrl = p["Source URL"]?.url || undefined;
       const businessImpact = p["Business Impact"]?.rich_text?.[0]?.plain_text || undefined;
       const gciRecommendation = p["GCI Recommendation"]?.rich_text?.[0]?.plain_text || undefined;
-      const content =
+      const contentEN =
+        p["Website Content EN"]?.rich_text?.[0]?.plain_text ||
+        summaryEN ||
+        "This market intelligence article is being prepared.";
+      const contentZH =
+        p["Website Content ZH"]?.rich_text?.[0]?.plain_text ||
         p["Website Content"]?.rich_text?.[0]?.plain_text ||
         p["WeChat Content"]?.rich_text?.[0]?.plain_text ||
         summaryZH ||
@@ -76,7 +81,8 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         ...(sourceUrl && { sourceUrl }),
         ...(businessImpact && { businessImpact }),
         ...(gciRecommendation && { gciRecommendation }),
-        content,
+        contentEN,
+        contentZH,
       };
     });
 

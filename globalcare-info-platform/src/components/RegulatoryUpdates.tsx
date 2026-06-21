@@ -81,7 +81,8 @@ interface Article {
   sourceUrl?: string;
   businessImpact?: string;
   gciRecommendation?: string;
-  content?: string;
+  contentEN?: string;
+  contentZH?: string;
 }
 
 const CATEGORIES = {
@@ -378,7 +379,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
           const a = selectedArticle;
           const title = { EN: a.titleEN, ZH: a.titleZH, AR: a.titleAR }[lang];
           const country = { EN: a.countryEN, ZH: a.countryZH, AR: a.countryAR }[lang];
-          const body = a.content || a.summaryZH || a.summaryEN;
+          const body = lang === "EN" ? (a.contentEN || a.summaryEN) : (a.contentZH || a.summaryZH || a.summaryEN);
           return (
             <div className="max-w-3xl mx-auto">
               <button
