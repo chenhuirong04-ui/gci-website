@@ -50,6 +50,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       const titleAR = p["Title AR"]?.rich_text?.[0]?.plain_text || titleEN;
       const summaryAR = p["Summary AR"]?.rich_text?.[0]?.plain_text || summaryEN;
       const sourceUrl = p["Source URL"]?.url || undefined;
+      const sourceName = p["Source Name"]?.rich_text?.[0]?.plain_text || p["Source Name"]?.title?.[0]?.plain_text || undefined;
       const businessImpact = p["Business Impact"]?.rich_text?.[0]?.plain_text || undefined;
       const gciRecommendation = p["GCI Recommendation"]?.rich_text?.[0]?.plain_text || undefined;
       const contentEN =
@@ -79,6 +80,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         summaryAR,
         coverImage: p["Cover Image URL"]?.url || "",
         ...(sourceUrl && { sourceUrl }),
+        ...(sourceName && { sourceName }),
         ...(businessImpact && { businessImpact }),
         ...(gciRecommendation && { gciRecommendation }),
         contentEN,

@@ -79,6 +79,7 @@ interface Article {
   coverImage: string;
   // Optional fields — present when Notion DB has them, undefined otherwise
   sourceUrl?: string;
+  sourceName?: string;
   businessImpact?: string;
   gciRecommendation?: string;
   contentEN?: string;
@@ -419,18 +420,12 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 {body}
               </div>
 
-              {a.sourceUrl && (
-                <div className="border-t border-brand-gold-500/10 pt-5">
-                  <a
-                    href={a.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors"
-                  >
-                    {lang === "ZH" ? "原文来源 →" : lang === "AR" ? "المصدر الأصلي ←" : "Original Source →"}
-                  </a>
-                </div>
-              )}
+              <div className="border-t border-brand-gold-500/10 pt-5">
+                <span className="text-xs font-bold text-brand-gold-400">
+                  {(lang === "ZH" ? "来源：" : lang === "AR" ? "المصدر: " : "Source: ") +
+                    (a.sourceName || (lang === "ZH" ? "公开市场信息" : lang === "AR" ? "معلومات السوق العامة" : "Public Market Information"))}
+                </span>
+              </div>
             </div>
           );
         })()}
