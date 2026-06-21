@@ -81,6 +81,7 @@ interface Article {
   sourceUrl?: string;
   businessImpact?: string;
   gciRecommendation?: string;
+  content?: string;
 }
 
 const CATEGORIES = {
@@ -292,6 +293,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<"all" | "regulatory" | "market" | "trade" | "gci">("all");
   const [articles, setArticles] = useState<Article[]>(ARTICLES_DATA);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const isRtl = lang === "AR";
 
   useEffect(() => {
@@ -370,7 +372,70 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-brand-navy-600/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10" dir={isRtl ? "rtl" : "ltr"}>
-        
+
+        {/* IN-SITE ARTICLE DETAIL VIEW — shown when a card is clicked, replaces list below */}
+        {selectedArticle && (() => {
+          const a = selectedArticle;
+          const title = { EN: a.titleEN, ZH: a.titleZH, AR: a.titleAR }[lang];
+          const country = { EN: a.countryEN, ZH: a.countryZH, AR: a.countryAR }[lang];
+          const body = a.content || a.summaryZH || a.summaryEN;
+          return (
+            <div className="max-w-3xl mx-auto">
+              <button
+                onClick={() => setSelectedArticle(null)}
+                className="mb-8 text-xs sm:text-sm font-sans font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>{lang === "ZH" ? "← 返回情报列表" : lang === "AR" ? "→ العودة" : "← Back to Insights"}</span>
+              </button>
+
+              <div className="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden mb-6 border border-brand-gold-500/15 bg-[#0a1428]">
+                <img
+                  src={resolveArticleImg(a.coverImage, a.countryEN)}
+                  alt=""
+                  className="w-full h-full object-cover select-none pointer-events-none"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070e20]/80 via-transparent to-transparent pointer-events-none" />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-4 text-[10px] font-mono uppercase tracking-wider">
+                <span className="bg-[#C59B3F] text-[#030611] px-2.5 py-1 rounded-md font-bold">
+                  {categoryLabels[a.category][lang]}
+                </span>
+                <span className="bg-[#030611]/85 text-brand-gold-200 border border-brand-gold-500/20 px-2.5 py-1 rounded-md flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-brand-gold-400 shrink-0" />
+                  {country}
+                </span>
+                <span className="text-slate-400">{a.date}</span>
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#f9f5eb] font-extrabold leading-snug tracking-tight mb-6">
+                {title}
+              </h1>
+
+              <div className="text-sm sm:text-base text-brand-gold-200/85 font-sans font-light leading-relaxed whitespace-pre-line mb-10">
+                {body}
+              </div>
+
+              {a.sourceUrl && (
+                <div className="border-t border-brand-gold-500/10 pt-5">
+                  <a
+                    href={a.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors"
+                  >
+                    {lang === "ZH" ? "原文来源 →" : lang === "AR" ? "المصدر الأصلي ←" : "Original Source →"}
+                  </a>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
+        {!selectedArticle && (
+        <>
         {/* SECTION HEADER BLOCK */}
         <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
           <div className="flex items-center gap-2 mb-4 justify-start">
@@ -416,8 +481,9 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-12">
               
               {/* LARGE FEATURED CARD ( occupying lg:col-span-2, large high contrast visual focus ) */}
-              <div 
-                className="lg:col-span-2 group flex flex-col justify-between bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-3xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-gold-500/5 min-h-[440px]"
+              <div
+                onClick={() => setSelectedArticle(leadArticle)}
+                className="lg:col-span-2 group flex flex-col justify-between bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-3xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-gold-500/5 min-h-[440px] cursor-pointer"
               >
                 {/* Visual Cover Image — fixed h-52, fallback placeholder if broken */}
                 <div className="relative w-full h-52 shrink-0 overflow-hidden border-b border-brand-gold-500/10 bg-[#0a1428]">
@@ -478,7 +544,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   return (
                     <div
                       key={article.id}
-                      className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm flex-1"
+                      onClick={() => setSelectedArticle(article)}
+                      className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm flex-1 cursor-pointer"
                     >
                       {/* Image strip at top of card — fixed h-28 */}
                       <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 border border-brand-gold-500/10 bg-[#0a1428] shrink-0">
@@ -530,7 +597,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 return (
                   <div
                     key={article.id}
-                    className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
+                    onClick={() => setSelectedArticle(article)}
+                    className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl cursor-pointer"
                   >
                     {/* Visual Card Image — fixed h-40, bottom label overlay */}
                     <div className="relative w-full h-40 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
@@ -737,7 +805,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                         return (
                           <div
                             key={article.id}
-                            className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/12 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl"
+                            onClick={() => setSelectedArticle(article)}
+                            className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/12 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl cursor-pointer"
                           >
                             <div className="relative w-full h-44 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
                               <img
@@ -795,6 +864,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             })()}
 
           </div>
+        )}
+        </>
         )}
 
       </div>

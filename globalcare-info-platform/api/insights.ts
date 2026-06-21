@@ -52,6 +52,12 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       const sourceUrl = p["Source URL"]?.url || undefined;
       const businessImpact = p["Business Impact"]?.rich_text?.[0]?.plain_text || undefined;
       const gciRecommendation = p["GCI Recommendation"]?.rich_text?.[0]?.plain_text || undefined;
+      const content =
+        p["Website Content"]?.rich_text?.[0]?.plain_text ||
+        p["WeChat Content"]?.rich_text?.[0]?.plain_text ||
+        summaryZH ||
+        summaryEN ||
+        "该市场情报正文正在整理中，请稍后查看。";
 
       return {
         id: page.id,
@@ -70,6 +76,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         ...(sourceUrl && { sourceUrl }),
         ...(businessImpact && { businessImpact }),
         ...(gciRecommendation && { gciRecommendation }),
+        content,
       };
     });
 
