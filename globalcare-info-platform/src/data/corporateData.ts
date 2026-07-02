@@ -38,7 +38,8 @@ export interface LanguagePack {
   service1Desc: string;
   service1Bullets: string[];
   service1Footer: string;
-  
+  service1DetailsBtn?: string;
+
   service2Title: string;
   service2Desc: string;
   service2Bullets: string[];
@@ -137,18 +138,18 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whatWeDoTitle: "FOUR CORE BUSINESS CAPABILITIES",
     whatWeDoSubtitle: "GCI connects resources, coordinates execution and supports business growth across regional and global markets through four core business capabilities.",
     
-    service1Title: "Market Entry & Business Services",
-    service1Desc: "Helping companies establish market presence and develop commercial opportunities across regional and international markets.",
+    service1Title: "Company Setup & Market Access",
+    service1Desc: "Supporting companies with UAE company setup, business visits, product access requirements, industry licensing, tax compliance and bank account coordination.",
     service1Bullets: [
-      "Market Opportunity Assessment",
-      "Business Matching",
-      "Channel Development",
-      "Business Visit Coordination",
-      "Partner Introductions",
-      "Commercial Support",
-      "Tax & Compliance Advisory"
+      "Company Setup",
+      "Business Visits",
+      "Product Certification",
+      "Industry Licensing",
+      "Tax & Accounting",
+      "Bank Account Support"
     ],
-    service1Footer: "Business Development",
+    service1Footer: "Access & Landing",
+    service1DetailsBtn: "View Service Details →",
     
     service2Title: "Trade & Supply Chain Solutions",
     service2Desc: "Connecting China supply resources with regional market demand through coordinated sourcing, logistics and distribution support.",
@@ -267,18 +268,18 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whatWeDoTitle: "四大核心业务能力",
     whatWeDoSubtitle: "GCI通过四大核心业务能力，对接资源，协同执行，支持区域及全球市场的业务增长。",
     
-    service1Title: "1. 市场进入与商务拓展",
-    service1Desc: "帮助企业在区域及国际市场建立市场存在并开拓商业机会。",
+    service1Title: "公司设立与市场准入服务",
+    service1Desc: "帮助企业在阿联酋完成公司设立、商务考察、产品准入、行业许可、财税合规及银行开户等基础落地事项。",
     service1Bullets: [
-      "市场机会评估",
-      "商业匹配对接",
-      "渠道开发建设",
-      "商务考察协调",
-      "合作伙伴引荐",
-      "商业落地支持",
-      "财税与合规支持"
+      "一站式公司设立",
+      "商务考察安排",
+      "产品准入与认证支持",
+      "行业许可与审批协调",
+      "财税与会计合规",
+      "银行开户协调"
     ],
-    service1Footer: "业务开发",
+    service1Footer: "准入与落地",
+    service1DetailsBtn: "查看服务细项 →",
 
     service2Title: "2. 贸易与供应链解决方案",
     service2Desc: "通过协同采购、物流与分销支持，将中国供应资源与区域市场需求相连接。",

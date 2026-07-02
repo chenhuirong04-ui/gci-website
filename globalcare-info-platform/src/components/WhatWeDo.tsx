@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { LanguagePack } from "../data/corporateData";
-import { Layers, ShieldCheck, Landmark, CheckCircle, Cpu } from "lucide-react";
+import { Layers, ShieldCheck, Landmark, CheckCircle, Cpu, ChevronRight } from "lucide-react";
+import { service1Details } from "../data/service1Details";
+import ServiceDetailDrawer from "./ServiceDetailDrawer";
 
 interface WhatWeDoProps {
   lang: "EN" | "ZH" | "AR";
@@ -9,6 +11,18 @@ interface WhatWeDoProps {
 
 export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
   const isRtl = lang === "AR";
+  const [activeDetailIndex, setActiveDetailIndex] = useState<number | null>(null);
+
+  const handleSubmitRequirement = () => {
+    setActiveDetailIndex(null);
+    const el = document.getElementById("contact-section");
+    if (el) {
+      const headerOffset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+  };
 
   const services = [
     {
@@ -17,7 +31,10 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       title: pack.service1Title,
       desc: pack.service1Desc,
       bullets: pack.service1Bullets || [],
-      footer: pack.service1Footer
+      footer: pack.service1Footer,
+      badgeLabel: pack.service1Footer,
+      detailsBtn: pack.service1DetailsBtn,
+      interactive: lang !== "AR"
     },
     {
       idx: "02",
@@ -96,18 +113,45 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
                 </p>
 
                 {/* Sub-elements bullet checklist */}
-                <ul className="space-y-3.5 border-t border-brand-gold-500/10 pt-5 text-xs sm:text-sm font-light text-brand-gold-200/80">
-                  {svc.bullets.map((bullet, k) => (
-                    <li key={k} className="flex gap-2.5 items-start leading-relaxed">
-                      <CheckCircle className="w-4 h-4 text-brand-gold-500 shrink-0 mt-0.5" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
+                <ul className={`border-t border-brand-gold-500/10 pt-5 text-xs sm:text-sm font-light text-brand-gold-200/80 ${svc.interactive ? "space-y-1" : "space-y-3.5"}`}>
+                  {svc.bullets.map((bullet, k) =>
+                    svc.interactive ? (
+                      <li key={k}>
+                        <button
+                          type="button"
+                          onClick={() => setActiveDetailIndex(k)}
+                          className="group/item w-full flex items-center justify-between gap-2 text-left rtl:text-right -mx-2.5 px-2.5 py-2 rounded-lg hover:bg-brand-gold-500/10 transition-colors cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500 shrink-0" />
+                            <span className="text-brand-gold-200/90 group-hover/item:text-brand-gold-100 transition-colors">{bullet}</span>
+                          </span>
+                          <ChevronRight className="w-3.5 h-3.5 text-brand-gold-500/40 group-hover/item:text-brand-gold-400 group-hover/item:translate-x-0.5 rtl:group-hover/item:-translate-x-0.5 rtl:rotate-180 transition-all shrink-0" />
+                        </button>
+                      </li>
+                    ) : (
+                      <li key={k} className="flex gap-2.5 items-start leading-relaxed">
+                        <CheckCircle className="w-4 h-4 text-brand-gold-500 shrink-0 mt-0.5" />
+                        <span>{bullet}</span>
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
 
               {/* Minimal Bottom Hover Element */}
-              {svc.footerUrl ? (
+              {svc.interactive ? (
+                <button
+                  type="button"
+                  onClick={() => setActiveDetailIndex(0)}
+                  className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center justify-between gap-1.5 text-brand-gold-400 hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors text-left rtl:text-right"
+                >
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-brand-gold-500/20 bg-brand-gold-500/5 text-[10px] sm:text-xs tracking-wide uppercase">
+                    {svc.badgeLabel}
+                  </span>
+                  <span>{svc.detailsBtn}</span>
+                </button>
+              ) : svc.footerUrl ? (
                 <a
                   href={svc.footerUrl}
                   target="_blank"
@@ -129,6 +173,15 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
         </div>
 
       </div>
+
+      {activeDetailIndex !== null && service1Details[activeDetailIndex] && (
+        <ServiceDetailDrawer
+          lang={lang}
+          item={service1Details[activeDetailIndex]}
+          onClose={() => setActiveDetailIndex(null)}
+          onSubmitRequirement={handleSubmitRequirement}
+        />
+      )}
     </section>
   );
 }
