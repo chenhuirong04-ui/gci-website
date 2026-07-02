@@ -38,7 +38,6 @@ export interface LanguagePack {
   service1Desc: string;
   service1Bullets: string[];
   service1Footer: string;
-  service1DetailsBtn?: string;
 
   service2Title: string;
   service2Desc: string;
@@ -149,7 +148,6 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "Bank Account Support"
     ],
     service1Footer: "Access & Landing",
-    service1DetailsBtn: "View Service Details →",
     
     service2Title: "Trade & Supply Chain Solutions",
     service2Desc: "Connecting China supply resources with regional market demand through coordinated sourcing, logistics and distribution support.",
@@ -279,7 +277,6 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "银行开户协调"
     ],
     service1Footer: "准入与落地",
-    service1DetailsBtn: "查看服务细项 →",
 
     service2Title: "2. 贸易与供应链解决方案",
     service2Desc: "通过协同采购、物流与分销支持，将中国供应资源与区域市场需求相连接。",

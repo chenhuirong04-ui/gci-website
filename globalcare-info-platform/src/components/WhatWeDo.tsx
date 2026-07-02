@@ -33,7 +33,6 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       bullets: pack.service1Bullets || [],
       footer: pack.service1Footer,
       badgeLabel: pack.service1Footer,
-      detailsBtn: pack.service1DetailsBtn,
       interactive: lang !== "AR"
     },
     {
@@ -141,16 +140,11 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
 
               {/* Minimal Bottom Hover Element */}
               {svc.interactive ? (
-                <button
-                  type="button"
-                  onClick={() => setActiveDetailIndex(0)}
-                  className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center justify-between gap-1.5 text-brand-gold-400 hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors text-left rtl:text-right"
-                >
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-brand-gold-500/20 bg-brand-gold-500/5 text-[10px] sm:text-xs tracking-wide uppercase">
+                <div className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center rtl:justify-end">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-brand-gold-500/20 bg-brand-gold-500/5 text-brand-gold-400 text-[10px] sm:text-xs font-sans font-medium tracking-wide uppercase">
                     {svc.badgeLabel}
                   </span>
-                  <span>{svc.detailsBtn}</span>
-                </button>
+                </div>
               ) : svc.footerUrl ? (
                 <a
                   href={svc.footerUrl}
