@@ -26,7 +26,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       },
       body: JSON.stringify({
         filter: { property: "Published", checkbox: { equals: true } },
-        sorts: [{ property: "Date", direction: "descending" }],
+        sorts: [{ timestamp: "created_time", direction: "descending" }],
         page_size: 50,
       }),
     });
@@ -65,6 +65,14 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         summaryEN ||
         "该市场情报正文正在整理中，请稍后查看。";
 
+      // sourceDate: original news date (Notion "Date" property, unchanged meaning).
+      // publishedAt: when this went live on the GCI website — Notion page created_time, falling
+      // back to last_edited_time if created_time is ever unavailable.
+      // sortAt: what every list/sort on the site should order by.
+      const sourceDate = p.Date?.date?.start || "";
+      const publishedAt = page.created_time || page.last_edited_time || "";
+      const sortAt = publishedAt || sourceDate;
+
       return {
         id: page.id,
         category: mapCategory(p.Category?.select?.name),
@@ -74,7 +82,10 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         countryEN,
         countryZH: countryEN,
         countryAR: countryEN,
-        date: p.Date?.date?.start || "",
+        date: sourceDate,
+        sourceDate,
+        publishedAt,
+        sortAt,
         summaryEN,
         summaryZH,
         summaryAR,

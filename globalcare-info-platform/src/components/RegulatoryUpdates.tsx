@@ -84,6 +84,25 @@ interface Article {
   gciRecommendation?: string;
   contentEN?: string;
   contentZH?: string;
+  // Date semantics: `date` stays the original Notion "Date" field (source/news date, used on the detail view).
+  // `sortAt` is the GCI-website publish time and drives ordering + the card "Published" date shown on lists.
+  sourceDate?: string;
+  publishedAt?: string;
+  sortAt?: string;
+}
+
+// GCI website publish time, falling back to the source date when unavailable (e.g. static fallback articles).
+function getSortAt(a: Article): string {
+  return a.sortAt || a.publishedAt || a.date || "";
+}
+
+function sortBySortAt(list: Article[]): Article[] {
+  return [...list].sort((x, y) => getSortAt(y).localeCompare(getSortAt(x)));
+}
+
+// Notion created_time/last_edited_time are full ISO timestamps — cards only show the YYYY-MM-DD part.
+function formatDisplayDate(a: Article): string {
+  return getSortAt(a).slice(0, 10);
 }
 
 const CATEGORIES = {
@@ -294,7 +313,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   const [isAllView, setIsAllView] = useState<boolean>(false);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<"all" | "regulatory" | "market" | "trade" | "gci">("all");
-  const [articles, setArticles] = useState<Article[]>(ARTICLES_DATA);
+  const [articles, setArticles] = useState<Article[]>(() => sortBySortAt(ARTICLES_DATA));
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const isRtl = lang === "AR";
 
@@ -305,7 +324,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
         if (Array.isArray(data) && data.length > 0) {
           const notionIds = new Set(data.map((a: Article) => a.id));
           const fallback = ARTICLES_DATA.filter(a => !notionIds.has(a.id));
-          setArticles([...data, ...fallback]);
+          setArticles(sortBySortAt([...data, ...fallback]));
         }
       })
       .catch(() => {});
@@ -338,7 +357,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   }[lang];
 
   const dateLabel = {
-    EN: "TRANS. DATE",
+    EN: "Published",
     ZH: "发布时间",
     AR: "تاريخ النشر"
   }[lang];
@@ -508,7 +527,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     {/* Meta line */}
                     <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 mb-3 uppercase tracking-wider">
                       <span>{dateLabel}:</span>
-                      <span>{leadArticle.date}</span>
+                      <span>{formatDisplayDate(leadArticle)}</span>
                     </div>
 
                     <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-[#f9f5eb] font-extrabold group-hover:text-white transition-colors leading-snug tracking-tight mb-4">
@@ -560,7 +579,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                             {country}
                           </span>
                           <span className="text-[9px] font-mono text-slate-500">
-                            {article.date}
+                            {formatDisplayDate(article)}
                           </span>
                         </div>
                         <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-3 leading-snug break-words">
@@ -615,7 +634,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                       <div className="flex items-center gap-2 text-[9px] font-mono text-slate-500 mb-2">
                         <span>{categoryLabels[article.category][lang]}</span>
                         <span>•</span>
-                        <span>{article.date}</span>
+                        <span>{formatDisplayDate(article)}</span>
                       </div>
 
                       <h4 className="text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-2 leading-snug tracking-tight mb-2">
@@ -819,7 +838,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                             <div>
                               <div className="flex items-center justify-between gap-2 text-[9px] font-mono text-slate-500 mb-2.5">
                                 <span className="text-brand-gold-400 font-semibold">{country}</span>
-                                <span>{article.date}</span>
+                                <span>{formatDisplayDate(article)}</span>
                               </div>
                               <h4 className="text-base font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors leading-snug mb-3 break-words">
                                 {title}
