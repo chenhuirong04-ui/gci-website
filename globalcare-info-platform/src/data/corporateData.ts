@@ -149,15 +149,15 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service1Footer: "Access & Landing",
     
-    service2Title: "Trade & Supply Chain Solutions",
-    service2Desc: "Connecting China supply resources with regional market demand through coordinated sourcing, logistics and distribution support.",
+    service2Title: "2. Trade Matching & Supply Chain Fulfillment",
+    service2Desc: "Supporting two-way trade coordination between market demand and supply chain resources through sourcing requests, supplier coordination, export documents, logistics, customs, warehousing, local delivery and order fulfillment.",
     service2Bullets: [
-      "Supplier Sourcing",
-      "Procurement Coordination",
-      "Logistics Coordination",
-      "Distribution Support",
-      "Warehousing Resources",
-      "Trade Facilitation"
+      "Sourcing Request Matching",
+      "Supply Resource Coordination",
+      "Export & Document Coordination",
+      "International Logistics & Customs",
+      "Warehousing & Local Delivery",
+      "Order Fulfillment Follow-up"
     ],
     service2Footer: "Supply Chain Network",
     
@@ -278,15 +278,15 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service1Footer: "准入与落地",
 
-    service2Title: "2. 贸易与供应链解决方案",
-    service2Desc: "通过协同采购、物流与分销支持，将中国供应资源与区域市场需求相连接。",
+    service2Title: "2. 贸易对接与供应链履约",
+    service2Desc: "围绕采购需求、供应资源、出口单证、物流清关、仓储配送与订单履约，支持跨境贸易需求与供应链资源之间的双向对接和履约协调。",
     service2Bullets: [
-      "供应商资源开发",
-      "采购协同对接",
-      "全程物流协调",
-      "本地分销支持",
-      "仓储资源对接",
-      "贸易便利化支持"
+      "采购需求对接",
+      "供应资源协调",
+      "出口与单证协同",
+      "国际物流与清关",
+      "仓储与本地配送",
+      "订单履约跟进"
     ],
     service2Footer: "供应链网络",
 
