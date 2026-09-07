@@ -27,7 +27,7 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
   const services = [
     {
       idx: "01",
-      icon: <Layers className="w-6 h-6 text-brand-gold-400" />,
+      icon: <Layers className="w-5 h-5 text-brand-gold-400" />,
       title: pack.service1Title,
       desc: pack.service1Desc,
       bullets: pack.service1Bullets || [],
@@ -37,7 +37,7 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
     },
     {
       idx: "02",
-      icon: <ShieldCheck className="w-6 h-6 text-brand-gold-400" />,
+      icon: <ShieldCheck className="w-5 h-5 text-brand-gold-400" />,
       title: pack.service2Title,
       desc: pack.service2Desc,
       bullets: pack.service2Bullets || [],
@@ -45,29 +45,30 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
     },
     {
       idx: "03",
-      icon: <Landmark className="w-6 h-6 text-brand-gold-400" />,
+      icon: <Landmark className="w-5 h-5 text-brand-gold-400" />,
       title: pack.service3Title,
       desc: pack.service3Desc,
       bullets: pack.service3Bullets || [],
       footer: pack.service3Footer,
-      footerUrl: "https://www.coolhomegcc.com"
+      footerUrl: "https://living.globalcareinfo.com"
     },
     {
       idx: "04",
-      icon: <Cpu className="w-6 h-6 text-brand-gold-400" />,
+      icon: <Cpu className="w-5 h-5 text-brand-gold-400" />,
       title: pack.service4Title,
       desc: pack.service4Desc,
       bullets: pack.service4Bullets || [],
       footer: pack.service4Footer,
-      footerUrl: "https://asoracore.com"
+      footerUrl: "https://25h.globalcareinfo.com"
     },
     {
       idx: "05",
-      icon: <Users className="w-6 h-6 text-brand-gold-400" />,
+      icon: <Users className="w-5 h-5 text-brand-gold-400" />,
       title: pack.service5Title,
       desc: pack.service5Desc,
       bullets: pack.service5Bullets || [],
-      footer: pack.service5Footer
+      footer: pack.service5Footer,
+      footerUrl: "https://www.highwayglobal.ae"
     }
   ];
 
@@ -102,38 +103,33 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
           {services.map((svc, position) => (
             <div
               key={svc.idx}
-              className={`p-6 sm:p-8 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/30 transition-all duration-300 flex flex-col justify-between group lg:col-span-2 ${gridPositionClass(position)}`}
+              className={`p-6 sm:p-7 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/30 transition-all duration-300 flex flex-col justify-between group lg:col-span-2 ${gridPositionClass(position)}`}
             >
               <div>
-                {/* Floating digit indicator */}
-                <div className="flex justify-between items-start mb-6">
-                  <div className="p-3 bg-brand-gold-500/5 rounded-lg border border-brand-gold-500/10 group-hover:bg-brand-gold-500/15 group-hover:border-brand-gold-500/25 transition-all">
+                {/* Icon + Title on the same row */}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="shrink-0 p-2.5 bg-brand-gold-500/5 rounded-lg border border-brand-gold-500/10 group-hover:bg-brand-gold-500/15 group-hover:border-brand-gold-500/25 transition-all">
                     {svc.icon}
                   </div>
-                  <span className="text-sm font-sans font-bold text-brand-gold-500/50 font-mono">
-                    {svc.idx}
-                  </span>
+                  <h3 className="text-lg font-serif font-semibold text-brand-gold-100 tracking-wide leading-snug">
+                    {svc.title}
+                  </h3>
                 </div>
 
-                {/* Service Title */}
-                <h3 className="text-lg font-serif font-semibold text-brand-gold-100 tracking-wide mb-4 min-h-[3.2rem] flex items-center">
-                  {svc.title}
-                </h3>
-
                 {/* Service Description */}
-                <p className="text-xs sm:text-sm text-brand-gold-200/90 font-light leading-relaxed mb-6 min-h-[4.5rem]">
+                <p className="text-xs sm:text-sm text-brand-gold-200/90 font-light leading-relaxed mb-4">
                   {svc.desc}
                 </p>
 
                 {/* Sub-elements bullet checklist */}
-                <ul className={`border-t border-brand-gold-500/10 pt-5 text-xs sm:text-sm font-light text-brand-gold-200/80 ${svc.interactive ? "space-y-1" : "space-y-3.5"}`}>
+                <ul className={`border-t border-brand-gold-500/10 pt-4 text-xs sm:text-sm font-light text-brand-gold-200/80 ${svc.interactive ? "space-y-0.5" : "space-y-2.5"}`}>
                   {svc.bullets.map((bullet, k) =>
                     svc.interactive ? (
                       <li key={k}>
                         <button
                           type="button"
                           onClick={() => setActiveDetailIndex(k)}
-                          className="group/item w-full flex items-center justify-between gap-2 text-left rtl:text-right -mx-2.5 px-2.5 py-2 rounded-lg hover:bg-brand-gold-500/10 transition-colors cursor-pointer"
+                          className="group/item w-full flex items-center justify-between gap-2 text-left rtl:text-right -mx-2.5 px-2.5 py-1.5 rounded-lg hover:bg-brand-gold-500/10 transition-colors cursor-pointer"
                         >
                           <span className="flex items-center gap-2.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500 shrink-0" />
@@ -154,7 +150,7 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
 
               {/* Minimal Bottom Hover Element */}
               {svc.interactive ? (
-                <div className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center rtl:justify-end">
+                <div className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center rtl:justify-end">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-brand-gold-500/20 bg-brand-gold-500/5 text-brand-gold-400 text-[10px] sm:text-xs font-sans font-medium tracking-wide uppercase">
                     {svc.badgeLabel}
                   </span>
@@ -164,13 +160,13 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
                   href={svc.footerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors"
+                  className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
                   <span>{svc.footer}</span>
                 </a>
               ) : (
-                <div className="mt-8 pt-4 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors">
+                <div className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
                   <span>{svc.footer}</span>
                 </div>

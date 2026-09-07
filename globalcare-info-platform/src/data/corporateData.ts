@@ -145,61 +145,52 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     service1Title: "Market Entry & Local Execution",
     service1Desc: "Supporting companies entering the UAE and regional markets through company setup, licensing, compliance, banking coordination and local business support.",
     service1Bullets: [
-      "Company Setup",
-      "Business Visits",
-      "Product Certification",
-      "Industry Licensing",
-      "Tax & Accounting",
-      "Bank Account Support"
+      "Company Setup & Industry Licensing",
+      "Product Market Access & Certification",
+      "Compliance & Tax",
+      "Banking & Local Execution Support"
     ],
     service1Footer: "Access & Landing",
 
     service2Title: "Trade, Supply Chain & Commercial Matching",
     service2Desc: "Connecting buyers, suppliers and commercial partners across markets through sourcing, trade coordination, logistics, customs, documentation and local delivery.",
     service2Bullets: [
-      "Sourcing Request Matching",
-      "Supply Resource Coordination",
-      "Export & Document Coordination",
+      "Sourcing Demand & Supplier Matching",
+      "Trade & Documentation Coordination",
       "International Logistics & Customs",
-      "Warehousing & Local Delivery",
-      "Order Fulfillment Follow-up"
+      "Warehousing, Local Delivery & Fulfillment"
     ],
     service2Footer: "Supply Chain Network",
 
     service3Title: "Projects & Resource Solutions",
     service3Desc: "Supporting project owners, contractors and partners with project sourcing, commercial resources, building materials, FF&E, furniture, sanitaryware and execution support.",
     service3Bullets: [
-      "FF&E Solutions",
-      "Furniture Supply",
-      "Building Materials",
-      "Sanitaryware Solutions",
-      "Hospitality Projects",
-      "Workplace Solutions"
+      "Interior Styling & FF&E Solutions",
+      "Turnkey Furniture Supply",
+      "Building Materials & Supporting Supplies",
+      "Project Execution & Delivery Support"
     ],
-    service3Footer: "Explore COOLHOME GCC →",
+    service3Footer: "Explore Project Supply →",
 
     service4Title: "AI & Business Systems",
     service4Desc: "Helping businesses improve operations, sales, workforce management and decision-making through AI agents, digital workflows and industry-focused business systems.",
     service4Bullets: [
-      "AI Lead Management",
-      "AI Customer Service",
-      "AI Knowledge Base",
-      "Workflow Automation",
-      "Operations Management",
-      "Executive Dashboards"
+      "AI Agents & Automation",
+      "Industry Business Systems",
+      "Business Intelligence & Dashboards",
+      "Digital Workflow Transformation"
     ],
-    service4Footer: "Explore AsoraCore →",
+    service4Footer: "Explore 25H →",
 
     service5Title: "Workforce Recruitment & Project Deployment",
     service5Desc: "Supporting UAE employers and project operators with cross-border workforce sourcing, screening, mobilization and deployment from Africa and selected international labor markets.",
     service5Bullets: [
       "Skilled & General Workforce",
-      "Overseas Recruitment",
-      "Screening & Trade Testing",
-      "UAE Mobilization",
-      "Project Deployment"
+      "Overseas Recruitment & Screening",
+      "Trade Testing & Mobilization",
+      "UAE Arrival & Project Deployment"
     ],
-    service5Footer: "Workforce Solutions",
+    service5Footer: "Explore Workforce Solutions →",
 
     whereWeOperateLabel: "Markets",
     whereWeOperateTitle: "Bilateral Corridor Network",
@@ -285,61 +276,52 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     service1Title: "市场准入与在岸执行",
     service1Desc: "帮助企业进入阿联酋及区域市场，提供公司设立、行业许可、合规审批、银行开户协调及本地商务支持。",
     service1Bullets: [
-      "一站式公司设立",
-      "商务考察安排",
-      "产品准入与认证支持",
-      "行业许可与审批协调",
-      "财税与会计合规",
-      "银行开户协调"
+      "公司设立与行业许可",
+      "产品准入与认证",
+      "合规与税务",
+      "银行及本地执行支持"
     ],
     service1Footer: "准入与落地",
 
     service2Title: "贸易、供应链与商业对接",
     service2Desc: "围绕采购需求、供应资源、贸易协调、物流清关、单证及本地配送，连接跨市场的买家、供应商与商业合作伙伴。",
     service2Bullets: [
-      "采购需求对接",
-      "供应资源协调",
-      "出口与单证协同",
+      "采购需求与供应商对接",
+      "贸易与单证协调",
       "国际物流与清关",
-      "仓储与本地配送",
-      "订单履约跟进"
+      "仓储、本地配送与履约"
     ],
     service2Footer: "供应链网络",
 
     service3Title: "项目与资源解决方案",
     service3Desc: "为项目业主、承包商及合作伙伴提供项目资源对接、建材、FF&E、家具、洁具供应及项目落地执行支持。",
     service3Bullets: [
-      "空间软装解决方案 (FF&E Solutions)",
+      "空间软装解决方案",
       "全案家具供应",
-      "环保建筑建材",
-      "洁具解决方案",
-      "酒店及文旅项目交付",
-      "办公与企业空间规划"
+      "建筑材料与配套供应",
+      "项目落地执行支持"
     ],
-    service3Footer: "探索 COOLHOME GCC →",
+    service3Footer: "探索项目供应 →",
 
-    service4Title: "AI 与业务系统",
+    service4Title: "AI 与企业系统",
     service4Desc: "通过 AI Agent、数字化工作流及行业专属业务系统，帮助企业提升运营、销售、人力管理及决策效率。",
     service4Bullets: [
-      "AI 销售线索管理",
-      "AI 智能客户服务",
-      "AI 企业知识库设计",
-      "业务工作流自动化",
-      "数字化日常运营管理",
-      "决策层高管看板集成"
+      "AI Agent 与自动化",
+      "行业经营管理系统",
+      "商业智能与管理看板",
+      "企业流程数字化"
     ],
-    service4Footer: "探索 AsoraCore →",
+    service4Footer: "探索 25H →",
 
-    service5Title: "劳务招募与项目派遣",
+    service5Title: "国际劳动力招聘与项目部署",
     service5Desc: "为阿联酋雇主及项目运营方提供跨境劳务招募服务，涵盖非洲及精选国际劳务市场的人员筛选、职业测试、动员及派遣。",
     service5Bullets: [
-      "技术工与普工招募",
-      "海外劳务招募",
-      "筛选与职业技能测试",
-      "阿联酋动员安置",
-      "项目现场派遣"
+      "技工与普通劳动力",
+      "海外招聘与筛选",
+      "工种测试与人员动员",
+      "UAE 到岗与项目部署"
     ],
-    service5Footer: "劳务解决方案",
+    service5Footer: "探索劳动力解决方案 →",
 
     whereWeOperateLabel: "市场网络",
     whereWeOperateTitle: "双向极速合规走廊",
@@ -425,62 +407,52 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     service1Title: "دخول السوق والتنفيذ المحلي",
     service1Desc: "مساعدة الشركات على دخول سوق الإمارات والأسواق الإقليمية من خلال تأسيس الشركات، والتراخيص، والامتثال، وتنسيق الحسابات المصرفية، والدعم التجاري المحلي.",
     service1Bullets: [
-      "تقييم فرص السوق وتحديد الثغرات",
-      "مطابقة وتنسيق المقابلات والأعمال",
-      "تطوير القنوات وشبكات التوزيع",
-      "تنسيق الزيارات والوفود الاستكشافية",
-      "التعريف والربط المباشر بالشركاء",
-      "تقديم الدعم التجاري والتشغيلي",
-      "الاستشارات الضريبية والامتثال التنظيمي"
+      "تأسيس الشركات والتراخيص الصناعية",
+      "الوصول للسوق واعتماد المنتجات",
+      "الامتثال والضرائب",
+      "الدعم المصرفي والتنفيذ المحلي"
     ],
     service1Footer: "تطوير الأعمال",
 
     service2Title: "التجارة وسلسلة الإمداد والتوفيق التجاري",
     service2Desc: "ربط المشترين والموردين والشركاء التجاريين عبر الأسواق من خلال التوريد وتنسيق التجارة والخدمات اللوجستية والجمارك والتوثيق والتوصيل المحلي.",
     service2Bullets: [
-      "البحث عن الموردين والجمع اللوجستي",
-      "التنسيق الفعال لكافة المشتريات",
-      "تسهيل الشحن والخدمات اللوجستية المتعددة",
-      "تأمين قنوات الدعم والتوزيع المحلي",
-      "توجيه وتسهيل موارد التخزين المتنوعة",
-      "دعم وتسهيل انسيابية الحركة التجارية"
+      "مطابقة الطلب بالموردين",
+      "تنسيق التجارة والمستندات",
+      "الخدمات اللوجستية الدولية والجمارك",
+      "التخزين والتوصيل المحلي والتنفيذ"
     ],
     service2Footer: "شبكة سلسلة التوريد",
 
     service3Title: "حلول المشاريع والموارد",
     service3Desc: "دعم أصحاب المشاريع والمقاولين والشركاء من خلال توريد المشاريع، والموارد التجارية، ومواد البناء، وحلول FF&E، والأثاث، والأدوات الصحية، ودعم التنفيذ.",
     service3Bullets: [
-      "توفير متممات وحلول FF&E للمشاريع",
-      "توريد الأثاث والمفروشات المتكاملة",
-      "توريد مواد البناء والحلول الهيكلية",
-      "حلول الأدوات الصحية",
-      "دعم توريد مشاريع الضيافة والفنادق",
-      "حلول وتخطيط المساحات المكتبية والبيئات"
+      "حلول التصميم الداخلي وFF&E",
+      "توريد الأثاث الشامل",
+      "مواد البناء والتوريدات المساندة",
+      "دعم تنفيذ وتسليم المشاريع"
     ],
-    service3Footer: "استكشف COOLHOME GCC ←",
+    service3Footer: "استكشف التوريد للمشاريع ←",
 
     service4Title: "الذكاء الاصطناعي وأنظمة الأعمال",
     service4Desc: "مساعدة الشركات على تحسين العمليات والمبيعات وإدارة القوى العاملة واتخاذ القرار من خلال وكلاء الذكاء الاصطناعي وسير العمل الرقمي وأنظمة الأعمال المتخصصة قطاعياً.",
     service4Bullets: [
-      "إدارة العملاء والصفقات بالذكاء الاصطناعي",
-      "أنظمة خدمة العملاء والمحادثة الذكية",
-      "تأسيس قواعد المعرفة المؤسسية الشاملة",
-      "أتمتة وتطوير تدفق وسير العمل",
-      "الرقابة الرقمية على العمليات والتشغيل",
-      "لوحات بيانات القيادة لصناع القرار"
+      "وكلاء الذكاء الاصطناعي والأتمتة",
+      "أنظمة الأعمال القطاعية",
+      "ذكاء الأعمال ولوحات البيانات",
+      "التحول الرقمي لسير العمل"
     ],
-    service4Footer: "استكشف AsoraCore ←",
+    service4Footer: "استكشف 25H ←",
 
     service5Title: "استقدام العمالة والتوزيع على المشاريع",
     service5Desc: "دعم أصحاب العمل ومشغلي المشاريع في الإمارات من خلال استقدام العمالة عبر الحدود، والفرز، والتعبئة، والتوزيع من أفريقيا وأسواق العمالة الدولية المختارة.",
     service5Bullets: [
       "عمالة ماهرة وعامة",
-      "استقدام العمالة من الخارج",
-      "الفرز واختبار المهارات",
-      "التعبئة إلى الإمارات",
-      "التوزيع على المشاريع"
+      "الاستقدام والفرز الخارجي",
+      "اختبار المهارات والتعبئة",
+      "الوصول إلى الإمارات ونشر المشاريع"
     ],
-    service5Footer: "حلول القوى العاملة",
+    service5Footer: "استكشف حلول القوى العاملة ←",
 
     whereWeOperateLabel: "مواقع عملياتنا",
     whereWeOperateTitle: "الممرات النشطة والشبكة العالمية",

@@ -10,78 +10,43 @@ export interface Service1DetailItem {
 
 export const service1Details: Service1DetailItem[] = [
   {
-    id: "company-setup",
+    id: "company-setup-licensing",
     title: {
-      EN: "One-stop Company Setup",
-      ZH: "一站式公司设立"
+      EN: "Company Setup & Industry Licensing",
+      ZH: "公司设立与行业许可"
     },
     description: {
-      EN: "Helping companies choose the appropriate Free Zone or Mainland setup path based on their business activity, and coordinating company registration, trade license, visa, PRO and office address arrangements.",
-      ZH: "协助企业根据业务类型选择 Free Zone 或 Mainland 设立路径，并协调公司注册、经营范围、营业执照、签证、PRO、办公地址等基础落地事项。"
+      EN: "Helping companies choose the appropriate Free Zone or Mainland setup path based on their business activity, coordinating company registration, trade license, visa, PRO and office address arrangements, plus any industry authority approval, qualification registration or regulated activity clearance the business activity requires.",
+      ZH: "协助企业根据业务类型选择 Free Zone 或 Mainland 设立路径，协调公司注册、经营范围、营业执照、签证、PRO、办公地址等基础落地事项，并按业务类型协调行业主管部门、资质登记及专项审批。"
     },
     support: {
       EN: [
         "Free Zone / Mainland setup coordination",
-        "Company name and business activity confirmation",
         "Trade License application coordination",
         "Registered address / Flexi Desk / office solution coordination",
-        "Establishment Card coordination",
-        "Investor and employee visa coordination",
-        "Emirates ID / Medical Test process coordination",
+        "Investor and employee visa & Establishment Card coordination",
         "PRO government affairs coordination",
+        "Construction, logistics, F&B, e-commerce and other regulated activity licensing coordination",
+        "Contractor, consultant and related qualification pathway coordination",
         "Renewal reminders and company document management"
       ],
       ZH: [
         "Free Zone / Mainland 设立路径协调",
-        "公司名称及经营范围确认",
         "Trade License 营业执照办理协调",
         "注册地址 / Flexi Desk / 办公室方案协调",
-        "Establishment Card 协调",
-        "投资人及员工签证协调",
-        "Emirates ID / Medical Test 流程协调",
+        "投资人及员工签证、Establishment Card 协调",
         "PRO 政府事务协调",
+        "建筑、物流、食品、电商等受监管行业许可协调",
+        "承包商、工程顾问及相关行业资质路径协调",
         "公司续期及文件管理提醒"
-      ]
-    }
-  },
-  {
-    id: "business-visit",
-    title: {
-      EN: "Business Visit Arrangement",
-      ZH: "商务考察安排"
-    },
-    description: {
-      EN: "Arranging Free Zone, office, warehouse, showroom, market, banking, tax, legal and industry service provider visits based on the client's landing objectives.",
-      ZH: "根据企业落地目标，安排自贸区、办公室、仓库、展厅、市场、银行、税务、法律及行业服务商的走访与会议，帮助企业在正式落地前了解真实环境与执行路径。"
-    },
-    support: {
-      EN: [
-        "Free Zone / Mainland setup visit coordination",
-        "Office, warehouse and showroom visits",
-        "Banking, tax, accounting and legal service provider meetings",
-        "Market, business district and wholesale market visits",
-        "Certification, access and compliance service provider meetings",
-        "Business itinerary planning, translation and escort coordination",
-        "Meeting notes and follow-up suggestions",
-        "Past business visit and activity materials may be shared during follow-up discussions when appropriate"
-      ],
-      ZH: [
-        "自贸区 / Mainland 设立路径考察",
-        "办公室、仓库、展厅资源走访",
-        "银行、税务、会计、法律服务商会议协调",
-        "市场、商圈、批发市场及行业资源走访",
-        "认证、准入、合规服务商对接",
-        "商务行程规划、翻译及陪同协调",
-        "会议纪要及后续跟进建议",
-        "过往商务考察及活动资料，可在后续沟通中根据情况展示"
       ]
     }
   },
   {
     id: "product-access",
     title: {
-      EN: "Product Access & Certification Support",
-      ZH: "产品准入与认证支持"
+      EN: "Product Market Access & Certification",
+      ZH: "产品准入与认证"
     },
     description: {
       EN: "Coordinating with certification bodies, registration service providers and compliance advisors based on the product category to support certification, registration, labeling, testing and import compliance requirements.",
@@ -111,45 +76,14 @@ export const service1Details: Service1DetailItem[] = [
     }
   },
   {
-    id: "licensing",
+    id: "compliance-tax",
     title: {
-      EN: "Industry Licensing & Approval Coordination",
-      ZH: "行业许可与审批协调"
+      EN: "Compliance & Tax",
+      ZH: "合规与税务"
     },
     description: {
-      EN: "Certain business activities in the UAE may require industry authority approval, qualification registration, professional licensing or regulated activity clearance. GCI coordinates with Free Zones, authorities and licensed service providers based on the client's business activity.",
-      ZH: "不同行业在阿联酋开展业务，可能涉及行业主管部门、资质登记、人员资质、活动许可或专项审批。GCI 可根据企业业务类型，协调自由区、政府部门及持牌服务商，协助客户梳理路径并推进对接。"
-    },
-    support: {
-      EN: [
-        "Construction, engineering and fit-out activity licensing coordination",
-        "Contractor, consultant and related qualification pathway coordination",
-        "Logistics, warehousing, import/export and re-export activity licensing coordination",
-        "Food, restaurant and food trading activity coordination",
-        "E-commerce, platform and delivery business activity pathway coordination",
-        "Education, training, medical and health-related approval pathway coordination",
-        "Boundary review coordination for regulated activities such as finance, investment and consulting"
-      ],
-      ZH: [
-        "建筑、工程、装修类活动许可协调",
-        "承包商、工程顾问及相关行业资质路径协调",
-        "物流、仓储、进出口、转口贸易相关许可协调",
-        "食品、餐饮、食品贸易相关许可协调",
-        "电商、平台、配送业务活动路径协调",
-        "教育、培训、医疗、健康相关审批路径协调",
-        "金融、投资、咨询等受监管活动边界判断协调"
-      ]
-    }
-  },
-  {
-    id: "tax-accounting",
-    title: {
-      EN: "Tax & Accounting Compliance",
-      ZH: "财税与会计合规"
-    },
-    description: {
-      EN: "Coordinating with UAE accounting, tax, audit and compliance service providers to support VAT, Corporate Tax, bookkeeping, audit, tax filing and e-invoicing readiness.",
-      ZH: "协调阿联酋本地会计、税务、审计及合规服务商，为企业提供 VAT、企业税、记账、审计、税务申报及电子发票准备等持续合规支持。"
+      EN: "Coordinating with UAE accounting, tax, audit and compliance service providers to support VAT, Corporate Tax, bookkeeping, audit, tax filing, e-invoicing readiness and ongoing regulatory compliance.",
+      ZH: "协调阿联酋本地会计、税务、审计及合规服务商，为企业提供 VAT、企业税、记账、审计、税务申报、电子发票准备及持续合规支持。"
     },
     support: {
       EN: [
@@ -157,7 +91,6 @@ export const service1Details: Service1DetailItem[] = [
         "Corporate Tax registration and filing coordination",
         "Monthly / quarterly bookkeeping coordination",
         "Annual audit service coordination",
-        "Invoice, contract and expense document process guidance",
         "Tax agent and compliance advisor coordination",
         "E-invoicing readiness support",
         "Tax reminders and compliance timeline follow-up"
@@ -167,7 +100,6 @@ export const service1Details: Service1DetailItem[] = [
         "Corporate Tax 企业税注册与申报协调",
         "月度 / 季度会计记账协调",
         "年度审计服务协调",
-        "发票、合同、成本单据整理流程建议",
         "税务代理及合规顾问协调",
         "电子发票准备支持",
         "税务提醒及合规节点跟进"
@@ -175,35 +107,33 @@ export const service1Details: Service1DetailItem[] = [
     }
   },
   {
-    id: "bank-account",
+    id: "banking-execution",
     title: {
-      EN: "Bank Account Coordination",
-      ZH: "银行开户协调"
+      EN: "Banking & Local Execution Support",
+      ZH: "银行及本地执行支持"
     },
     description: {
-      EN: "Supporting companies with bank account direction, KYC logic, business model explanation, bank appointment coordination and follow-up communication. Account opening decisions are made independently by the bank based on compliance review.",
-      ZH: "协助企业梳理银行开户方向、KYC 逻辑、业务模式说明、开户资料准备、银行预约及补件沟通。银行开户结果由银行根据合规审查独立决定，GCI 不承诺开户结果。"
+      EN: "Supporting companies with bank account direction, KYC logic and bank appointment coordination, plus on-ground business visits to offices, warehouses, showrooms and service providers to support local execution. Account opening decisions are made independently by the bank based on compliance review.",
+      ZH: "协助企业梳理银行开户方向、KYC 逻辑及银行预约协调，并安排办公室、仓库、展厅及服务商的实地走访以支持本地执行落地。银行开户结果由银行根据合规审查独立决定，GCI 不承诺开户结果。"
     },
     support: {
       EN: [
-        "Bank selection direction",
-        "KYC logic review",
-        "Business model explanation",
-        "Shareholder and company background coordination",
-        "Expected transaction countries, customer and supplier explanation coordination",
-        "Bank appointment coordination",
-        "Supplementary document follow-up",
-        "Ongoing account compliance reminders"
+        "Bank selection direction and KYC logic review",
+        "Business model and shareholder background coordination",
+        "Bank appointment coordination and supplementary document follow-up",
+        "Office, warehouse and showroom visit coordination",
+        "Banking, tax, legal and industry service provider meetings",
+        "Business itinerary planning, translation and escort coordination",
+        "Ongoing account and compliance reminders"
       ],
       ZH: [
-        "银行选择方向建议",
-        "KYC 逻辑梳理",
-        "业务模式说明整理",
-        "股东及公司背景资料协调",
-        "预计交易国家、客户、供应商说明协调",
-        "银行预约协调",
-        "补件沟通与进度跟进",
-        "后续账户合规提醒"
+        "银行选择方向建议及 KYC 逻辑梳理",
+        "业务模式及股东背景资料协调",
+        "银行预约协调及补件沟通",
+        "办公室、仓库、展厅走访协调",
+        "银行、税务、法律及行业服务商会议协调",
+        "商务行程规划、翻译及陪同协调",
+        "后续账户及合规提醒"
       ]
     }
   }
