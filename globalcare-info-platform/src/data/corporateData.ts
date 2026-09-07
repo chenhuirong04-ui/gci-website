@@ -53,7 +53,12 @@ export interface LanguagePack {
   service4Desc: string;
   service4Bullets: string[];
   service4Footer: string;
-  
+
+  service5Title: string;
+  service5Desc: string;
+  service5Bullets: string[];
+  service5Footer: string;
+
   whereWeOperateLabel: string;
   whereWeOperateTitle: string;
   whereWeOperateSubtitle: string;
@@ -116,8 +121,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navContact: "Contact",
     contactBtn: "Book Consultation",
     
-    heroBadge: "Sino-Global Corporate Outbound Blueprint",
-    heroTitle: "China Resources.\nGLOBAL EXECUTION.",
+    heroBadge: "Global Business Execution Network",
+    heroTitle: "Global Resources.\nGLOBAL EXECUTION.",
     heroSubtitle: "We connect resources. We coordinate execution. We make things happen.",
     heroDesc: "GCI helps companies connect resources, enter markets and execute projects across the Middle East, Africa and selected global markets.",
     heroCtaPrimary: "Book Consultation",
@@ -134,11 +139,11 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreMarkets: ["UAE", "Saudi Arabia", "Qatar", "Bahrain", "Oman", "Kuwait", "Kenya", "Tanzania", "Nigeria", "Morocco", "China", "Brazil"],
 
     whatWeDoLabel: "Capabilities",
-    whatWeDoTitle: "FOUR CORE BUSINESS CAPABILITIES",
-    whatWeDoSubtitle: "GCI connects resources, coordinates execution and supports business growth across regional and global markets through four core business capabilities.",
-    
-    service1Title: "Company Setup & Market Access",
-    service1Desc: "Supporting companies with UAE company setup, business visits, product access requirements, industry licensing, tax compliance and bank account coordination.",
+    whatWeDoTitle: "FIVE CORE BUSINESS CAPABILITIES",
+    whatWeDoSubtitle: "GCI connects opportunities, resources and execution across markets through five integrated business capabilities.",
+
+    service1Title: "Market Entry & Local Execution",
+    service1Desc: "Supporting companies entering the UAE and regional markets through company setup, licensing, compliance, banking coordination and local business support.",
     service1Bullets: [
       "Company Setup",
       "Business Visits",
@@ -148,9 +153,9 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "Bank Account Support"
     ],
     service1Footer: "Access & Landing",
-    
-    service2Title: "2. Trade Matching & Supply Chain Fulfillment",
-    service2Desc: "Supporting two-way trade coordination between market demand and supply chain resources through sourcing requests, supplier coordination, export documents, logistics, customs, warehousing, local delivery and order fulfillment.",
+
+    service2Title: "Trade, Supply Chain & Commercial Matching",
+    service2Desc: "Connecting buyers, suppliers and commercial partners across markets through sourcing, trade coordination, logistics, customs, documentation and local delivery.",
     service2Bullets: [
       "Sourcing Request Matching",
       "Supply Resource Coordination",
@@ -160,21 +165,21 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "Order Fulfillment Follow-up"
     ],
     service2Footer: "Supply Chain Network",
-    
-    service3Title: "Project & Living Solutions",
-    service3Desc: "Supporting hospitality, residential, workplace and commercial projects through integrated project supply solutions.",
+
+    service3Title: "Projects & Resource Solutions",
+    service3Desc: "Supporting project owners, contractors and partners with project sourcing, commercial resources, building materials, FF&E, furniture, sanitaryware and execution support.",
     service3Bullets: [
       "FF&E Solutions",
       "Furniture Supply",
       "Building Materials",
-      "Interior Finishes",
+      "Sanitaryware Solutions",
       "Hospitality Projects",
       "Workplace Solutions"
     ],
     service3Footer: "Explore COOLHOME GCC →",
-    
-    service4Title: "Digital & AI Solutions",
-    service4Desc: "Helping businesses improve sales, operations and management through AI-powered workflow systems.",
+
+    service4Title: "AI & Business Systems",
+    service4Desc: "Helping businesses improve operations, sales, workforce management and decision-making through AI agents, digital workflows and industry-focused business systems.",
     service4Bullets: [
       "AI Lead Management",
       "AI Customer Service",
@@ -184,7 +189,18 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "Executive Dashboards"
     ],
     service4Footer: "Explore AsoraCore →",
-    
+
+    service5Title: "Workforce Recruitment & Project Deployment",
+    service5Desc: "Supporting UAE employers and project operators with cross-border workforce sourcing, screening, mobilization and deployment from Africa and selected international labor markets.",
+    service5Bullets: [
+      "Skilled & General Workforce",
+      "Overseas Recruitment",
+      "Screening & Trade Testing",
+      "UAE Mobilization",
+      "Project Deployment"
+    ],
+    service5Footer: "Workforce Solutions",
+
     whereWeOperateLabel: "Markets",
     whereWeOperateTitle: "Bilateral Corridor Network",
     whereWeOperateSubtitle: "Explore our physical commercial hubs, liaison offices, and customs clearance gates bridging China supplies with active Gulf economies.",
@@ -245,8 +261,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navContact: "联系我们",
     contactBtn: "预订商务会谈",
     
-    heroBadge: "全球企业出海在岸服务网络",
-    heroTitle: "China Resources.\nGLOBAL EXECUTION.",
+    heroBadge: "全球商业执行网络",
+    heroTitle: "Global Resources.\nGLOBAL EXECUTION.",
     heroSubtitle: "We connect resources. We coordinate execution. We make things happen. (对接全球资源，协同在岸执行。)",
     heroDesc: "GCI 协助企业对接资源、进入市场，并在中东、非洲及精选全球市场执行项目。",
     heroCtaPrimary: "预约高管咨询",
@@ -263,11 +279,11 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreMarkets: ["阿联酋", "沙特阿拉伯", "卡塔尔", "巴林", "阿曼", "科威特", "肯尼亚", "坦桑尼亚", "尼日利亚", "摩洛哥", "中国", "巴西"],
 
     whatWeDoLabel: "服务能力",
-    whatWeDoTitle: "四大核心业务能力",
-    whatWeDoSubtitle: "GCI通过四大核心业务能力，对接资源，协同执行，支持区域及全球市场的业务增长。",
-    
-    service1Title: "公司设立与市场准入服务",
-    service1Desc: "帮助企业在阿联酋完成公司设立、商务考察、产品准入、行业许可、财税合规及银行开户等基础落地事项。",
+    whatWeDoTitle: "五大核心业务能力",
+    whatWeDoSubtitle: "GCI 通过五大一体化业务能力，对接商机、资源与执行，服务区域及全球市场的业务增长。",
+
+    service1Title: "市场准入与在岸执行",
+    service1Desc: "帮助企业进入阿联酋及区域市场，提供公司设立、行业许可、合规审批、银行开户协调及本地商务支持。",
     service1Bullets: [
       "一站式公司设立",
       "商务考察安排",
@@ -278,8 +294,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service1Footer: "准入与落地",
 
-    service2Title: "2. 贸易对接与供应链履约",
-    service2Desc: "围绕采购需求、供应资源、出口单证、物流清关、仓储配送与订单履约，支持跨境贸易需求与供应链资源之间的双向对接和履约协调。",
+    service2Title: "贸易、供应链与商业对接",
+    service2Desc: "围绕采购需求、供应资源、贸易协调、物流清关、单证及本地配送，连接跨市场的买家、供应商与商业合作伙伴。",
     service2Bullets: [
       "采购需求对接",
       "供应资源协调",
@@ -290,20 +306,20 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service2Footer: "供应链网络",
 
-    service3Title: "3. 项目与生活方式解决方案",
-    service3Desc: "通过集成式的项目供应解决方案，支持酒店、住宅、办公及商业项目的建设与交付。",
+    service3Title: "项目与资源解决方案",
+    service3Desc: "为项目业主、承包商及合作伙伴提供项目资源对接、建材、FF&E、家具、洁具供应及项目落地执行支持。",
     service3Bullets: [
       "空间软装解决方案 (FF&E Solutions)",
       "全案家具供应",
       "环保建筑建材",
-      "室内硬装高阶面料",
+      "洁具解决方案",
       "酒店及文旅项目交付",
       "办公与企业空间规划"
     ],
     service3Footer: "探索 COOLHOME GCC →",
 
-    service4Title: "4. 数字化与 AI 解决方案",
-    service4Desc: "通过自主研发的 AI 赋能工作流系统，帮助企业提升销售业绩、优化日常运营并增强执行管理。",
+    service4Title: "AI 与业务系统",
+    service4Desc: "通过 AI Agent、数字化工作流及行业专属业务系统，帮助企业提升运营、销售、人力管理及决策效率。",
     service4Bullets: [
       "AI 销售线索管理",
       "AI 智能客户服务",
@@ -313,6 +329,17 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "决策层高管看板集成"
     ],
     service4Footer: "探索 AsoraCore →",
+
+    service5Title: "劳务招募与项目派遣",
+    service5Desc: "为阿联酋雇主及项目运营方提供跨境劳务招募服务，涵盖非洲及精选国际劳务市场的人员筛选、职业测试、动员及派遣。",
+    service5Bullets: [
+      "技术工与普工招募",
+      "海外劳务招募",
+      "筛选与职业技能测试",
+      "阿联酋动员安置",
+      "项目现场派遣"
+    ],
+    service5Footer: "劳务解决方案",
 
     whereWeOperateLabel: "市场网络",
     whereWeOperateTitle: "双向极速合规走廊",
@@ -374,8 +401,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     navContact: "اتصل بنا",
     contactBtn: "حجز استشارة",
     
-    heroBadge: "خطة التوسع العالمي للشركات",
-    heroTitle: "China Resources.\nGLOBAL EXECUTION.",
+    heroBadge: "شبكة تنفيذ الأعمال العالمية",
+    heroTitle: "Global Resources.\nGLOBAL EXECUTION.",
     heroSubtitle: "نحن نربط الموارد. ننسق العمليات الميدانية. نحقق النتائج للمجموعات.",
     heroDesc: "تساعد GCI الشركات على ربط الموارد ودخول الأسواق وتنفيذ المشاريع في الشرق الأوسط وأفريقيا وأسواق عالمية مختارة.",
     heroCtaPrimary: "احجز جلسة استشارة",
@@ -392,11 +419,11 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     whoWeAreMarkets: ["الإمارات العربية المتحدة", "المملكة العربية السعودية", "قطر", "البحرين", "سلطنة عُمان", "الكويت", "كينيا", "تنزانيا", "نيجيريا", "المغرب", "الصين", "البرازيل"],
 
     whatWeDoLabel: "مستويات الخدمة",
-    whatWeDoTitle: "أربع قدرات تجارية أساسية",
-    whatWeDoSubtitle: "تربط GCI الموارد وتنسق التنفيذ وتدعم نمو الأعمال في الأسواق الإقليمية والعالمية من خلال أربع قدرات رئيسية.",
-    
-    service1Title: "1. Market Entry & Business Services",
-    service1Desc: "مساعدة الشركات على تأسيس حضورها التجاري وتطوير الفرص الاستثمارية في الأسواق الإقليمية والدولية.",
+    whatWeDoTitle: "خمس قدرات تجارية أساسية",
+    whatWeDoSubtitle: "تربط GCI الفرص والموارد والتنفيذ عبر الأسواق من خلال خمس قدرات تجارية متكاملة.",
+
+    service1Title: "دخول السوق والتنفيذ المحلي",
+    service1Desc: "مساعدة الشركات على دخول سوق الإمارات والأسواق الإقليمية من خلال تأسيس الشركات، والتراخيص، والامتثال، وتنسيق الحسابات المصرفية، والدعم التجاري المحلي.",
     service1Bullets: [
       "تقييم فرص السوق وتحديد الثغرات",
       "مطابقة وتنسيق المقابلات والأعمال",
@@ -408,8 +435,8 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service1Footer: "تطوير الأعمال",
 
-    service2Title: "2. Trade & Supply Chain Solutions",
-    service2Desc: "ربط مصادر الإمداد الصينية بالطلب في الأسواق الإقليمية من خلال تنسيق التوريد والخدمات اللوجستية والدعم التوزيعي.",
+    service2Title: "التجارة وسلسلة الإمداد والتوفيق التجاري",
+    service2Desc: "ربط المشترين والموردين والشركاء التجاريين عبر الأسواق من خلال التوريد وتنسيق التجارة والخدمات اللوجستية والجمارك والتوثيق والتوصيل المحلي.",
     service2Bullets: [
       "البحث عن الموردين والجمع اللوجستي",
       "التنسيق الفعال لكافة المشتريات",
@@ -420,20 +447,20 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     ],
     service2Footer: "شبكة سلسلة التوريد",
 
-    service3Title: "3. Project & Living Solutions",
-    service3Desc: "دعم مشاريع الضيافة، الحلول السكنية، المساحات المكتبية والمنشآت التجارية عبر حلول التوريد المتكاملة للمشاريع.",
+    service3Title: "حلول المشاريع والموارد",
+    service3Desc: "دعم أصحاب المشاريع والمقاولين والشركاء من خلال توريد المشاريع، والموارد التجارية، ومواد البناء، وحلول FF&E، والأثاث، والأدوات الصحية، ودعم التنفيذ.",
     service3Bullets: [
       "توفير متممات وحلول FF&E للمشاريع",
       "توريد الأثاث والمفروشات المتكاملة",
       "توريد مواد البناء والحلول الهيكلية",
-      "توفير التشطيبات الداخلية والديكورات",
+      "حلول الأدوات الصحية",
       "دعم توريد مشاريع الضيافة والفنادق",
       "حلول وتخطيط المساحات المكتبية والبيئات"
     ],
     service3Footer: "استكشف COOLHOME GCC ←",
 
-    service4Title: "4. Digital & AI Solutions",
-    service4Desc: "تمكين الشركات من رفع مبيعاتها وتحسين عملياتها اليومية والإدارية من خلال أنظمة ذكية لإدارة سير العمل.",
+    service4Title: "الذكاء الاصطناعي وأنظمة الأعمال",
+    service4Desc: "مساعدة الشركات على تحسين العمليات والمبيعات وإدارة القوى العاملة واتخاذ القرار من خلال وكلاء الذكاء الاصطناعي وسير العمل الرقمي وأنظمة الأعمال المتخصصة قطاعياً.",
     service4Bullets: [
       "إدارة العملاء والصفقات بالذكاء الاصطناعي",
       "أنظمة خدمة العملاء والمحادثة الذكية",
@@ -443,6 +470,17 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
       "لوحات بيانات القيادة لصناع القرار"
     ],
     service4Footer: "استكشف AsoraCore ←",
+
+    service5Title: "استقدام العمالة والتوزيع على المشاريع",
+    service5Desc: "دعم أصحاب العمل ومشغلي المشاريع في الإمارات من خلال استقدام العمالة عبر الحدود، والفرز، والتعبئة، والتوزيع من أفريقيا وأسواق العمالة الدولية المختارة.",
+    service5Bullets: [
+      "عمالة ماهرة وعامة",
+      "استقدام العمالة من الخارج",
+      "الفرز واختبار المهارات",
+      "التعبئة إلى الإمارات",
+      "التوزيع على المشاريع"
+    ],
+    service5Footer: "حلول القوى العاملة",
 
     whereWeOperateLabel: "مواقع عملياتنا",
     whereWeOperateTitle: "الممرات النشطة والشبكة العالمية",

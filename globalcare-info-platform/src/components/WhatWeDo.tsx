@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LanguagePack } from "../data/corporateData";
-import { Layers, ShieldCheck, Landmark, CheckCircle, Cpu, ChevronRight } from "lucide-react";
+import { Layers, ShieldCheck, Landmark, CheckCircle, Cpu, ChevronRight, Users } from "lucide-react";
 import { service1Details } from "../data/service1Details";
 import ServiceDetailDrawer from "./ServiceDetailDrawer";
 
@@ -60,8 +60,22 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       bullets: pack.service4Bullets || [],
       footer: pack.service4Footer,
       footerUrl: "https://asoracore.com"
+    },
+    {
+      idx: "05",
+      icon: <Users className="w-6 h-6 text-brand-gold-400" />,
+      title: pack.service5Title,
+      desc: pack.service5Desc,
+      bullets: pack.service5Bullets || [],
+      footer: pack.service5Footer
     }
   ];
+
+  const gridPositionClass = (position: number) => {
+    if (position === 3) return "lg:col-start-2";
+    if (position === 4) return "lg:col-start-4";
+    return "";
+  };
 
   return (
     <section id="what-we-do" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10">
@@ -83,12 +97,12 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
           </p>
         </div>
 
-        {/* Dynamic 4-Column Service Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
-          {services.map((svc) => (
-            <div 
+        {/* Dynamic Service Grid: 3-up desktop first row, 2 centered second row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 items-stretch">
+          {services.map((svc, position) => (
+            <div
               key={svc.idx}
-              className="p-6 sm:p-8 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/30 transition-all duration-300 flex flex-col justify-between group"
+              className={`p-6 sm:p-8 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/30 transition-all duration-300 flex flex-col justify-between group lg:col-span-2 ${gridPositionClass(position)}`}
             >
               <div>
                 {/* Floating digit indicator */}
