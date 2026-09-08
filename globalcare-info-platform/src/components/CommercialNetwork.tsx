@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { LanguagePack } from "../data/corporateData";
-import { Globe, Video, FileText, Compass, AlertCircle, VideoOff, Layers } from "lucide-react";
+import { Globe, Video, FileText, Compass, AlertCircle, Layers } from "lucide-react";
 
 // Vite production-safe imports — /src/assets/ paths break after build hashing
+// Only UAE and China keep a static fallback image (used only if their real Notion
+// video overlay is ever unavailable) — Saudi and Kenya no longer use a case-style
+// photo at all, since neither is a verified real project photo for that market.
 import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268.png";
-import imgSolarRiyadh from "../assets/images/case_solar_riyadh_1780768308627.png";
-import imgMedicalMombasa from "../assets/images/case_medical_mombasa_1780768328334.png";
 import imgPortShenzhen from "../assets/images/case_port_shenzhen_1780768345006.png";
 
 const CN_IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_robotics_dubai_1780768291268.png": imgRoboticsDubai,
-  "/src/assets/images/case_solar_riyadh_1780768308627.png": imgSolarRiyadh,
-  "/src/assets/images/case_medical_mombasa_1780768328334.png": imgMedicalMombasa,
   "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
 };
 function resolveCnImg(path: string | null): string | null {
@@ -73,13 +72,13 @@ const COUNTRIES_DATA: CountryRecord[] = [
     nameEN: "Saudi Arabia",
     nameZH: "沙特阿拉伯",
     nameAR: "المملكة العربية السعودية",
-    descEN: "Commercial partners, client visits, project opportunities and local execution support.",
-    descZH: "商业合作伙伴、客户拜访、项目机遇及本地执行支持。",
-    descAR: "الشركاء التجاريون، زيارات العملاء، فرص المشاريع ودعم التنفيذ المحلي.",
-    tagsEN: ["Partners", "Client Visits", "Projects", "Market Development"],
-    tagsZH: ["商务伙伴", "客户随访", "项目对接", "市场拓展"],
-    tagsAR: ["الشركاء", "زيارات العملاء", "المشاريع", "تطوير السوق"],
-    image: "/src/assets/images/case_solar_riyadh_1780768308627.png"
+    descEN: "Market coverage across Saudi Arabia — commercial partnerships, project-opportunity tracking and local execution support.",
+    descZH: "沙特阿拉伯市场覆盖——商业合作伙伴关系、项目机会跟踪及本地执行支持。",
+    descAR: "تغطية سوقية في المملكة العربية السعودية — شراكات تجارية، ومتابعة فرص المشاريع، ودعم التنفيذ المحلي.",
+    tagsEN: ["Market Entry", "Project Support", "Local Partnerships"],
+    tagsZH: ["市场准入", "项目支持", "本地合作"],
+    tagsAR: ["دخول السوق", "الدعم المشروعي", "الشراكات المحلية"],
+    image: null
   },
   {
     key: "qatar",
@@ -89,9 +88,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Strategic GCC intelligence market with strong infrastructure investment and active regulatory development.",
     descZH: "战略性海湾情报市场，基础设施投资强劲，纳入 GCI Intelligence Engine 政策监控体系。",
     descAR: "سوق خليجي استراتيجي بمسار استثمار قوي في البنية التحتية ورصد تنظيمي نشط.",
-    tagsEN: ["Intelligence Market", "Infrastructure", "Regulatory Monitoring"],
-    tagsZH: ["情报监控市场", "基础设施", "政策追踪"],
-    tagsAR: ["سوق الذكاء", "البنية التحتية", "رصد التنظيم"],
+    tagsEN: ["Intelligence Monitoring", "Trade", "Market Entry"],
+    tagsZH: ["情报监控", "贸易", "市场准入"],
+    tagsAR: ["الرصد الاستخباراتي", "التجارة", "دخول السوق"],
     image: null
   },
   {
@@ -102,9 +101,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Regional trade connections, partner network and regional business support.",
     descZH: "区域贸易关系、合作伙伴网络及区域内业务支持。",
     descAR: "العلاقات التجارية الإقليمية، شبكة الشركاء والدعم الإقليمي للأعمال.",
-    tagsEN: ["Partner Network", "Trade Support", "Regional Access"],
-    tagsZH: ["伙伴网络", "贸易支持", "区域通道"],
-    tagsAR: ["شبكة الشركاء", "الدعم التجاري", "الدخول الإقليمي"],
+    tagsEN: ["Trade", "Local Partnerships", "Market Entry"],
+    tagsZH: ["贸易", "本地合作", "市场准入"],
+    tagsAR: ["التجارة", "الشراكات المحلية", "دخول السوق"],
     image: null
   },
   {
@@ -115,9 +114,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Regional market access, trade coordination and local partner support.",
     descZH: "区域市场准入、贸易协调及本地合作伙伴支持。",
     descAR: "الدخول إلى الأسواق الإقليمية، التنسيق التجاري ودعم الشركاء المحليين.",
-    tagsEN: ["Market Access", "Trade Coordination", "Local Partners"],
-    tagsZH: ["市场准入", "贸易协调", "本地伙伽"],
-    tagsAR: ["دخول الأسواق", "التنسيق التجاري", "الشركاء المحليون"],
+    tagsEN: ["Market Entry", "Trade", "Local Partnerships"],
+    tagsZH: ["市场准入", "贸易", "本地合作"],
+    tagsAR: ["دخول السوق", "التجارة", "الشراكات المحلية"],
     image: null
   },
   {
@@ -128,9 +127,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "GCC intelligence market with active trade and investment monitoring under GCI Intelligence Engine.",
     descZH: "GCC 核心情报市场，纳入 GCI Intelligence Engine 每日政策与贸易监控。",
     descAR: "سوق خليجي أساسي مشمول برصد السياسات والتجارة اليومي عبر محرك ذكاء GCI.",
-    tagsEN: ["Intelligence Market", "Trade Monitoring", "GCC Core"],
-    tagsZH: ["情报监控市场", "贸易监控", "海湾核心"],
-    tagsAR: ["سوق الذكاء", "رصد التجارة", "الخليج الأساسي"],
+    tagsEN: ["Intelligence Monitoring", "Trade", "Local Partnerships"],
+    tagsZH: ["情报监控", "贸易", "本地合作"],
+    tagsAR: ["الرصد الاستخباراتي", "التجارة", "الشراكات المحلية"],
     image: null
   },
   {
@@ -141,9 +140,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "East Africa growth market with active port and trade development, monitored under GCI Intelligence Engine.",
     descZH: "东非高潜成长市场，港口及贸易发展活跃，纳入 GCI Intelligence Engine 政策监控。",
     descAR: "سوق نمو في شرق إفريقيا مع تطور نشط في الموانئ والتجارة، مشمول برصد محرك ذكاء GCI.",
-    tagsEN: ["Africa Growth", "Port Development", "Intelligence Market"],
-    tagsZH: ["非洲成长市场", "港口发展", "情报监控"],
-    tagsAR: ["نمو أفريقي", "تطوير الموانئ", "سوق الذكاء"],
+    tagsEN: ["Intelligence Monitoring", "Trade", "Supply Chain"],
+    tagsZH: ["情报监控", "贸易", "供应链"],
+    tagsAR: ["الرصد الاستخباراتي", "التجارة", "سلسلة الإمداد"],
     image: null
   },
   {
@@ -154,9 +153,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "West Africa's largest economy and key growth market, monitored under GCI Intelligence Engine.",
     descZH: "西非最大经济体及重要成长市场，纳入 GCI Intelligence Engine 政策监控体系。",
     descAR: "أكبر اقتصاد في غرب إفريقيا وسوق نمو رئيسي، مشمول برصد محرك ذكاء GCI.",
-    tagsEN: ["Africa Growth", "West Africa", "Intelligence Market"],
-    tagsZH: ["非洲成长市场", "西非经济", "情报监控"],
-    tagsAR: ["نمو أفريقي", "غرب أفريقيا", "سوق الذكاء"],
+    tagsEN: ["Intelligence Monitoring", "Trade", "Market Entry"],
+    tagsZH: ["情报监控", "贸易", "市场准入"],
+    tagsAR: ["الرصد الاستخباراتي", "التجارة", "دخول السوق"],
     image: null
   },
   {
@@ -164,13 +163,13 @@ const COUNTRIES_DATA: CountryRecord[] = [
     nameEN: "Kenya",
     nameZH: "肯尼亚",
     nameAR: "كينيا",
-    descEN: "East Africa market gateway, warehousing resources, distribution support and local business network.",
-    descZH: "东非市场门户、仓储资源、分销支持及本地商业网络。",
-    descAR: "بوابة أسواق شرق إفريقيا، موارد المستودعات، دعم التوزيع والشبكة التجارية المحلية.",
-    tagsEN: ["East Africa", "Warehouse", "Distribution", "Local Network"],
-    tagsZH: ["东非门户", "海外干仓", "分销支持", "本地网络"],
-    tagsAR: ["شرق إفريقيا", "المستودعات", "التوزيع", "الشبكة المحلية"],
-    image: "/src/assets/images/case_medical_mombasa_1780768328334.png"
+    descEN: "Market coverage across Kenya and the East Africa gateway — supply chain resources, trade coordination and local partnerships.",
+    descZH: "肯尼亚及东非门户市场覆盖——供应链资源、贸易协调及本地合作伙伴关系。",
+    descAR: "تغطية سوقية في كينيا وبوابة شرق إفريقيا — موارد سلسلة الإمداد، والتنسيق التجاري، والشراكات المحلية.",
+    tagsEN: ["Supply Chain", "Trade", "Local Partnerships"],
+    tagsZH: ["供应链", "贸易", "本地合作"],
+    tagsAR: ["سلسلة الإمداد", "التجارة", "الشراكات المحلية"],
+    image: null
   },
   {
     key: "china",
@@ -193,9 +192,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Southeast Asia network coverage market. Manufacturing hub and regional supply chain node — not in daily policy monitoring.",
     descZH: "东南亚网络覆盖市场。制造业枢纽及区域供应链节点，不纳入每日政策监控。",
     descAR: "سوق تغطية شبكة جنوب شرق آسيا. مركز تصنيع وعقدة سلسلة إمداد إقليمية — غير مشمول بالرصد اليومي للسياسات.",
-    tagsEN: ["Network Coverage", "Manufacturing", "Supply Chain"],
-    tagsZH: ["网络覆盖", "制造资源", "供应链节点"],
-    tagsAR: ["تغطية الشبكة", "التصنيع", "سلسلة الإمداد"],
+    tagsEN: ["Supply Chain", "Trade"],
+    tagsZH: ["供应链", "贸易"],
+    tagsAR: ["سلسلة الإمداد", "التجارة"],
     image: null
   },
   {
@@ -206,9 +205,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Southeast Asia network coverage market. Sourcing resources and regional partner connections — not in daily policy monitoring.",
     descZH: "东南亚网络覆盖市场。采购资源及区域合作伙伴关系，不纳入每日政策监控。",
     descAR: "سوق تغطية شبكة جنوب شرق آسيا. موارد المشتريات وعلاقات الشركاء الإقليميين — غير مشمول بالرصد اليومي.",
-    tagsEN: ["Network Coverage", "Sourcing", "Partners"],
-    tagsZH: ["网络覆盖", "采购网络", "伙伴合作"],
-    tagsAR: ["تغطية الشبكة", "المشتريات", "الشركاء"],
+    tagsEN: ["Supply Chain", "Local Partnerships"],
+    tagsZH: ["供应链", "本地合作"],
+    tagsAR: ["سلسلة الإمداد", "الشراكات المحلية"],
     image: null
   },
   {
@@ -219,9 +218,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Southeast Asia network coverage market. Regional business network and commercial partnerships — not in daily policy monitoring.",
     descZH: "东南亚网络覆盖市场。区域商业网络及商业合作伙伴关系，不纳入每日政策监控。",
     descAR: "سوق تغطية شبكة جنوب شرق آسيا. شبكة تجارية إقليمية وشراكات تجارية — غير مشمول بالرصد اليومي.",
-    tagsEN: ["Network Coverage", "Partners", "Distribution"],
-    tagsZH: ["网络覆盖", "商业网络", "分销伙伴"],
-    tagsAR: ["تغطية الشبكة", "الشركاء", "التوزيع"],
+    tagsEN: ["Trade", "Local Partnerships"],
+    tagsZH: ["贸易", "本地合作"],
+    tagsAR: ["التجارة", "الشراكات المحلية"],
     image: null
   },
   {
@@ -232,9 +231,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Southeast Asia network coverage market. Regional financial and logistics hub — not in daily policy monitoring.",
     descZH: "东南亚网络覆盖市场。区域金融与物流枢纽，不纳入每日政策监控。",
     descAR: "سوق تغطية شبكة جنوب شرق آسيا. مركز مالي ولوجستي إقليمي — غير مشمول بالرصد اليومي.",
-    tagsEN: ["Network Coverage", "Logistics Hub", "Finance"],
-    tagsZH: ["网络覆盖", "物流枢纽", "金融中心"],
-    tagsAR: ["تغطية الشبكة", "مركز لوجستي", "مالية"],
+    tagsEN: ["Trade", "Supply Chain"],
+    tagsZH: ["贸易", "供应链"],
+    tagsAR: ["التجارة", "سلسلة الإمداد"],
     image: null
   },
   {
@@ -245,9 +244,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Southeast Asia network coverage market. Manufacturing and trade gateway — not in daily policy monitoring.",
     descZH: "东南亚网络覆盖市场。制造与贸易门户，不纳入每日政策监控。",
     descAR: "سوق تغطية شبكة جنوب شرق آسيا. بوابة تصنيع وتجارة — غير مشمول بالرصد اليومي.",
-    tagsEN: ["Network Coverage", "Manufacturing", "Trade Gateway"],
-    tagsZH: ["网络覆盖", "制造业", "贸易门户"],
-    tagsAR: ["تغطية الشبكة", "التصنيع", "بوابة التجارة"],
+    tagsEN: ["Supply Chain", "Trade"],
+    tagsZH: ["供应链", "贸易"],
+    tagsAR: ["سلسلة الإمداد", "التجارة"],
     image: null
   },
   {
@@ -271,9 +270,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Strategic expansion market for North Africa and regional trade opportunities.",
     descZH: "北非战略拓展市场及区域贸易机遇。",
     descAR: "سوق التوسع الاستراتيجي لشمال إفريقيا والفرص التجارية الإقليمية.",
-    tagsEN: ["Expansion Market", "North Africa", "Trade Opportunities"],
-    tagsZH: ["拓展市场", "北非枢纽", "贸易机遇"],
-    tagsAR: ["سوق التوسع", "شمال إفريقيا", "فرص التجارة"],
+    tagsEN: ["Market Entry", "Trade"],
+    tagsZH: ["市场准入", "贸易"],
+    tagsAR: ["دخول السوق", "التجارة"],
     image: null
   },
   {
@@ -284,9 +283,9 @@ const COUNTRIES_DATA: CountryRecord[] = [
     descEN: "Strategic expansion market for Latin America and future commercial corridors.",
     descZH: "拉丁美洲战略拓展市场及未来商业廊道。",
     descAR: "سوق التوسع الاستراتيجي لأمريكا اللاتينية والممرات التجارية المستقبلية.",
-    tagsEN: ["Expansion Market", "Latin America", "Future Corridor"],
-    tagsZH: ["拓展市场", "拉美网络", "未来廊道"],
-    tagsAR: ["سوق التوسع", "أمريكا اللاتينية", "ممرات المستقبل"],
+    tagsEN: ["Market Entry", "Trade"],
+    tagsZH: ["市场准入", "贸易"],
+    tagsAR: ["دخول السوق", "التجارة"],
     image: null
   }
 ];
@@ -336,16 +335,31 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
     AR: "شبكة تجارية إقليمية مبنية من خلال الشراكات المحلية، والموارد التجارية، وسنوات من التنفيذ في الأسواق الإقليمية والعالمية."
   }[lang];
 
-  const placeholderText = {
-    EN: "Video / images to be updated",
-    ZH: "视频与图片正待更新",
-    AR: "الفيديو والصور في طور التحديث"
-  }[lang];
-
   const liveFeedText = {
     EN: "Live Connectivity Feed",
     ZH: "实时在岸连接图像",
     AR: "لقطات الربط الميداني الحية"
+  }[lang];
+
+  // Distinguishes the 3 markets with a real, verified GCI video (unchanged: UAE, China,
+  // Thailand) from every other market, which now shows a static Market Coverage card
+  // instead of a "video/images to be updated" placeholder.
+  const verifiedBadgeText = {
+    EN: "Verified GCI Activity",
+    ZH: "GCI 真实活动",
+    AR: "نشاط موثق لدى GCI"
+  }[lang];
+
+  const marketCoverageBadgeText = {
+    EN: "Market Coverage",
+    ZH: "市场覆盖",
+    AR: "تغطية السوق"
+  }[lang];
+
+  const networkNodeLabel = {
+    EN: "GCI Commercial Network",
+    ZH: "GCI 商业网络",
+    AR: "شبكة GCI التجارية"
   }[lang];
 
   const tagsLabel = {
@@ -416,14 +430,24 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
             <div className="relative aspect-video md:aspect-[21/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center group shadow-2xl transition-all duration-300">
 
               {youtubeId ? (
-                <iframe
-                  key={youtubeId}
-                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
-                  title={activeCountry.nameEN}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                <>
+                  <iframe
+                    key={youtubeId}
+                    src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+                    title={activeCountry.nameEN}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                  {/* Additive-only badge distinguishing verified real-video markets — does not
+                      alter the iframe, title, copy or YouTube link above it in any way. */}
+                  <div className="absolute top-4 right-4 z-20 pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-emerald-500/40 text-emerald-400 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                      {verifiedBadgeText}
+                    </span>
+                  </div>
+                </>
               ) : activeImage ? (
                 <>
                   {/* Cover image — alt="" prevents broken-image alt text from overlapping badges */}
@@ -460,21 +484,60 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                 </>
               ) : (
                 <>
-                  {/* Stylish Modern Premium Placeholder with Glowing Design Grid */}
+                  {/* Market Coverage — a formal static presentation (abstract network graphic,
+                      not a photo) for markets without a verified real GCI video. Replaces the
+                      old "video/images to be updated" half-finished-looking placeholder. */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#0c1426] to-[#040813] flex flex-col items-center justify-center p-6 text-center select-none overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:16px_16px]" />
-                    <div className="absolute w-[200px] h-[200px] bg-brand-gold-500/5 blur-[50px] rounded-full" />
+                    <div className="absolute w-[220px] h-[220px] bg-brand-gold-500/5 blur-[60px] rounded-full" />
 
-                    <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/10 text-brand-gold-400/40 mb-4 shadow-xl">
-                      <VideoOff className="w-8 h-8 stroke-[1.5]" />
+                    {/* Abstract network-node graphic — deliberately not a building/warehouse/
+                        factory photo, so it can never read as a real on-the-ground project shot. */}
+                    <svg className="absolute inset-0 w-full h-full opacity-[0.18]" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <g stroke="#C59B3F" strokeWidth="1">
+                        <line x1="110" y1="90" x2="400" y2="200" />
+                        <line x1="400" y1="200" x2="690" y2="110" />
+                        <line x1="400" y1="200" x2="260" y2="320" />
+                        <line x1="400" y1="200" x2="590" y2="320" />
+                        <line x1="110" y1="90" x2="260" y2="320" />
+                        <line x1="690" y1="110" x2="590" y2="320" />
+                      </g>
+                      <g fill="#DFBA6B">
+                        <circle cx="110" cy="90" r="4" />
+                        <circle cx="400" cy="200" r="6" />
+                        <circle cx="690" cy="110" r="4" />
+                        <circle cx="260" cy="320" r="4" />
+                        <circle cx="590" cy="320" r="4" />
+                      </g>
+                    </svg>
+
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="p-4 rounded-full bg-[#030611]/80 border border-brand-gold-500/15 text-brand-gold-400/70 mb-4 shadow-xl">
+                        <Globe className="w-8 h-8 stroke-[1.5]" />
+                      </div>
+                      <span className="text-xl sm:text-2xl font-serif font-extrabold text-brand-gold-100 tracking-tight">
+                        {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                      </span>
+                      <span className="text-[10px] uppercase font-sans text-brand-gold-500/40 tracking-wider mt-1 block font-medium">
+                        {networkNodeLabel}
+                      </span>
                     </div>
 
-                    <span className={`text-xs sm:text-sm font-mono text-[#DFBA6B] uppercase font-bold animate-pulse ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
-                      {placeholderText}
-                    </span>
-                    <span className="text-[10px] uppercase font-sans text-brand-gold-500/30 tracking-wider mt-1 block font-medium">
-                      GCI Commercial Network Asset Deck
-                    </span>
+                    {/* TOP-LEFT: Country name badge — same position/style as the image branch */}
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className={`inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full ${lang === "EN" ? "tracking-wide uppercase" : "tracking-normal"}`}>
+                        <Globe className="w-3 h-3 shrink-0 text-brand-gold-400" />
+                        {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                      </span>
+                    </div>
+
+                    {/* BOTTOM-LEFT: Market Coverage status badge */}
+                    <div className="absolute bottom-4 left-4 z-20">
+                      <span className={`inline-flex items-center gap-2 bg-[#030611]/80 backdrop-blur-sm border border-brand-gold-500/20 text-brand-gold-400 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
+                        <Layers className="w-3 h-3 shrink-0" />
+                        <span>{marketCoverageBadgeText}</span>
+                      </span>
+                    </div>
                   </div>
                 </>
               )}
