@@ -1,5 +1,6 @@
 import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268.png";
 import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
+import imgWorkforceAccommodation from "../assets/images/uae-workforce-accommodation.png";
 
 export interface Opportunity {
   id: string;
@@ -288,7 +289,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     tags: ["Workforce", "Accommodation", "Project Support"],
     tagsZH: ["劳动力", "住宿", "项目支持"],
     tagsAR: ["القوى العاملة", "الإسكان", "الدعم المشروعي"],
-    image: "/images/countries/country-uae.jpg",
+    image: imgWorkforceAccommodation,
     youtubeUrl: "",
     overviewEN: "GCI is actively exploring workforce accommodation opportunities in the UAE, including labour camp development, leasing, workforce housing solutions, operations and supporting services for large-scale projects.",
     overviewZH: "围绕阿联酋大型建筑、工业及项目用工需求，GCI 正在关注并推进劳工营、员工住宿、租赁、运营及配套服务相关合作机会。",
