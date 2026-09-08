@@ -7,13 +7,41 @@ interface ContactSectionProps {
   pack: LanguagePack;
 }
 
+const INQUIRY_TYPES: Record<"EN" | "ZH" | "AR", string[]> = {
+  EN: [
+    "Market Entry & Local Execution",
+    "Trade & Supply Chain",
+    "Project & Resource Solutions",
+    "AI & Business Systems",
+    "Workforce Recruitment & Deployment",
+    "Other Business Cooperation"
+  ],
+  ZH: [
+    "市场进入与本地执行",
+    "贸易与供应链",
+    "项目与资源解决方案",
+    "AI 与企业系统",
+    "劳动力招聘与部署",
+    "其他商业合作"
+  ],
+  AR: [
+    "دخول السوق والتنفيذ المحلي",
+    "التجارة وسلسلة الإمداد",
+    "حلول المشاريع والموارد",
+    "الذكاء الاصطناعي وأنظمة الأعمال",
+    "استقدام القوى العاملة ونشرها",
+    "تعاون تجاري آخر"
+  ]
+};
+
 export default function ContactSection({ lang, pack }: ContactSectionProps) {
   const isRtl = lang === "AR";
+  const inquiryTypes = INQUIRY_TYPES[lang];
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
-    corridor: "China-UAE Corridor",
+    inquiryTypeIndex: 0,
     message: ""
   });
   const [submitted, setSubmitted] = useState<false | "success" | "error" | "no-endpoint">(false);
@@ -21,13 +49,16 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[GCI Inquiry] ${formData.company} — ${formData.corridor}`);
+    // Always record the inquiry type in English for internal consistency, regardless of the
+    // language the visitor filled the form in.
+    const inquiryTypeEN = INQUIRY_TYPES.EN[formData.inquiryTypeIndex];
+    const subject = encodeURIComponent(`[GCI Inquiry] ${formData.company} — ${inquiryTypeEN}`);
     const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nCorridor: ${formData.corridor}\n\n${formData.message}`
+      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nInquiry Type: ${inquiryTypeEN}\n\n${formData.message}`
     );
     window.location.href = `mailto:info@globalcareinfo.com?subject=${subject}&body=${body}`;
     setSubmitted("success");
-    setFormData({ name: "", email: "", company: "", corridor: "China-UAE Corridor", message: "" });
+    setFormData({ name: "", email: "", company: "", inquiryTypeIndex: 0, message: "" });
   };
 
   return (
@@ -140,14 +171,13 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                       {pack.contactFormCorridor}
                     </label>
                     <select
-                      value={formData.corridor}
-                      onChange={(e) => setFormData({ ...formData, corridor: e.target.value })}
+                      value={formData.inquiryTypeIndex}
+                      onChange={(e) => setFormData({ ...formData, inquiryTypeIndex: Number(e.target.value) })}
                       className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-brand-gold-400 cursor-pointer font-sans"
                     >
-                      <option value="China-UAE Corridor">China - UAE Corridor</option>
-                      <option value="China-Saudi Corridor">China - Saudi Arabia Corridor</option>
-                      <option value="China-East Africa Corridor">China - East Africa Corridor</option>
-                      <option value="UAE-GCC Corridor">UAE - GCC Regional Gateway</option>
+                      {inquiryTypes.map((option, i) => (
+                        <option key={i} value={i}>{option}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -259,11 +289,13 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
               </span>
               <p className="text-sm text-brand-gold-200 font-light leading-relaxed mb-1.5">
                 {lang === "ZH"
-                  ? "迪拜 Jebel Ali，Dubai Traders Market，504 办公室"
-                  : "Dubai Traders Market, Office 504, Jebel Ali"}
+                  ? "迪拜 Jebel Ali，Dubai Traders Market，2317-1"
+                  : lang === "AR"
+                  ? "Dubai Traders Market، 2317-1، جبل علي"
+                  : "Dubai Traders Market, 2317-1, Jebel Ali"}
               </p>
               <p className="text-xs font-sans font-medium text-brand-gold-500">
-                {lang === "ZH" ? "阿联酋迪拜" : "Dubai, United Arab Emirates"}
+                {lang === "ZH" ? "阿联酋迪拜" : lang === "AR" ? "دبي، الإمارات العربية المتحدة" : "Dubai, United Arab Emirates"}
               </p>
             </div>
 

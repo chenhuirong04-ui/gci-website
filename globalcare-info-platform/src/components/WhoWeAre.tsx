@@ -5,10 +5,9 @@ import {
   Landmark, 
   Factory, 
   Award, 
-  Briefcase, 
-  TrendingUp, 
-  Coins, 
-  Handshake, 
+  Briefcase,
+  TrendingUp,
+  Handshake,
   Globe, 
   Compass, 
   ChevronRight,
@@ -31,99 +30,99 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
   // Multi-lingual details for GCI's 6 Service Targets (matching Image 2 design)
   const serviceDetails = {
     ZH: [
-      { 
-        title: "制造商", 
-        desc: "源头大厂与定制供应商，协助获取准入护城河", 
-        detail: "在岸资质核验 · 生产标准对接" 
+      {
+        title: "制造商与供应商",
+        desc: "制造与供应资源，协助采购、生产及出口协调",
+        detail: "采购支持 · 出口协调"
       },
-      { 
-        title: "品牌商", 
-        desc: "拓展海湾全渠道、打造在册及在岸品牌长远声誉", 
-        detail: "渠道体系建设 · 品牌心智构建" 
+      {
+        title: "品牌方与企业",
+        desc: "支持品牌市场进入、渠道开发及区域业务增长",
+        detail: "市场进入 · 渠道开发"
       },
-      { 
-        title: "项目开发商", 
-        desc: "大宗基建、新能源及重点工业园项目合规常设协同", 
-        detail: "政商资源协调 · 实地落地交付" 
+      {
+        title: "项目开发商与承包商",
+        desc: "协调项目资源、物资及在岸执行支持",
+        detail: "项目协调 · 执行支持"
       },
-      { 
-        title: "贸易公司", 
-        desc: "理顺跨境大宗采购物流与海关，常态化资金闭环", 
-        detail: "通关履约保障 · 供应链常态化" 
+      {
+        title: "贸易与供应链企业",
+        desc: "协调跨境贸易、物流与供应链执行",
+        detail: "贸易协调 · 物流支持"
       },
-      { 
-        title: "投资者", 
-        desc: "研判在岸实体商机，协助开展安全稳妥的财务投资", 
-        detail: "实体项目甄别 · 资产风险管理" 
+      {
+        title: "雇主与项目运营方",
+        desc: "劳动力招聘、筛选、动员及项目部署支持",
+        detail: "招聘筛选 · 动员部署"
       },
-      { 
-        title: "战略合作伙伴", 
-        desc: "对接双边商会及行协，构建长期在岸发展网络", 
-        detail: "双边网络支撑 · 跨国政商互信" 
+      {
+        title: "战略与本地合作伙伴",
+        desc: "建立长期本地合作伙伴关系及区域商业网络",
+        detail: "本地合作 · 网络构建"
       }
     ],
     EN: [
-      { 
-        title: "Manufacturers", 
-        desc: "Factory-direct sources seeking on-ground GCC compliance", 
-        detail: "Access Compliance · Spec Alignment" 
+      {
+        title: "Manufacturers & Suppliers",
+        desc: "Factory and supplier resources for sourcing, production and export coordination",
+        detail: "Sourcing Support · Export Coordination"
       },
-      { 
-        title: "Brand Owners", 
-        desc: "Building lasting brand equity and local retail footprints", 
-        detail: "Channel Setup · Trust Cultivation" 
+      {
+        title: "Brand Owners & Enterprises",
+        desc: "Supporting market entry, channel development and regional business growth",
+        detail: "Market Entry · Channel Development"
       },
-      { 
-        title: "Project Developers", 
-        desc: "Coordinating physical delivery for energy and infrastructure", 
-        detail: "Onshore Coordination · Resource Support" 
+      {
+        title: "Project Developers & Contractors",
+        desc: "Coordinating project resources, materials and on-ground execution support",
+        detail: "Project Coordination · Execution Support"
       },
-      { 
-        title: "Trading Companies", 
-        desc: "Securing stable cross-border supply chains and commodities", 
-        detail: "Logistics Clearance · Secure Cleared Path" 
+      {
+        title: "Trading & Supply Chain Companies",
+        desc: "Coordinating cross-border trade, logistics and supply chain execution",
+        detail: "Trade Coordination · Logistics Support"
       },
-      { 
-        title: "Investors", 
-        desc: "Sourcing verified operational assets and joint ventures", 
-        detail: "Deal Screening · Executive Evaluation" 
+      {
+        title: "Employers & Project Operators",
+        desc: "Workforce recruitment, screening, mobilization and project deployment support",
+        detail: "Recruitment & Screening · Mobilization"
       },
-      { 
-        title: "Strategic Partners", 
-        desc: "Establishing strong multi-lateral ties with chambers", 
-        detail: "State & Chamber Links · Hub Trust" 
+      {
+        title: "Strategic & Local Partners",
+        desc: "Building long-term local partnerships and regional business networks",
+        detail: "Local Partnerships · Network Building"
       }
     ],
     AR: [
-      { 
-        title: "الشركات المصنعة", 
-        desc: "المصادر الصناعية الساعية لتجاوز العقبات التنظيمية", 
-        detail: "المطابقة الفنية · التوطين المعتمد" 
+      {
+        title: "الشركات المصنعة والموردون",
+        desc: "موارد تصنيع وتوريد لدعم المصادر والإنتاج وتنسيق التصدير",
+        detail: "دعم المصادر · تنسيق التصدير"
       },
-      { 
-        title: "أصحاب العلامات التجارية", 
-        desc: "تأسيس شبكات مبيعات مستدامة ورفع القيمة التجارية", 
-        detail: "تطوير القنوات · ترسيخ الثقة" 
+      {
+        title: "أصحاب العلامات التجارية والمؤسسات",
+        desc: "دعم دخول السوق وتطوير القنوات ونمو الأعمال الإقليمية",
+        detail: "دخول السوق · تطوير القنوات"
       },
-      { 
-        title: "مطورو المشاريع", 
-        desc: "توصيل وتنفيذ مشاريع الطاقة والبنية التحتية والمناطق الصناعية", 
-        detail: "التمثيل المادي · تنسيق الشراكات" 
+      {
+        title: "مطورو المشاريع والمقاولون",
+        desc: "تنسيق موارد المشاريع والمواد ودعم التنفيذ الميداني",
+        detail: "تنسيق المشاريع · دعم التنفيذ"
       },
-      { 
-        title: "شركات التجارة", 
-        desc: "ضمان انسيابية الإمداد والمشتريات وتحصيل الحقوق بأمان", 
-        detail: "حماية العقود · الجمارك والتحصيل" 
+      {
+        title: "شركات التجارة وسلسلة الإمداد",
+        desc: "تنسيق التجارة عبر الحدود واللوجستيات وتنفيذ سلسلة الإمداد",
+        detail: "تنسيق التجارة · دعم لوجستي"
       },
-      { 
-        title: "المستثمرون", 
-        desc: "توجيه رؤوس الأموال بكفاءة عبر أصول حقيقية ومفحوصة", 
-        detail: "تقييم المشروعات · تقليص المخاطر" 
+      {
+        title: "أصحاب العمل ومشغلو المشاريع",
+        desc: "دعم استقدام القوى العاملة وفرزها وتعبئتها ونشرها في المشاريع",
+        detail: "الاستقدام والفرز · التعبئة والنشر"
       },
-      { 
-        title: "الشركاء الاستراتيجيون", 
-        desc: "توطيد شبكة تعاون وثيقة مع الهيئات والصناديق الإقليمية", 
-        detail: "روابط حكومية · تفويضات ثنائية" 
+      {
+        title: "الشركاء الاستراتيجيون والمحليون",
+        desc: "بناء شراكات محلية طويلة الأمد وشبكات أعمال إقليمية",
+        detail: "شراكات محلية · بناء الشبكات"
       }
     ]
   };
@@ -134,7 +133,7 @@ export default function WhoWeAre({ lang, pack }: WhoWeAreProps) {
       case 1: return <Award className="w-5 h-5 text-brand-gold-400" />;
       case 2: return <Briefcase className="w-5 h-5 text-brand-gold-400" />;
       case 3: return <TrendingUp className="w-5 h-5 text-brand-gold-400" />;
-      case 4: return <Coins className="w-5 h-5 text-brand-gold-400" />;
+      case 4: return <Users className="w-5 h-5 text-brand-gold-400" />;
       case 5: return <Handshake className="w-5 h-5 text-brand-gold-400" />;
       default: return <Users className="w-5 h-5 text-brand-gold-400" />;
     }
