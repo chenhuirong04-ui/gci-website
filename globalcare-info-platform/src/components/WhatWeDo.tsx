@@ -50,7 +50,7 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
       desc: pack.service3Desc,
       bullets: pack.service3Bullets || [],
       footer: pack.service3Footer,
-      footerUrl: "https://app.globalcareinfo.com/quotation?mode=customer-quote"
+      footerUrl: "https://living.globalcareinfo.com"
     },
     {
       idx: "04",
