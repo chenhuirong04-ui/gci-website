@@ -15,9 +15,9 @@ const t = {
   sectionLabel: { EN: "BUSINESS OPPORTUNITIES HUB", ZH: "商业机会平台", AR: "منصة فرص الأعمال" },
   sectionTitle: { EN: "ACTIVE BUSINESS OPPORTUNITIES", ZH: "活跃商业机会", AR: "فرص الأعمال النشطة" },
   subtitle: {
-    EN: "Explore active business opportunities currently being developed, supported, or facilitated by GCI across global markets.",
-    ZH: "探索 GCI 正在参与、推动及协调的国际商业机会。",
-    AR: "استكشف الفرص التجارية النشطة التي تطورها GCI أو تدعمها أو تيسرها حالياً عبر الأسواق العالمية."
+    EN: "Selected projects and business opportunities that GCI is tracking, evaluating or actively supporting.",
+    ZH: "展示 GCI 正在跟踪、评估或实际参与的重点项目与商业机会。",
+    AR: "مشاريع وفرص أعمال مختارة تتابعها GCI أو تقيّمها أو تدعمها بشكل نشط."
   },
   placeholderText: { EN: "Video Coming Soon", ZH: "视频即将发布", AR: "الفيديو قريباً" },
   tagsLabel: { EN: "Key Sectors", ZH: "核心领域", AR: "القطاعات الرئيسية" },
@@ -42,6 +42,9 @@ function getStatus(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
 function getTags(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
   return lang === "ZH" ? opp.tagsZH : lang === "AR" ? opp.tagsAR : opp.tags;
 }
+function getOpportunityType(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+  return lang === "ZH" ? opp.opportunityTypeZH : lang === "AR" ? opp.opportunityTypeAR : opp.opportunityType;
+}
 function getOverview(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
   return lang === "ZH" ? opp.overviewZH : lang === "AR" ? opp.overviewAR : opp.overviewEN;
 }
@@ -59,6 +62,11 @@ function statusStyle(status: Opportunity["status"]) {
   if (status === "Active") return "text-green-400 bg-green-400/10 border border-green-400/30";
   if (status === "Under Development") return "text-yellow-400 bg-yellow-400/10 border border-yellow-400/30";
   return "text-brand-gold-400 bg-brand-gold-400/10 border border-brand-gold-400/30";
+}
+function opportunityTypeStyle(type: Opportunity["opportunityType"]) {
+  return type === "Active GCI Opportunity"
+    ? "text-[#030611] bg-brand-gold-400 border border-brand-gold-300 font-bold"
+    : "text-brand-gold-300 bg-transparent border border-brand-gold-400/40";
 }
 
 function scrollToSection(id: string) {
@@ -110,6 +118,9 @@ function DetailView({
               </span>
               <span className={`text-sm font-medium px-3 py-1 rounded ${statusStyle(opp.status)}`}>
                 {getStatus(opp, lang)}
+              </span>
+              <span className={`text-sm font-medium px-3 py-1 rounded ${opportunityTypeStyle(opp.opportunityType)}`}>
+                {getOpportunityType(opp, lang)}
               </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
@@ -325,10 +336,13 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                           {getCountry(activeOpp, lang)}
                         </span>
                       </div>
-                      {/* Status badge bottom-left */}
-                      <div className="absolute bottom-4 left-4 z-20">
+                      {/* Status + opportunity-type badges bottom-left */}
+                      <div className="absolute bottom-4 left-4 z-20 flex flex-wrap gap-2">
                         <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${statusStyle(activeOpp.status)}`}>
                           {getStatus(activeOpp, lang)}
+                        </span>
+                        <span className={`text-xs font-medium px-3 py-1.5 rounded-full ${opportunityTypeStyle(activeOpp.opportunityType)}`}>
+                          {getOpportunityType(activeOpp, lang)}
                         </span>
                       </div>
                       {/* Video coming soon badge bottom-right */}
@@ -371,6 +385,9 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                       </span>
                       <span className={`text-[10px] font-mono font-bold px-3 py-1 rounded-lg ${statusStyle(activeOpp.status)}`}>
                         {getStatus(activeOpp, lang)}
+                      </span>
+                      <span className={`text-[10px] font-mono font-bold px-3 py-1 rounded-lg ${opportunityTypeStyle(activeOpp.opportunityType)}`}>
+                        {getOpportunityType(activeOpp, lang)}
                       </span>
                     </div>
 

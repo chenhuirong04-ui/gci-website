@@ -1,3 +1,6 @@
+import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268.png";
+import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
+
 export interface Opportunity {
   id: string;
   slug: string;
@@ -7,9 +10,12 @@ export interface Opportunity {
   country: string;
   countryZH: string;
   countryAR: string;
-  status: "Active" | "Under Development" | "Opportunity";
+  status: string;
   statusZH: string;
   statusAR: string;
+  opportunityType: "Market Opportunity" | "Active GCI Opportunity";
+  opportunityTypeZH: string;
+  opportunityTypeAR: string;
   tags: string[];
   tagsZH: string[];
   tagsAR: string[];
@@ -32,377 +38,314 @@ export interface Opportunity {
 export const OPPORTUNITIES: Opportunity[] = [
   {
     id: "opp-1",
-    slug: "morocco-development-opportunity",
-    titleEN: "Morocco Development Opportunity",
-    titleZH: "摩洛哥开发项目机会",
-    titleAR: "فرصة التطوير في المغرب",
-    country: "Morocco",
-    countryZH: "摩洛哥",
-    countryAR: "المغرب",
+    slug: "al-maktoum-airport-expansion",
+    titleEN: "Al Maktoum International Airport Expansion",
+    titleZH: "阿勒马克图姆国际机场扩建",
+    titleAR: "توسعة مطار آل مكتوم الدولي",
+    country: "UAE / Dubai",
+    countryZH: "阿联酋·迪拜",
+    countryAR: "الإمارات / دبي",
     status: "Under Development",
     statusZH: "开发中",
     statusAR: "قيد التطوير",
-    tags: ["Real Estate", "Supplier Development", "Investment"],
-    tagsZH: ["房地产", "供应商开发", "投资"],
-    tagsAR: ["العقارات", "تطوير الموردين", "الاستثمار"],
-    image: "/images/countries/country-morocco.jpg",
+    opportunityType: "Market Opportunity",
+    opportunityTypeZH: "市场机会",
+    opportunityTypeAR: "فرصة سوقية",
+    tags: ["Aviation", "Infrastructure", "Construction"],
+    tagsZH: ["航空", "基础设施", "建筑"],
+    tagsAR: ["الطيران", "البنية التحتية", "البناء"],
+    image: "/images/countries/country-uae.jpg",
     youtubeUrl: "",
-    overviewEN: "GCI is actively facilitating connections and commercial coordination for a development opportunity in Morocco. This engagement focuses on supporting real estate-linked supply chain requirements and identifying qualified suppliers for large-scale project delivery. Morocco's accelerating infrastructure development, combined with its strategic position as a gateway between Africa and Europe, creates significant upstream and downstream commercial opportunities for qualified partners.",
-    overviewZH: "GCI 正积极促进摩洛哥一项开发机会的商业联络与协调工作。本项目重点支持与房地产相关的供应链需求，并为大型项目交付寻找合格供应商。摩洛哥持续加速的基础设施建设，加之其作为非洲与欧洲之间战略门户的独特地位，为合格合作伙伴创造了重要的上下游商业机遇。",
-    overviewAR: "تعمل GCI بنشاط على تسهيل الاتصالات والتنسيق التجاري لفرصة تطوير في المغرب. يركز هذا التعاون على دعم متطلبات سلسلة التوريد المرتبطة بالعقارات وتحديد موردين مؤهلين لتنفيذ مشاريع واسعة النطاق.",
+    overviewEN: "The expansion of Al Maktoum International Airport is creating long-term opportunities across aviation infrastructure, construction, project supply, equipment, logistics and workforce support. GCI is tracking the project as a major UAE market opportunity.",
+    overviewZH: "迪拜阿勒马克图姆国际机场扩建正在持续推进，未来将形成大量航空基础设施、建筑施工、项目供应、设备、物流及劳动力配套需求。GCI 将其作为重点市场机会持续关注。",
+    overviewAR: "تخلق توسعة مطار آل مكتوم الدولي فرصاً طويلة الأمد في البنية التحتية للطيران والبناء وتوريد المشاريع والمعدات واللوجستيات ودعم القوى العاملة. تتابع GCI هذا المشروع باعتباره فرصة سوقية رئيسية في الإمارات.",
     currentFocusEN: [
-      "Coordinating supplier qualification and procurement matching",
-      "Supporting logistics and import planning for project materials",
-      "Facilitating commercial introductions between project stakeholders",
-      "Assessing FF&E and construction material sourcing requirements"
+      "Monitoring project phasing and public tender announcements",
+      "Mapping construction and materials supply requirements",
+      "Identifying equipment and logistics partners active in the project",
+      "Assessing workforce and project-support demand as the expansion progresses",
     ],
     currentFocusZH: [
-      "协调供应商资质审核与采购匹配",
-      "支持项目物资的物流与进口规划",
-      "促进项目利益相关方之间的商业对接",
-      "评估家具设备及建筑材料的采购需求"
+      "跟踪项目分期进展及公开招标信息",
+      "梳理建筑与材料供应需求",
+      "识别参与该项目的设备与物流合作方",
+      "评估随扩建推进而产生的劳动力及项目支持需求",
     ],
     currentFocusAR: [
-      "تنسيق تأهيل الموردين ومطابقة المشتريات",
-      "دعم التخطيط اللوجستي والاستيراد لمواد المشروع",
-      "تسهيل التعريف التجاري بين أصحاب المصلحة في المشروع",
-      "تقييم متطلبات مصادر الأثاث والمعدات ومواد البناء"
+      "متابعة مراحل المشروع وإعلانات المناقصات العامة",
+      "رصد متطلبات توريد مواد ومعدات البناء",
+      "تحديد شركاء المعدات واللوجستيات الفاعلين في المشروع",
+      "تقييم الطلب على القوى العاملة والدعم المشروعي مع تقدم التوسعة",
     ],
     potentialOpportunitiesEN: [
-      "Supplier and manufacturer partnerships for construction materials",
-      "FF&E sourcing and procurement coordination",
-      "Logistics and freight forwarding services",
-      "Local market entry support for international suppliers"
+      "Construction & Infrastructure",
+      "Building Materials & Project Supply",
+      "Equipment & Logistics",
+      "Workforce & Project Support",
     ],
     potentialOpportunitiesZH: [
-      "建筑材料供应商和制造商合作",
-      "家具设备采购协调",
-      "物流和货运代理服务",
-      "为国际供应商提供本地市场进入支持"
+      "建筑与基础设施",
+      "建筑材料与项目供应",
+      "设备与物流",
+      "劳动力与项目支持",
     ],
     potentialOpportunitiesAR: [
-      "شراكات الموردين والمصنعين لمواد البناء",
-      "تنسيق مصادر الأثاث والمعدات والمشتريات",
-      "خدمات اللوجستيات وشحن البضائع",
-      "دعم دخول السوق المحلي للموردين الدوليين"
+      "البناء والبنية التحتية",
+      "مواد البناء وتوريد المشاريع",
+      "المعدات واللوجستيات",
+      "القوى العاملة والدعم المشروعي",
     ],
     whoShouldContactEN: [
-      "Construction material manufacturers and exporters",
-      "FF&E suppliers with international delivery capability",
-      "Logistics and freight companies with Africa/Europe experience",
-      "Investors interested in Morocco's development sector"
+      "Construction and infrastructure contractors with aviation-sector experience",
+      "Building materials and equipment suppliers",
+      "Logistics and freight companies serving major UAE projects",
+      "Workforce and project-support service providers",
     ],
     whoShouldContactZH: [
-      "建筑材料制造商和出口商",
-      "具备国际配送能力的家具设备供应商",
-      "拥有非洲/欧洲经验的物流和货运公司",
-      "对摩洛哥开发领域感兴趣的投资者"
+      "具备航空领域经验的建筑与基础设施承包商",
+      "建筑材料与设备供应商",
+      "服务阿联酋重大项目的物流货运公司",
+      "劳动力与项目支持服务提供商",
     ],
     whoShouldContactAR: [
-      "مصنعو ومصدرو مواد البناء",
-      "موردو الأثاث والمعدات ذوو قدرة التسليم الدولي",
-      "شركات اللوجستيات والشحن ذات خبرة في أفريقيا/أوروبا",
-      "المستثمرون المهتمون بقطاع التطوير في المغرب"
-    ]
+      "مقاولو البناء والبنية التحتية ذوو الخبرة في قطاع الطيران",
+      "موردو مواد البناء والمعدات",
+      "شركات اللوجستيات والشحن العاملة في المشاريع الكبرى بالإمارات",
+      "مزودو خدمات القوى العاملة والدعم المشروعي",
+    ],
   },
   {
     id: "opp-2",
-    slug: "cambodia-industrial-park",
-    titleEN: "Cambodia Industrial Park Opportunity",
-    titleZH: "柬埔寨工业园机会",
-    titleAR: "فرصة المنطقة الصناعية في كمبوديا",
-    country: "Cambodia",
-    countryZH: "柬埔寨",
-    countryAR: "كمبوديا",
-    status: "Active",
-    statusZH: "进行中",
-    statusAR: "نشط",
-    tags: ["Industrial Park", "Manufacturing", "Investment"],
-    tagsZH: ["工业园区", "制造业", "投资"],
-    tagsAR: ["منطقة صناعية", "تصنيع", "استثمار"],
-    image: "/images/opportunities/cambodia-industrial.jpg",
+    slug: "dubai-walk-master-plan",
+    titleEN: "Dubai Walk Master Plan",
+    titleZH: "迪拜步行系统总体规划",
+    titleAR: "المخطط الرئيسي لمشروع Dubai Walk",
+    country: "UAE / Dubai",
+    countryZH: "阿联酋·迪拜",
+    countryAR: "الإمارات / دبي",
+    status: "Programme Development / Implementation",
+    statusZH: "计划推进与实施中",
+    statusAR: "قيد التطوير والتنفيذ",
+    opportunityType: "Market Opportunity",
+    opportunityTypeZH: "市场机会",
+    opportunityTypeAR: "فرصة سوقية",
+    tags: ["Urban Infrastructure", "Public Realm"],
+    tagsZH: ["城市基础设施", "公共空间"],
+    tagsAR: ["البنية التحتية الحضرية", "الفضاء العام"],
+    image: imgRoboticsDubai,
     youtubeUrl: "",
-    overviewEN: "GCI is supporting commercial coordination and partner matching for an active industrial park development opportunity in Cambodia. This engagement targets manufacturers and industrial operators seeking to establish or expand production facilities in Southeast Asia, taking advantage of Cambodia's competitive manufacturing environment, preferential trade agreements, and growing regional demand. The opportunity covers factory setup, supply chain integration, and go-to-market coordination.",
-    overviewZH: "GCI 正为柬埔寨一项进行中的工业园开发机会提供商业协调和合作伙伴匹配支持。本项目面向希望在东南亚建立或扩大生产设施的制造商和工业运营商，借助柬埔寨具有竞争力的制造环境、优惠贸易协定及不断增长的区域需求。机会涵盖工厂设立、供应链整合和市场进入协调。",
-    overviewAR: "تدعم GCI التنسيق التجاري ومطابقة الشركاء لفرصة تطوير منطقة صناعية نشطة في كمبوديا. تستهدف هذه المشاركة المصنعين والمشغلين الصناعيين الراغبين في إنشاء أو توسيع مرافق الإنتاج في جنوب شرق آسيا.",
+    overviewEN: "Dubai Walk is expanding Dubai's pedestrian and public-realm infrastructure, creating opportunities across urban works, landscaping, lighting, street furniture, construction materials and supporting supply.",
+    overviewZH: "Dubai Walk 旨在持续扩展迪拜步行网络和公共空间体系，将带来城市基础设施、景观、照明、城市家具、建材及施工配套等长期市场机会。",
+    overviewAR: "يهدف مشروع Dubai Walk إلى توسيع شبكة المشي والفضاء العام في دبي، مما يخلق فرصاً في الأعمال الحضرية والمناظر الطبيعية والإضاءة وأثاث الشوارع ومواد البناء والتوريد الداعم.",
     currentFocusEN: [
-      "Matching manufacturers with available industrial land and facilities",
-      "Coordinating factory setup and operational requirements",
-      "Supporting supply chain and raw material procurement",
-      "Facilitating investment coordination and commercial introductions"
+      "Tracking programme rollout phases across Dubai's pedestrian network",
+      "Mapping landscaping, lighting and street-furniture requirements",
+      "Identifying suppliers for public-realm construction materials",
+      "Assessing partnership potential with programme delivery contractors",
     ],
     currentFocusZH: [
-      "将制造商与可用工业用地和设施进行匹配",
-      "协调工厂设立和运营需求",
-      "支持供应链和原材料采购",
-      "促进投资协调和商业对接"
+      "跟踪迪拜步行网络各阶段推进情况",
+      "梳理景观、照明及城市家具相关需求",
+      "识别公共空间建筑材料供应商",
+      "评估与项目实施承包商的合作潜力",
     ],
     currentFocusAR: [
-      "مطابقة المصنعين مع الأراضي الصناعية والمرافق المتاحة",
-      "تنسيق إعداد المصانع ومتطلبات التشغيل",
-      "دعم سلسلة التوريد وشراء المواد الخام",
-      "تسهيل تنسيق الاستثمار والتعريفات التجارية"
+      "متابعة مراحل تنفيذ البرنامج عبر شبكة المشي في دبي",
+      "رصد متطلبات المناظر الطبيعية والإضاءة وأثاث الشوارع",
+      "تحديد موردي مواد البناء للفضاء العام",
+      "تقييم إمكانية الشراكة مع مقاولي تنفيذ البرنامج",
     ],
     potentialOpportunitiesEN: [
-      "Industrial land and factory leasing or ownership",
-      "Manufacturing partnerships and joint ventures",
-      "Supply chain setup for regional or global distribution",
-      "Investment into industrial infrastructure"
+      "Urban Infrastructure",
+      "Landscaping & Public Realm",
+      "Lighting & Urban Furniture",
+      "Construction Materials & Supporting Supply",
     ],
     potentialOpportunitiesZH: [
-      "工业用地和工厂租赁或所有权",
-      "制造业合伙和合资企业",
-      "面向区域或全球分销的供应链建立",
-      "工业基础设施投资"
+      "城市基础设施",
+      "景观与公共空间",
+      "照明与城市家具",
+      "建筑材料与配套供应",
     ],
     potentialOpportunitiesAR: [
-      "تأجير الأراضي الصناعية والمصانع أو تملكها",
-      "شراكات التصنيع والمشاريع المشتركة",
-      "إنشاء سلسلة التوريد للتوزيع الإقليمي أو العالمي",
-      "الاستثمار في البنية التحتية الصناعية"
+      "البنية التحتية الحضرية",
+      "المناظر الطبيعية والفضاء العام",
+      "الإضاءة وأثاث المدينة",
+      "مواد البناء والتوريد الداعم",
     ],
     whoShouldContactEN: [
-      "Manufacturers seeking Southeast Asia production base",
-      "Industrial investors looking for emerging market exposure",
-      "Companies planning supply chain relocation or diversification",
-      "Trading companies with regional distribution networks"
+      "Landscaping and public-realm contractors",
+      "Lighting and urban furniture suppliers",
+      "Construction materials suppliers for civic infrastructure",
+      "Companies with Dubai municipal or programme delivery experience",
     ],
     whoShouldContactZH: [
-      "寻求东南亚生产基地的制造商",
-      "寻找新兴市场敞口的工业投资者",
-      "计划供应链迁移或多元化的企业",
-      "拥有区域分销网络的贸易公司"
+      "景观与公共空间承包商",
+      "照明与城市家具供应商",
+      "市政基础设施建筑材料供应商",
+      "具备迪拜市政或项目实施经验的企业",
     ],
     whoShouldContactAR: [
-      "المصنعون الباحثون عن قاعدة إنتاج في جنوب شرق آسيا",
-      "المستثمرون الصناعيون الباحثون عن التعرض لأسواق ناشئة",
-      "الشركات التي تخطط لنقل سلسلة التوريد أو تنويعها",
-      "شركات التداول ذات شبكات التوزيع الإقليمية"
-    ]
+      "مقاولو المناظر الطبيعية والفضاء العام",
+      "موردو الإضاءة وأثاث المدينة",
+      "موردو مواد البناء للبنية التحتية المدنية",
+      "الشركات ذات الخبرة في بلدية دبي أو تنفيذ البرامج",
+    ],
   },
   {
     id: "opp-3",
-    slug: "cambodia-halal-industrial-park",
-    titleEN: "Cambodia Halal Industrial Park",
-    titleZH: "柬埔寨清真工业园",
-    titleAR: "المنطقة الصناعية الحلال في كمبوديا",
-    country: "Cambodia",
-    countryZH: "柬埔寨",
-    countryAR: "كمبوديا",
-    status: "Active",
-    statusZH: "进行中",
-    statusAR: "نشط",
-    tags: ["Halal Industry", "Food Processing", "Investment"],
-    tagsZH: ["清真产业", "食品加工", "投资"],
-    tagsAR: ["الصناعة الحلال", "معالجة الأغذية", "الاستثمار"],
-    image: "/images/opportunities/cambodia-halal.jpg",
+    slug: "dubai-blue-green-spaces-programme",
+    titleEN: "Dubai Blue & Green Spaces Programme",
+    titleZH: "迪拜蓝绿空间计划",
+    titleAR: "برنامج المساحات الزرقاء والخضراء في دبي",
+    country: "UAE / Dubai",
+    countryZH: "阿联酋·迪拜",
+    countryAR: "الإمارات / دبي",
+    status: "Programme Development",
+    statusZH: "计划推进中",
+    statusAR: "قيد التطوير",
+    opportunityType: "Market Opportunity",
+    opportunityTypeZH: "市场机会",
+    opportunityTypeAR: "فرصة سوقية",
+    tags: ["Urban Development", "Landscaping", "Infrastructure"],
+    tagsZH: ["城市发展", "景观", "基础设施"],
+    tagsAR: ["التطوير الحضري", "تنسيق المناظر الطبيعية", "البنية التحتية"],
+    image: imgGlobalHub,
     youtubeUrl: "",
-    overviewEN: "GCI is coordinating commercial engagement for a dedicated Halal Industrial Park opportunity in Cambodia, designed specifically for food processing, packaging, and halal-certified manufacturing operations. With increasing demand for halal products across Southeast Asia, the Middle East, and global Muslim markets, this opportunity positions manufacturers and food processors to tap into a rapidly growing supply chain ecosystem with access to ASEAN trade corridors and GCC export pathways.",
-    overviewZH: "GCI 正为柬埔寨一个专属清真工业园机会协调商业接触，该工业园专为食品加工、包装及清真认证制造业设计。随着东南亚、中东及全球穆斯林市场对清真产品需求持续增长，该机会帮助制造商和食品加工企业进入快速成长的供应链生态系统，并可接入东盟贸易走廊及海湾国家出口通道。",
-    overviewAR: "تنسق GCI التعاون التجاري لفرصة منطقة صناعية حلال مخصصة في كمبوديا، مصممة خصيصاً لعمليات معالجة الأغذية والتعبئة والتصنيع المعتمد حلالاً. مع تزايد الطلب على المنتجات الحلال عبر جنوب شرق آسيا والشرق الأوسط والأسواق الإسلامية العالمية.",
+    overviewEN: "Dubai's continued investment in blue and green spaces, public environments and urban infrastructure is opening opportunities for landscaping, outdoor solutions, lighting, materials and project supply.",
+    overviewZH: "迪拜持续推进蓝绿空间、公共环境与城市基础设施建设，为景观、公共空间、户外设施、照明、建材及项目供应带来新的市场机会。",
+    overviewAR: "يفتح استثمار دبي المستمر في المساحات الزرقاء والخضراء والبيئات العامة والبنية التحتية الحضرية فرصاً في تنسيق المناظر الطبيعية والحلول الخارجية والإضاءة والمواد وتوريد المشاريع.",
     currentFocusEN: [
-      "Identifying halal food manufacturers and processors for park placement",
-      "Coordinating halal certification pathway and compliance advisory",
-      "Supporting export market connections to GCC and Southeast Asia",
-      "Facilitating packaging, cold chain and logistics infrastructure"
+      "Monitoring blue-green infrastructure programme announcements",
+      "Mapping landscaping and outdoor-solutions requirements",
+      "Identifying materials and project supply needs for public spaces",
+      "Assessing lighting and irrigation infrastructure opportunities",
     ],
     currentFocusZH: [
-      "识别适合入驻园区的清真食品制造商和加工商",
-      "协调清真认证流程和合规咨询",
-      "支持与海湾国家及东南亚出口市场的连接",
-      "促进包装、冷链和物流基础设施建设"
+      "跟踪蓝绿基础设施计划相关公告",
+      "梳理景观与户外设施相关需求",
+      "识别公共空间材料与项目供应需求",
+      "评估照明与灌溉基础设施相关机会",
     ],
     currentFocusAR: [
-      "تحديد مصنعي الأغذية الحلال ومعالجيها لوضعهم في المنطقة",
-      "تنسيق مسار الشهادات الحلال والاستشارات الامتثالية",
-      "دعم روابط السوق التصديرية لدول الخليج وجنوب شرق آسيا",
-      "تسهيل التغليف وسلسلة البرودة والبنية التحتية اللوجستية"
+      "متابعة إعلانات برنامج البنية التحتية الزرقاء والخضراء",
+      "رصد متطلبات المناظر الطبيعية والحلول الخارجية",
+      "تحديد احتياجات المواد وتوريد المشاريع للفضاءات العامة",
+      "تقييم فرص البنية التحتية للإضاءة والري",
     ],
     potentialOpportunitiesEN: [
-      "Halal food production and processing facilities",
-      "Packaging and cold storage infrastructure",
-      "Halal certification and export compliance services",
-      "Distribution partnerships for GCC and Muslim-majority markets"
+      "Landscape & Public Space",
+      "Urban Infrastructure",
+      "Lighting & Outdoor Solutions",
+      "Materials & Project Supply",
     ],
     potentialOpportunitiesZH: [
-      "清真食品生产和加工设施",
-      "包装和冷藏基础设施",
-      "清真认证和出口合规服务",
-      "面向海湾国家及穆斯林主体市场的分销合作"
+      "景观与公共空间",
+      "城市基础设施",
+      "照明与户外设施",
+      "材料与项目供应",
     ],
     potentialOpportunitiesAR: [
-      "مرافق إنتاج الأغذية الحلال ومعالجتها",
-      "البنية التحتية للتغليف والتخزين البارد",
-      "خدمات الشهادات الحلال وامتثال التصدير",
-      "شراكات التوزيع لدول الخليج وأسواق الأغلبية المسلمة"
+      "المناظر الطبيعية والفضاء العام",
+      "البنية التحتية الحضرية",
+      "الإضاءة والحلول الخارجية",
+      "المواد وتوريد المشاريع",
     ],
     whoShouldContactEN: [
-      "Halal food manufacturers and processors",
-      "Food & beverage companies seeking ASEAN production base",
-      "Investors in halal economy and food industry",
-      "Exporters targeting GCC and Muslim-majority markets"
+      "Landscape design and construction companies",
+      "Outdoor lighting and irrigation solution providers",
+      "Materials suppliers for public and green-space infrastructure",
+      "Contractors with Dubai urban development experience",
     ],
     whoShouldContactZH: [
-      "清真食品制造商和加工商",
-      "寻求东盟生产基地的食品饮料公司",
-      "清真经济和食品行业投资者",
-      "面向海湾国家和穆斯林主体市场的出口商"
+      "景观设计与施工公司",
+      "户外照明与灌溉解决方案供应商",
+      "公共及绿地基础设施材料供应商",
+      "具备迪拜城市开发经验的承包商",
     ],
     whoShouldContactAR: [
-      "مصنعو الأغذية الحلال ومعالجوها",
-      "شركات الأغذية والمشروبات الباحثة عن قاعدة إنتاج آسيان",
-      "المستثمرون في الاقتصاد الحلال وصناعة الأغذية",
-      "المصدرون المستهدفون لدول الخليج وأسواق الأغلبية المسلمة"
-    ]
+      "شركات تصميم وتنفيذ المناظر الطبيعية",
+      "مزودو حلول الإضاءة والري الخارجية",
+      "موردو المواد للبنية التحتية العامة والخضراء",
+      "المقاولون ذوو الخبرة في التطوير الحضري بدبي",
+    ],
   },
   {
     id: "opp-4",
-    slug: "dubai-land-opportunity",
-    titleEN: "Dubai Land Opportunity",
-    titleZH: "迪拜土地机会",
-    titleAR: "فرصة أراضي دبي",
-    country: "United Arab Emirates",
+    slug: "uae-labour-camp-workforce-accommodation",
+    titleEN: "UAE Labour Camp & Workforce Accommodation Opportunity",
+    titleZH: "阿联酋劳工营与人员住宿机会",
+    titleAR: "فرصة مخيمات العمال وإسكان القوى العاملة في الإمارات",
+    country: "UAE",
     countryZH: "阿联酋",
-    countryAR: "الإمارات العربية المتحدة",
-    status: "Opportunity",
-    statusZH: "待接洽",
-    statusAR: "فرصة",
-    tags: ["Land", "Industrial", "Logistics"],
-    tagsZH: ["土地", "工业", "物流"],
-    tagsAR: ["أراضي", "صناعي", "لوجستيات"],
+    countryAR: "الإمارات",
+    status: "Active",
+    statusZH: "进行中",
+    statusAR: "نشط",
+    opportunityType: "Active GCI Opportunity",
+    opportunityTypeZH: "GCI 活跃机会",
+    opportunityTypeAR: "فرصة نشطة لدى GCI",
+    tags: ["Workforce", "Accommodation", "Project Support"],
+    tagsZH: ["劳动力", "住宿", "项目支持"],
+    tagsAR: ["القوى العاملة", "الإسكان", "الدعم المشروعي"],
     image: "/images/countries/country-uae.jpg",
     youtubeUrl: "",
-    overviewEN: "GCI is facilitating preliminary commercial coordination around a land opportunity in Dubai suitable for industrial, logistics, or light manufacturing use. Dubai's world-class logistics infrastructure, free zone ecosystem, and connectivity to global trade routes make it an ideal location for companies seeking a Middle East operational hub. GCI is supporting qualified parties in understanding the opportunity framework and coordinating appropriate commercial introductions.",
-    overviewZH: "GCI 正在围绕迪拜一块适合工业、物流或轻型制造用途的土地机会进行初步商业协调。迪拜世界一流的物流基础设施、自由区生态系统及与全球贸易路线的连接，使其成为寻求中东运营枢纽的企业的理想选址。GCI 正在协助合格方了解机会框架并协调适当的商业对接。",
-    overviewAR: "تسهل GCI التنسيق التجاري الأولي حول فرصة أراضٍ في دبي مناسبة للاستخدام الصناعي أو اللوجستي أو التصنيع الخفيف. تجعل البنية التحتية اللوجستية على مستوى عالمي لدبي ونظام المناطق الحرة واتصالها بطرق التجارة العالمية منها موقعاً مثالياً.",
+    overviewEN: "GCI is actively exploring workforce accommodation opportunities in the UAE, including labour camp development, leasing, workforce housing solutions, operations and supporting services for large-scale projects.",
+    overviewZH: "围绕阿联酋大型建筑、工业及项目用工需求，GCI 正在关注并推进劳工营、员工住宿、租赁、运营及配套服务相关合作机会。",
+    overviewAR: "تعمل GCI بنشاط على استكشاف فرص إسكان القوى العاملة في الإمارات، بما في ذلك تطوير مخيمات العمال، والتأجير، وحلول إسكان القوى العاملة، والتشغيل والخدمات الداعمة للمشاريع الكبرى.",
     currentFocusEN: [
-      "Qualifying interested parties for commercial engagement",
-      "Providing framework overview to suitable investors and operators",
-      "Coordinating introductions and preliminary discussions",
-      "Supporting due diligence coordination for interested parties"
+      "Evaluating labour camp sites and accommodation capacity across the UAE",
+      "Coordinating with operators on leasing and workforce housing models",
+      "Assessing operational and supporting-service requirements",
+      "Engaging with project owners on workforce accommodation needs",
     ],
     currentFocusZH: [
-      "对感兴趣方进行资质审核以进行商业接触",
-      "为合适的投资者和运营商提供框架概述",
-      "协调引荐和初步讨论",
-      "为感兴趣方提供尽职调查协调支持"
+      "评估阿联酋各地劳工营选址及住宿容量",
+      "与运营方协调租赁及员工住宿方案",
+      "评估运营及配套服务需求",
+      "与项目业主对接员工住宿相关需求",
     ],
     currentFocusAR: [
-      "تأهيل الأطراف المهتمة للمشاركة التجارية",
-      "تقديم نظرة عامة على الإطار للمستثمرين والمشغلين المناسبين",
-      "تنسيق التعريفات والمناقشات الأولية",
-      "دعم تنسيق العناية الواجبة للأطراف المهتمة"
+      "تقييم مواقع مخيمات العمال والقدرة الاستيعابية للإسكان في الإمارات",
+      "التنسيق مع المشغلين حول نماذج التأجير وإسكان القوى العاملة",
+      "تقييم متطلبات التشغيل والخدمات الداعمة",
+      "التواصل مع أصحاب المشاريع حول احتياجات إسكان القوى العاملة",
     ],
     potentialOpportunitiesEN: [
-      "Industrial and logistics land acquisition or leasing",
-      "Light manufacturing facility development",
-      "Warehouse and distribution hub development",
-      "Free zone entity setup and operational coordination"
+      "Labour Camp Development",
+      "Accommodation Leasing",
+      "Workforce Housing Solutions",
+      "Operation & Supporting Services",
     ],
     potentialOpportunitiesZH: [
-      "工业和物流土地收购或租赁",
-      "轻型制造设施开发",
-      "仓库和分销枢纽开发",
-      "自由区实体设立和运营协调"
+      "劳工营开发",
+      "住宿租赁",
+      "员工住宿解决方案",
+      "运营与配套服务",
     ],
     potentialOpportunitiesAR: [
-      "الاستحواذ على الأراضي الصناعية واللوجستية أو استئجارها",
-      "تطوير مرافق التصنيع الخفيف",
-      "تطوير مركز المستودعات والتوزيع",
-      "إنشاء كيانات المناطق الحرة والتنسيق التشغيلي"
+      "تطوير مخيمات العمال",
+      "تأجير الإسكان",
+      "حلول إسكان القوى العاملة",
+      "التشغيل والخدمات الداعمة",
     ],
     whoShouldContactEN: [
-      "Industrial operators and manufacturers seeking UAE base",
-      "Logistics companies looking for Dubai hub",
-      "Investors in industrial real estate or free zones",
-      "Companies planning Middle East operational expansion"
+      "Labour camp developers and operators",
+      "Accommodation leasing and property management companies",
+      "Large-scale project owners with workforce housing needs",
+      "Facilities management and support-services providers",
     ],
     whoShouldContactZH: [
-      "寻求阿联酋基地的工业运营商和制造商",
-      "寻找迪拜枢纽的物流公司",
-      "工业房地产或自由区投资者",
-      "计划中东运营扩张的企业"
+      "劳工营开发商及运营商",
+      "住宿租赁及物业管理公司",
+      "有员工住宿需求的大型项目业主",
+      "设施管理及配套服务提供商",
     ],
     whoShouldContactAR: [
-      "المشغلون الصناعيون والمصنعون الباحثون عن قاعدة في الإمارات",
-      "شركات اللوجستيات الباحثة عن مركز في دبي",
-      "المستثمرون في العقارات الصناعية أو المناطق الحرة",
-      "الشركات التي تخطط للتوسع التشغيلي في الشرق الأوسط"
-    ]
+      "مطورو ومشغلو مخيمات العمال",
+      "شركات تأجير الإسكان وإدارة الممتلكات",
+      "أصحاب المشاريع الكبرى ذوو احتياجات إسكان القوى العاملة",
+      "مزودو خدمات إدارة المرافق والدعم",
+    ],
   },
-  {
-    id: "opp-5",
-    slug: "concrete-batching-plant-opportunity",
-    titleEN: "Concrete Batching Plant Opportunity",
-    titleZH: "混凝土搅拌站机会",
-    titleAR: "فرصة محطة خلط الخرسانة",
-    country: "United Arab Emirates",
-    countryZH: "阿联酋",
-    countryAR: "الإمارات العربية المتحدة",
-    status: "Opportunity",
-    statusZH: "待接洽",
-    statusAR: "فرصة",
-    tags: ["Construction", "Industrial Asset", "Investment"],
-    tagsZH: ["建筑", "工业资产", "投资"],
-    tagsAR: ["البناء", "الأصول الصناعية", "الاستثمار"],
-    image: "/images/opportunities/concrete-plant.jpg",
-    youtubeUrl: "",
-    overviewEN: "GCI is coordinating an opportunity involving a concrete batching plant asset in the UAE, targeting investors, operators, or construction companies looking to acquire or operate industrial construction infrastructure. The UAE's sustained construction activity — driven by major development programs, expo legacies, and Vision 2031 infrastructure targets — continues to generate strong demand for concrete production assets strategically positioned within the market.",
-    overviewZH: "GCI 正在协调阿联酋一项涉及混凝土搅拌站资产的机会，面向希望收购或运营工业建筑基础设施的投资者、运营商或建筑公司。阿联酋在重大开发计划、世博遗产及2031愿景基础设施目标的推动下，持续旺盛的建筑活动为战略性布局市场的混凝土生产资产创造了强劲需求。",
-    overviewAR: "تنسق GCI فرصة تتعلق بأصل محطة خلط الخرسانة في الإمارات، تستهدف المستثمرين أو المشغلين أو شركات البناء الراغبين في الاستحواذ على بنية تحتية صناعية للبناء أو تشغيلها.",
-    currentFocusEN: [
-      "Coordinating introductions for qualified investors and operators",
-      "Supporting technical and operational assessment facilitation",
-      "Matching construction companies with asset acquisition opportunities",
-      "Providing market context and commercial framework overview"
-    ],
-    currentFocusZH: [
-      "为合格投资者和运营商协调引荐",
-      "支持技术和运营评估的协调工作",
-      "将建筑公司与资产收购机会进行匹配",
-      "提供市场背景和商业框架概述"
-    ],
-    currentFocusAR: [
-      "تنسيق التعريفات للمستثمرين والمشغلين المؤهلين",
-      "دعم تسهيل التقييم الفني والتشغيلي",
-      "مطابقة شركات البناء مع فرص الاستحواذ على الأصول",
-      "تقديم السياق السوقي ونظرة عامة على الإطار التجاري"
-    ],
-    potentialOpportunitiesEN: [
-      "Acquisition of existing concrete batching plant asset",
-      "Operational partnership or management agreement",
-      "Supply agreements with major construction projects",
-      "Industrial asset investment in UAE construction sector"
-    ],
-    potentialOpportunitiesZH: [
-      "收购现有混凝土搅拌站资产",
-      "运营合作或管理协议",
-      "与重大建筑项目的供应协议",
-      "阿联酋建筑行业工业资产投资"
-    ],
-    potentialOpportunitiesAR: [
-      "الاستحواذ على أصل محطة خلط الخرسانة الحالية",
-      "شراكة تشغيلية أو اتفاقية إدارة",
-      "اتفاقيات التوريد مع مشاريع البناء الكبرى",
-      "استثمار الأصول الصناعية في قطاع البناء الإماراتي"
-    ],
-    whoShouldContactEN: [
-      "Construction companies and contractors in UAE",
-      "Industrial asset investors and private equity",
-      "Concrete and building materials operators",
-      "Companies planning UAE construction sector entry"
-    ],
-    whoShouldContactZH: [
-      "阿联酋建筑公司和承包商",
-      "工业资产投资者和私募股权",
-      "混凝土和建筑材料运营商",
-      "计划进入阿联酋建筑行业的企业"
-    ],
-    whoShouldContactAR: [
-      "شركات البناء والمقاولون في الإمارات",
-      "مستثمرو الأصول الصناعية والأسهم الخاصة",
-      "مشغلو الخرسانة ومواد البناء",
-      "الشركات التي تخطط لدخول قطاع البناء في الإمارات"
-    ]
-  }
 ];
