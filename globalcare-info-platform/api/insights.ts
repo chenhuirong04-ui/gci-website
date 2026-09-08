@@ -1,8 +1,13 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const DB_ID = "931a8a5bc40a4e1cb0ce65491fa0ccf5";
+// This route only ever reads published=true rows, which the public-read RLS policy already
+// allows for anon/authenticated — so it uses the publishable key, not service_role. The
+// service_role key is reserved for the GitHub Actions generator's writes and never touches
+// this codepath. Still server-side only (Vercel function env), never a VITE_* var.
+const SUPABASE_URL = (process.env.SUPABASE_URL || "").replace(/\/rest\/v1\/?$/, "").replace(/\/$/, "");
+const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "";
 
-function mapCategory(name?: string): string {
+function mapCategory(name?: string | null): string {
   const map: Record<string, string> = {
     "Regulatory Updates": "regulatory",
     "Market News": "market",
@@ -12,72 +17,86 @@ function mapCategory(name?: string): string {
   return (name && map[name]) || "gci";
 }
 
+interface GciInsightRow {
+  id: string;
+  title_en: string;
+  title_zh: string | null;
+  title_ar: string | null;
+  summary_en: string | null;
+  summary_zh: string | null;
+  summary_ar: string | null;
+  website_content_en: string | null;
+  website_content_zh: string | null;
+  country: string;
+  category: string;
+  source_url: string | null;
+  source_name: string | null;
+  source_date: string | null;
+  business_impact: string | null;
+  gci_recommendation: string | null;
+  published_at: string;
+}
+
+const SELECT_FIELDS = [
+  "id", "title_en", "title_zh", "title_ar",
+  "summary_en", "summary_zh", "summary_ar",
+  "website_content_en", "website_content_zh",
+  "country", "category",
+  "source_url", "source_name", "source_date",
+  "business_impact", "gci_recommendation",
+  "published_at",
+].join(",");
+
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
-  const token = process.env.NOTION_TOKEN;
-  if (!token) return res.status(200).json([]);
+  if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+    console.error("[api/insights] SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY not set");
+    return res.status(200).json([]);
+  }
 
   try {
-    const r = await fetch(`https://api.notion.com/v1/databases/${DB_ID}/query`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Notion-Version": "2022-06-28",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        filter: { property: "Published", checkbox: { equals: true } },
-        sorts: [{ timestamp: "created_time", direction: "descending" }],
-        page_size: 50,
-      }),
-    });
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/gci_insights?select=${SELECT_FIELDS}&published=eq.true&order=published_at.desc&limit=1000`,
+      {
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+        },
+      }
+    );
 
-    const data = await r.json();
-    if (!data.results) return res.status(200).json([]);
+    if (!r.ok) {
+      // Log status + a short, secret-free error body only — never the request URL/headers.
+      const errText = await r.text().catch(() => "");
+      console.error(`[api/insights] Supabase query failed: HTTP ${r.status} ${errText.slice(0, 300)}`);
+      return res.status(200).json([]);
+    }
 
-    const articles = data.results.map((page: any) => {
-      const p = page.properties;
-      const titleEN = p.Title?.title?.[0]?.plain_text || "";
-      const summaryEN = p["Summary EN"]?.rich_text?.[0]?.plain_text || "";
-      const summaryZH = p["Summary ZH"]?.rich_text?.[0]?.plain_text || summaryEN;
-      const countryEN = (
-        p.Country?.select?.name ||
-        p.Country?.multi_select?.[0]?.name ||
-        p.Country?.rich_text?.[0]?.plain_text ||
-        "Global"
-      ).trim();
+    const rows: GciInsightRow[] = await r.json();
 
-      // Optional fields — silently empty if the Notion DB doesn't have them yet
-      const titleAR = p["Title AR"]?.rich_text?.[0]?.plain_text || titleEN;
-      const summaryAR = p["Summary AR"]?.rich_text?.[0]?.plain_text || summaryEN;
-      const sourceUrl = p["Source URL"]?.url || undefined;
-      const sourceName = p["Source Name"]?.rich_text?.[0]?.plain_text || p["Source Name"]?.title?.[0]?.plain_text || undefined;
-      const businessImpact = p["Business Impact"]?.rich_text?.[0]?.plain_text || undefined;
-      const gciRecommendation = p["GCI Recommendation"]?.rich_text?.[0]?.plain_text || undefined;
-      const contentEN =
-        p["Website Content EN"]?.rich_text?.[0]?.plain_text ||
-        summaryEN ||
-        "This market intelligence article is being prepared.";
-      const contentZH =
-        p["Website Content ZH"]?.rich_text?.[0]?.plain_text ||
-        p["Website Content"]?.rich_text?.[0]?.plain_text ||
-        p["WeChat Content"]?.rich_text?.[0]?.plain_text ||
-        summaryZH ||
-        summaryEN ||
-        "该市场情报正文正在整理中，请稍后查看。";
+    const articles = rows.map((row) => {
+      const titleEN = row.title_en || "";
+      const summaryEN = row.summary_en || "";
+      const summaryZH = row.summary_zh || summaryEN;
+      const summaryAR = row.summary_ar || summaryEN;
+      const countryEN = (row.country || "Global").trim();
 
-      // sourceDate: original news date (Notion "Date" property, unchanged meaning).
-      // publishedAt: when this went live on the GCI website — Notion page created_time, falling
-      // back to last_edited_time if created_time is ever unavailable.
-      // sortAt: what every list/sort on the site should order by.
-      const sourceDate = p.Date?.date?.start || "";
-      const publishedAt = page.created_time || page.last_edited_time || "";
+      const titleZH = row.title_zh || titleEN;
+      const titleAR = row.title_ar || titleEN;
+
+      // Historical rows can have NULL long-form content — fall back to the summary rather
+      // than writing placeholder text anywhere (never persisted, computed only at serve time).
+      const contentEN = row.website_content_en || summaryEN;
+      const contentZH = row.website_content_zh || summaryZH || summaryEN;
+
+      const sourceDate = row.source_date || "";
+      const publishedAt = row.published_at || "";
       const sortAt = publishedAt || sourceDate;
 
       return {
-        id: page.id,
-        category: mapCategory(p.Category?.select?.name),
+        id: row.id,
+        category: mapCategory(row.category),
         titleEN,
-        titleZH: p["Title ZH"]?.rich_text?.[0]?.plain_text || titleEN,
+        titleZH,
         titleAR,
         countryEN,
         countryZH: countryEN,
@@ -89,18 +108,22 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
         summaryEN,
         summaryZH,
         summaryAR,
-        coverImage: p["Cover Image URL"]?.url || "",
-        ...(sourceUrl && { sourceUrl }),
-        ...(sourceName && { sourceName }),
-        ...(businessImpact && { businessImpact }),
-        ...(gciRecommendation && { gciRecommendation }),
+        // No cover_image column in Supabase — RegulatoryUpdates.tsx's resolveArticleImg()
+        // always prefers its own COUNTRY_COVER_MAP[countryEN] first (covers every pool
+        // country including "Global"), so this is never actually rendered.
+        coverImage: "",
+        ...(row.source_url && { sourceUrl: row.source_url }),
+        ...(row.source_name && { sourceName: row.source_name }),
+        ...(row.business_impact && { businessImpact: row.business_impact }),
+        ...(row.gci_recommendation && { gciRecommendation: row.gci_recommendation }),
         contentEN,
         contentZH,
       };
     });
 
     return res.status(200).json(articles);
-  } catch {
+  } catch (err) {
+    console.error("[api/insights] unexpected error:", err instanceof Error ? err.message : String(err));
     return res.status(200).json([]);
   }
 }

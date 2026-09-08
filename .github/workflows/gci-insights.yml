@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run (no OpenAI/Notion calls)"
+        description: "Dry run (no OpenAI/Supabase calls)"
         type: boolean
         default: true
 
@@ -31,6 +31,7 @@ jobs:
       - name: Run GCI Insights generator
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: npx tsx scripts/gci-insights/generate.ts
