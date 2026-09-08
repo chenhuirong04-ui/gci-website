@@ -1,0 +1,36 @@
+name: GCI Insights Generator
+
+# Runs daily at 08:00 Asia/Dubai (UTC+4) = 04:00 UTC. GitHub Actions cron is
+# always UTC, so the offset is applied here rather than at trigger time.
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (no OpenAI/Notion calls)"
+        type: boolean
+        default: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: globalcare-info-platform
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run GCI Insights generator
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: npx tsx scripts/gci-insights/generate.ts
