@@ -65,7 +65,7 @@ const sectors = {
     { name: "Construction & Infrastructure", description: "Market access, supplier and resource connection, supply chain coordination and project execution support.", icon: Construction },
     { name: "Automotive & New Energy", description: "Market access, product and technology connection, supply chain coordination and business expansion support.", icon: CarFront },
     { name: "Industrial & Manufacturing", description: "Supplier and manufacturing resource connection, procurement coordination and cross-border execution support.", icon: Factory },
-    { name: "Real Estate & Living", description: "Market access, supplier connection, procurement coordination and project resource support.", icon: Building2 },
+    { name: "Interiors, Living & Building Products", description: "Market access, supplier connection, procurement coordination and project resource support.", icon: Building2 },
     { name: "Trade & Logistics", description: "Commercial resource connection, procurement, logistics and cross-border supply chain coordination.", icon: Ship },
     { name: "Technology & AI", description: "Technology connection, process digitization, AI-enabled operations and business systems support.", icon: CircuitBoard }
   ],
@@ -73,7 +73,7 @@ const sectors = {
     { name: "建筑与基础设施", description: "提供市场进入、供应商与资源连接、供应链协调及项目执行支持。", icon: Construction },
     { name: "汽车与新能源", description: "提供市场进入、产品与技术连接、供应链协调及业务拓展支持。", icon: CarFront },
     { name: "工业与制造", description: "连接供应商与制造资源，协调采购、供应链与跨境执行。", icon: Factory },
-    { name: "房地产与生活方式", description: "支持市场进入、供应商连接、采购协调与项目资源对接。", icon: Building2 },
+    { name: "室内空间、生活与建筑产品", description: "支持市场进入、供应商连接、采购协调与项目资源对接。", icon: Building2 },
     { name: "贸易与物流", description: "连接商业资源，协调采购、物流与跨境供应链。", icon: Ship },
     { name: "科技与人工智能", description: "连接技术资源，支持流程数字化、AI 赋能运营与企业系统建设。", icon: CircuitBoard }
   ],
