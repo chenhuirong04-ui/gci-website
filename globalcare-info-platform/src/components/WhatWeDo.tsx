@@ -1,82 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import { LanguagePack } from "../data/corporateData";
-import { Layers, ShieldCheck, Landmark, CheckCircle, Cpu, ChevronRight, Users } from "lucide-react";
-import { service1Details } from "../data/service1Details";
-import ServiceDetailDrawer from "./ServiceDetailDrawer";
+import { ArrowUpRight, BrainCircuit, CheckCircle2, Compass, Network } from "lucide-react";
 
 interface WhatWeDoProps {
   lang: "EN" | "ZH" | "AR";
   pack: LanguagePack;
 }
 
-export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
+export default function WhatWeDo({ lang }: WhatWeDoProps) {
   const isRtl = lang === "AR";
-  const [activeDetailIndex, setActiveDetailIndex] = useState<number | null>(null);
-
-  const handleSubmitRequirement = () => {
-    setActiveDetailIndex(null);
-    const el = document.getElementById("contact-section");
-    if (el) {
-      const headerOffset = 80;
-      const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+  const copy = {
+    EN: {
+      label: "What We Do",
+      title: "THREE CAPABILITIES. ONE EXECUTION PLATFORM.",
+      subtitle: "GCI brings market access, cross-border resources and operating systems together so opportunities can move into execution.",
+      supportingLabel: "Supporting capabilities",
+      services: [
+        {
+          idx: "01", icon: Compass, title: "MARKET ENTRY & BUSINESS EXPANSION",
+          desc: "Helping companies enter, establish and expand in new markets through strategy, local partnerships and coordinated execution support.",
+          bullets: ["Market Entry Strategy", "Local Partnerships", "Company Establishment Support", "Regulatory & Licensing Coordination", "Business Expansion", "Banking & Tax Coordination", "Business Development & Commercial Coordination", "Ongoing Local Execution Support"],
+          note: "GCI coordinates setup, licensing, banking, tax and compliance requirements with qualified local providers; regulated legal, tax and accounting advice remains with licensed professionals."
+        },
+        {
+          idx: "02", icon: Network, title: "SUPPLY CHAIN & PROJECT EXECUTION",
+          desc: "Connecting qualified suppliers, procurement resources and site execution support across China, the GCC and cross-border projects.",
+          bullets: ["Supplier Sourcing & Procurement", "China / GCC Supply Chain Coordination", "Supplier Identification & Verification", "Project & Site Execution Support", "Workforce & Site Resources", "Building Materials & FF&E", "Logistics / Mobilization Coordination", "Cross-Border Project Coordination"],
+          note: "Workforce, accommodation, transportation and site resources are coordinated as one part of wider supply chain and project execution."
+        },
+        {
+          idx: "03", icon: BrainCircuit, title: "AI & BUSINESS OPERATIONS",
+          desc: "Helping businesses redesign and digitize how work gets done through AI-enabled operations, connected internal systems and management tools.",
+          bullets: ["Business Process Digitization", "AI-enabled Operations", "CRM & Customer Operations", "Workflow & Internal Systems", "Operational Intelligence", "Automation & Management Tools", "Procurement & Project Operations", "Workforce & Management Systems"],
+          note: "GCI focuses on operating models and execution efficiency — not standalone software outsourcing."
+        }
+      ]
+    },
+    ZH: {
+      label: "核心能力", title: "三大能力，一个跨境商业执行平台。", subtitle: "GCI 将市场准入、跨境资源与企业运营系统整合在同一执行框架中。", supportingLabel: "支持性子能力",
+      services: [
+        { idx: "01", icon: Compass, title: "市场进入与业务拓展", desc: "通过市场进入策略、本地合作伙伴和协调执行支持，帮助企业进入、落地并拓展新市场。", bullets: ["市场进入策略", "本地合作伙伴", "公司设立支持", "监管与许可协调", "业务拓展", "银行与税务协调", "业务开发与商业协调", "持续本地执行支持"], note: "GCI 与具备资质的本地服务机构协调公司设立、许可、银行、税务及合规需求；受监管的法律、税务和会计意见由持牌专业机构提供。" },
+        { idx: "02", icon: Network, title: "供应链与项目执行", desc: "连接中国、海湾地区及跨境项目所需的合格供应商、采购资源与现场执行支持。", bullets: ["供应商寻源与采购", "中国 / 海湾供应链协调", "供应商识别与核验", "项目与现场执行支持", "劳动力与现场资源", "建材与 FF&E", "物流 / 动员协调", "跨境项目协调"], note: "劳动力、住宿、交通和现场资源作为供应链与项目执行整体能力的一部分进行协调。" },
+        { idx: "03", icon: BrainCircuit, title: "AI 与企业运营", desc: "通过 AI 驱动运营、互联内部系统和管理工具，帮助企业重构并数字化实际工作方式。", bullets: ["业务流程数字化", "AI 驱动运营", "CRM 与客户运营", "工作流与内部系统", "运营智能", "自动化与管理工具", "采购与项目运营", "劳动力与管理系统"], note: "GCI 聚焦运营模式与执行效率提升，而不是单纯的软件外包开发。" }
+      ]
+    },
+    AR: {
+      label: "قدراتنا", title: "ثلاث قدرات. منصة تنفيذ واحدة.", subtitle: "تجمع GCI بين دخول الأسواق والموارد العابرة للحدود وأنظمة التشغيل لتحويل الفرص إلى تنفيذ.", supportingLabel: "قدرات داعمة",
+      services: [
+        { idx: "01", icon: Compass, title: "دخول السوق وتطوير الأعمال", desc: "مساعدة الشركات على دخول الأسواق الجديدة والتأسيس والتوسع عبر الاستراتيجية والشراكات المحلية ودعم التنفيذ المنسق.", bullets: ["استراتيجية دخول السوق", "الشراكات المحلية", "دعم تأسيس الشركات", "تنسيق اللوائح والتراخيص", "تطوير الأعمال", "تنسيق البنوك والضرائب", "تطوير الأعمال والتنسيق التجاري", "دعم التنفيذ المحلي المستمر"], note: "تنسق GCI متطلبات التأسيس والتراخيص والبنوك والضرائب والامتثال مع مزودي خدمات محليين مؤهلين، بينما تبقى الاستشارات المنظمة لدى المهنيين المرخصين." },
+        { idx: "02", icon: Network, title: "سلسلة الإمداد وتنفيذ المشاريع", desc: "ربط الموردين المؤهلين وموارد المشتريات ودعم التنفيذ الميداني عبر الصين ودول الخليج والمشاريع العابرة للحدود.", bullets: ["البحث عن الموردين والمشتريات", "تنسيق سلاسل الإمداد بين الصين والخليج", "تحديد الموردين والتحقق منهم", "دعم تنفيذ المشاريع والمواقع", "موارد القوى العاملة والموقع", "مواد البناء وFF&E", "تنسيق اللوجستيات والتعبئة", "تنسيق المشاريع العابرة للحدود"], note: "يتم تنسيق القوى العاملة والسكن والنقل وموارد الموقع كجزء من تنفيذ سلسلة الإمداد والمشروع." },
+        { idx: "03", icon: BrainCircuit, title: "الذكاء الاصطناعي وعمليات الأعمال", desc: "مساعدة الشركات على إعادة تصميم ورقمنة العمل من خلال عمليات مدعومة بالذكاء الاصطناعي وأنظمة داخلية مترابطة وأدوات إدارة.", bullets: ["رقمنة عمليات الأعمال", "عمليات مدعومة بالذكاء الاصطناعي", "إدارة العملاء وCRM", "سير العمل والأنظمة الداخلية", "الذكاء التشغيلي", "أدوات الأتمتة والإدارة", "عمليات المشتريات والمشاريع", "أنظمة القوى العاملة والإدارة"], note: "تركز GCI على نماذج التشغيل وكفاءة التنفيذ، وليس على التعهيد البرمجي المستقل." }
+      ]
     }
-  };
-
-  const services = [
-    {
-      idx: "01",
-      icon: <Layers className="w-5 h-5 text-brand-gold-400" />,
-      title: pack.service1Title,
-      desc: pack.service1Desc,
-      bullets: pack.service1Bullets || [],
-      footer: pack.service1Footer,
-      badgeLabel: pack.service1Footer,
-      interactive: lang !== "AR"
-    },
-    {
-      idx: "02",
-      icon: <ShieldCheck className="w-5 h-5 text-brand-gold-400" />,
-      title: pack.service2Title,
-      desc: pack.service2Desc,
-      bullets: pack.service2Bullets || [],
-      footer: pack.service2Footer
-    },
-    {
-      idx: "03",
-      icon: <Landmark className="w-5 h-5 text-brand-gold-400" />,
-      title: pack.service3Title,
-      desc: pack.service3Desc,
-      bullets: pack.service3Bullets || [],
-      footer: pack.service3Footer,
-      footerUrl: "https://living.globalcareinfo.com"
-    },
-    {
-      idx: "04",
-      icon: <Cpu className="w-5 h-5 text-brand-gold-400" />,
-      title: pack.service4Title,
-      desc: pack.service4Desc,
-      bullets: pack.service4Bullets || [],
-      footer: pack.service4Footer,
-      footerUrl: "https://25h.globalcareinfo.com"
-    },
-    {
-      idx: "05",
-      icon: <Users className="w-5 h-5 text-brand-gold-400" />,
-      title: pack.service5Title,
-      desc: pack.service5Desc,
-      bullets: pack.service5Bullets || [],
-      footer: pack.service5Footer,
-      footerUrl: "https://www.highwayglobal.ae"
-    }
-  ];
-
-  const gridPositionClass = (position: number) => {
-    if (position === 3) return "lg:col-start-2";
-    if (position === 4) return "lg:col-start-4";
-    return "";
-  };
+  }[lang];
 
   return (
     <section id="what-we-do" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10">
@@ -87,105 +63,66 @@ export default function WhatWeDo({ lang, pack }: WhatWeDoProps) {
           <div className="flex items-center gap-2 mb-4 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">
-              {pack.whatWeDoLabel}
+              {copy.label}
             </span>
           </div>
           <h2 id="whatwedo-title" className="text-3xl md:text-4xl font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">
-            {pack.whatWeDoTitle}
+            {copy.title}
           </h2>
           <p className="mt-4 text-base text-brand-gold-200/80 max-w-2xl font-light leading-relaxed">
-            {pack.whatWeDoSubtitle}
+            {copy.subtitle}
           </p>
         </div>
 
-        {/* Dynamic Service Grid: 3-up desktop first row, 2 centered second row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 items-stretch">
-          {services.map((svc, position) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {copy.services.map((svc) => {
+            const Icon = svc.icon;
+            const primaryBullets = svc.bullets.slice(0, 5);
+            const supportingBullets = svc.bullets.slice(5);
+            return (
             <div
               key={svc.idx}
-              className={`p-6 sm:p-7 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/30 transition-all duration-300 flex flex-col justify-between group lg:col-span-2 ${gridPositionClass(position)}`}
+              className="relative p-6 sm:p-8 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
             >
-              <div>
-                {/* Icon + Title on the same row */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="shrink-0 p-2.5 bg-brand-gold-500/5 rounded-lg border border-brand-gold-500/10 group-hover:bg-brand-gold-500/15 group-hover:border-brand-gold-500/25 transition-all">
-                    {svc.icon}
+              <span className="absolute -right-2 -top-6 text-[7rem] font-display text-brand-gold-500/[0.035] select-none">{svc.idx}</span>
+              <div className="relative flex-1">
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  <div className="p-3 bg-brand-gold-500/5 rounded-xl border border-brand-gold-500/15">
+                    <Icon className="w-5 h-5 text-brand-gold-400" />
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-brand-gold-100 tracking-wide leading-snug">
-                    {svc.title}
-                  </h3>
+                  <span className="text-xs font-mono text-brand-gold-500/70">{svc.idx}</span>
                 </div>
-
-                {/* Service Description */}
-                <p className="text-xs sm:text-sm text-brand-gold-200/90 font-light leading-relaxed mb-4">
-                  {svc.desc}
-                </p>
-
-                {/* Sub-elements bullet checklist */}
-                <ul className={`border-t border-brand-gold-500/10 pt-4 text-xs sm:text-sm font-light text-brand-gold-200/80 ${svc.interactive ? "space-y-0.5" : "space-y-2.5"}`}>
-                  {svc.bullets.map((bullet, k) =>
-                    svc.interactive ? (
-                      <li key={k}>
-                        <button
-                          type="button"
-                          onClick={() => setActiveDetailIndex(k)}
-                          className="group/item w-full flex items-center justify-between gap-2 text-left rtl:text-right -mx-2.5 px-2.5 py-1.5 rounded-lg hover:bg-brand-gold-500/10 transition-colors cursor-pointer"
-                        >
-                          <span className="flex items-center gap-2.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500 shrink-0" />
-                            <span className="text-brand-gold-200/90 group-hover/item:text-brand-gold-100 transition-colors">{bullet}</span>
-                          </span>
-                          <ChevronRight className="w-3.5 h-3.5 text-brand-gold-500/40 group-hover/item:text-brand-gold-400 group-hover/item:translate-x-0.5 rtl:group-hover/item:-translate-x-0.5 rtl:rotate-180 transition-all shrink-0" />
-                        </button>
-                      </li>
-                    ) : (
-                      <li key={k} className="flex gap-2.5 items-start leading-relaxed">
-                        <CheckCircle className="w-4 h-4 text-brand-gold-500 shrink-0 mt-0.5" />
+                <h3 className="min-h-[3.5rem] text-lg font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">{svc.title}</h3>
+                <p className="text-sm text-brand-gold-200/80 font-light leading-relaxed mt-4 mb-6">{svc.desc}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2.5 border-t border-brand-gold-500/10 pt-5 text-xs font-medium text-brand-gold-100/85">
+                  {primaryBullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-2 items-start leading-relaxed">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-brand-gold-500 shrink-0 mt-0.5" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 pt-4 border-t border-brand-gold-500/[0.07]">
+                  <p className="mb-3 text-[9px] uppercase tracking-[0.16em] text-brand-gold-500/40">{copy.supportingLabel}</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2 text-[11px] text-brand-gold-300/45">
+                    {supportingBullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-2 items-start leading-relaxed">
+                        <span className="w-1 h-1 rounded-full bg-brand-gold-500/35 shrink-0 mt-1.5" />
                         <span>{bullet}</span>
                       </li>
-                    )
-                  )}
-                </ul>
+                    ))}
+                  </ul>
+                </div>
               </div>
-
-              {/* Minimal Bottom Hover Element */}
-              {svc.interactive ? (
-                <div className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center rtl:justify-end">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-brand-gold-500/20 bg-brand-gold-500/5 text-brand-gold-400 text-[10px] sm:text-xs font-sans font-medium tracking-wide uppercase">
-                    {svc.badgeLabel}
-                  </span>
-                </div>
-              ) : svc.footerUrl ? (
-                <a
-                  href={svc.footerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
-                  <span>{svc.footer}</span>
-                </a>
-              ) : (
-                <div className="mt-5 pt-3 border-t border-brand-gold-500/10 flex items-center gap-1.5 text-brand-gold-400 group-hover:text-brand-gold-300 text-xs sm:text-sm font-sans font-medium transition-colors">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500/40 group-hover:bg-brand-gold-400 group-hover:animate-ping" />
-                  <span>{svc.footer}</span>
-                </div>
-              )}
-
+              <p className="relative mt-6 pt-5 border-t border-brand-gold-500/10 text-[11px] leading-relaxed text-brand-gold-300/60 flex gap-2">
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0 mt-0.5" />{svc.note}
+              </p>
             </div>
-          ))}
+          )})}
         </div>
 
       </div>
 
-      {activeDetailIndex !== null && service1Details[activeDetailIndex] && (
-        <ServiceDetailDrawer
-          lang={lang}
-          item={service1Details[activeDetailIndex]}
-          onClose={() => setActiveDetailIndex(null)}
-          onSubmitRequirement={handleSubmitRequirement}
-        />
-      )}
     </section>
   );
 }

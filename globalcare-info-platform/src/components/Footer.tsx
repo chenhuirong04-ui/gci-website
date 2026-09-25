@@ -18,14 +18,14 @@ export default function Footer({ lang, pack }: FooterProps) {
             GlobalCare Info (GCI)
           </span>
           <span className="text-xs font-sans text-[#DFBA6B] block">
-            Dubai-Based Market Access & License Execution Entity
+            Cross-Border Business Execution Platform
           </span>
         </div>
 
         {/* Legal disclosures and copyrights */}
         <div className="text-center md:text-right max-w-md">
           <p className="text-xs leading-relaxed text-brand-gold-300/50 mb-1.5 font-sans">
-            Official registration coordinated under UAE DET and Riyadh MISA licensing protocols. Direct on-ground custom warehouse properties leased and maintained securely.
+            Market access, supply chain, project execution and business operations across China, the Middle East and Europe.
           </p>
           <p className="text-xs font-sans text-brand-gold-300/50">
             © {new Date().getFullYear()} GlobalCare Info Group. All Rights Reserved.

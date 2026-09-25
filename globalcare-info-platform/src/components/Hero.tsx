@@ -154,7 +154,7 @@ export default function Hero({ lang, pack }: HeroProps) {
   };
 
   return (
-    <section className="relative pt-8 pb-20 md:py-24 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
+    <section id="home" className="relative pt-8 pb-20 md:py-24 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
       
       {/* Decorative Atmosphere glow arcs */}
       <div className="absolute top-0 left-[20%] w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[150px] pointer-events-none" />
@@ -176,7 +176,7 @@ export default function Hero({ lang, pack }: HeroProps) {
               />
               <div className="flex flex-col gap-0.5">
                 <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
-                  Global Market
+                  Cross-Border Business
                 </span>
                 <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
                   Execution Platform
@@ -210,8 +210,8 @@ export default function Hero({ lang, pack }: HeroProps) {
             {/* High-end CTAs */}
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <a
-                onClick={(e) => handleCtaClick(e, "contact-section")}
-                href="#contact-section"
+                onClick={(e) => handleCtaClick(e, "what-we-do")}
+                href="#what-we-do"
                 className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] text-sm font-sans font-bold tracking-wide py-3.5 px-8 rounded-lg shadow-xl shadow-brand-gold-500/15 transition-all duration-300 cursor-pointer active:scale-95"
               >
                 <span>{pack.heroCtaPrimary}</span>
@@ -219,8 +219,8 @@ export default function Hero({ lang, pack }: HeroProps) {
               </a>
 
               <a
-                onClick={(e) => handleCtaClick(e, "where-we-operate")}
-                href="#where-we-operate"
+                onClick={(e) => handleCtaClick(e, "contact-section")}
+                href="#contact-section"
                 className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-[#090f20]/90 hover:bg-[#0c152e] border border-brand-gold-500/30 text-[#fdfaf2] text-sm font-sans font-semibold tracking-wide py-3.5 px-8 rounded-lg transition-all duration-300 cursor-pointer active:scale-95"
               >
                 <span>{pack.heroCtaSecondary}</span>
@@ -236,13 +236,13 @@ export default function Hero({ lang, pack }: HeroProps) {
             <div className="w-full max-w-2xl mx-auto flex items-center justify-between border-b border-brand-gold-500/15 pb-3 mb-5 text-xs font-sans text-brand-gold-300 select-none">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium tracking-wide">12 Intelligence Markets + 6 Network Coverage</span>
+                <span className="font-medium tracking-wide">China · Middle East · Africa · Europe</span>
               </div>
               <span>
                 {hoveredNode ? (
                   <span className="text-brand-gold-400 font-semibold">{hoveredNode} Node</span>
                 ) : (
-                  <span className="text-brand-gold-300/60 font-light font-mono">Dubai Junction Active</span>
+                  <span className="text-brand-gold-300/60 font-light font-mono">Cross-Border Network Active</span>
                 )}
               </span>
             </div>

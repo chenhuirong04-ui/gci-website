@@ -1,6 +1,6 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { LanguagePack } from "../data/corporateData";
-import { ArrowRight, Globe } from "lucide-react";
 import gciLogo from "../assets/gci-logo-header-transparent.png";
 
 interface HeaderProps {
@@ -9,104 +9,76 @@ interface HeaderProps {
   pack: LanguagePack;
 }
 
-export default function Header({ lang, setLang, pack }: HeaderProps) {
-  const isRtl = lang === "AR";
+const NAV_COPY = {
+  EN: { about: "About", capabilities: "Capabilities", markets: "Markets", sectors: "Sectors", insights: "Insights", contact: "Contact", marketEntry: "Market Entry", supply: "Supply Chain & Projects", ai: "AI & Business Operations", middleEast: "Middle East", europe: "Europe", china: "China", talk: "Talk to GCI" },
+  ZH: { about: "关于", capabilities: "核心能力", markets: "市场", sectors: "行业", insights: "市场情报", contact: "联系", marketEntry: "市场进入", supply: "供应链与项目", ai: "AI 与企业运营", middleEast: "中东", europe: "欧洲", china: "中国", talk: "联系 GCI" },
+  AR: { about: "من نحن", capabilities: "القدرات", markets: "الأسواق", sectors: "القطاعات", insights: "المعلومات", contact: "اتصل بنا", marketEntry: "دخول السوق", supply: "سلسلة الإمداد والمشاريع", ai: "الذكاء الاصطناعي والعمليات", middleEast: "الشرق الأوسط", europe: "أوروبا", china: "الصين", talk: "تحدث مع GCI" }
+} as const;
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
+export default function Header({ lang, setLang }: HeaderProps) {
+  const c = NAV_COPY[lang];
+  const isRtl = lang === "AR";
+  const [openMenu, setOpenMenu] = useState<null | "capabilities" | "markets">(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
+  const scrollTo = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 88, behavior: "smooth" });
+    setOpenMenu(null);
+    setMobileOpen(false);
   };
 
-  return (
-    <header className="sticky top-0 z-50 bg-[#030611]/90 backdrop-blur-md border-b border-brand-gold-500/10 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-6 h-[6.5rem] flex items-center pt-5 justify-between" dir={isRtl ? "rtl" : "ltr"}>
-        
-        {/* Brand Logo & Corporate Mark */}
-        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 group focus:outline-none select-none">
-          <img
-            src={gciLogo}
-            alt="GCI — Global Market Execution Platform"
-            className="h-16 w-auto object-contain select-none"
-            draggable={false}
-          />
-        </a>
+  const links = [
+    { label: c.sectors, id: "sectors" },
+    { label: c.insights, id: "insights-section" },
+    { label: c.contact, id: "contact-section" }
+  ];
 
-        {/* Corporate Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          <a onClick={(e) => handleNavClick(e, "what-we-do")} href="#what-we-do" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navWhatWeDo}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-          <a onClick={(e) => handleNavClick(e, "insights-section")} href="#insights-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navInsights}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-          <a onClick={(e) => handleNavClick(e, "business-opportunities")} href="#business-opportunities" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navBusinessOpportunities}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-          <a onClick={(e) => handleNavClick(e, "media-section")} href="#media-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navMedia}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-          <a onClick={(e) => handleNavClick(e, "who-we-are")} href="#who-we-are" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navWhoWeAre}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-          <a onClick={(e) => handleNavClick(e, "contact-section")} href="#contact-section" className="relative group py-2 text-sm tracking-wide font-medium text-brand-gold-100/90 hover:text-brand-gold-400 transition-all duration-300">
-            {pack.navContact}
-            <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#dfb256] transition-all duration-300 group-hover:w-full opacity-70" />
-          </a>
-        </nav>
-
-        {/* Localized HUD Controls + Language & Consultation CTA */}
-        <div className="flex items-center gap-6 flex-wrap">
-          
-          {/* Segmented Controller for Languages */}
-          <div className="flex items-center bg-[#070d1d] border border-brand-gold-500/15 p-1 rounded-md font-sans text-xs">
-            <button
-              onClick={() => setLang("EN")}
-              className={`px-2.5 py-1 rounded transition-all duration-300 cursor-pointer font-medium ${lang === "EN" ? "bg-brand-gold-500 text-[#030611] font-bold" : "text-brand-gold-200/60 hover:text-brand-gold-400"}`}
-            >
-              EN
-            </button>
-            <span className="text-brand-gold-500/15 px-1">|</span>
-            <button
-              onClick={() => setLang("ZH")}
-              className={`px-2.5 py-1 rounded transition-all duration-300 cursor-pointer font-medium ${lang === "ZH" ? "bg-brand-gold-500 text-[#030611] font-bold" : "text-brand-gold-200/60 hover:text-brand-gold-400"}`}
-            >
-              中文
-            </button>
-            <span className="text-brand-gold-500/15 px-1">|</span>
-            <button
-              onClick={() => setLang("AR")}
-              className={`px-2.5 py-1 rounded transition-all duration-300 cursor-pointer font-medium ${lang === "AR" ? "bg-brand-gold-500 text-[#030611] font-bold" : "text-brand-gold-200/60 hover:text-brand-gold-400"}`}
-            >
-              العربية
-            </button>
-          </div>
-
-          {/* Consultation Contact Link */}
-          <a
-            onClick={(e) => handleNavClick(e, "contact-section")}
-            href="#contact-section"
-            className="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold-600 to-brand-gold-400 hover:from-brand-gold-500 hover:to-brand-gold-300 text-[#030611] px-5 py-2.5 rounded-lg text-sm font-sans font-bold tracking-wide transition-all duration-300 shadow-md shadow-brand-gold-500/10 active:scale-95"
-          >
-            <span>{pack.contactBtn}</span>
-            <ArrowRight className={`w-4 h-4 stroke-[2.5] ${isRtl ? "rotate-180" : ""}`} />
-          </a>
+  return <header ref={headerRef} className="sticky top-0 z-50 bg-[#030611]/95 backdrop-blur-xl border-b border-brand-gold-500/10" dir={isRtl ? "rtl" : "ltr"}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[5.5rem] flex items-center justify-between gap-5">
+      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="shrink-0 cursor-pointer" aria-label="GCI home">
+        <img src={gciLogo} alt="GCI — Cross-Border Business Execution Platform" className="h-14 w-auto object-contain" draggable={false}/>
+      </button>
+      <nav className="hidden lg:flex items-center gap-1 text-sm text-brand-gold-100/80">
+        <button onClick={() => scrollTo("platform-model")} className="px-3 py-3 hover:text-brand-gold-400 transition-colors cursor-pointer">{c.about}</button>
+        <div className="relative">
+          <button onClick={() => setOpenMenu(openMenu === "capabilities" ? null : "capabilities")} className="px-3 py-3 inline-flex items-center gap-1 hover:text-brand-gold-400 transition-colors cursor-pointer" aria-expanded={openMenu === "capabilities"}>{c.capabilities}<ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMenu === "capabilities" ? "rotate-180" : ""}`}/></button>
+          {openMenu === "capabilities" && <div className="absolute top-full left-0 min-w-64 rounded-xl border border-brand-gold-500/15 bg-[#050a15] p-2 shadow-2xl"><button onClick={() => scrollTo("what-we-do")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.marketEntry}</button><button onClick={() => scrollTo("what-we-do")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.supply}</button><button onClick={() => scrollTo("what-we-do")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.ai}</button></div>}
         </div>
-
+        <div className="relative">
+          <button onClick={() => setOpenMenu(openMenu === "markets" ? null : "markets")} className="px-3 py-3 inline-flex items-center gap-1 hover:text-brand-gold-400 transition-colors cursor-pointer" aria-expanded={openMenu === "markets"}>{c.markets}<ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMenu === "markets" ? "rotate-180" : ""}`}/></button>
+          {openMenu === "markets" && <div className="absolute top-full left-0 min-w-48 rounded-xl border border-brand-gold-500/15 bg-[#050a15] p-2 shadow-2xl"><button onClick={() => scrollTo("markets")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.middleEast}</button><button onClick={() => scrollTo("europe")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.europe}</button><button onClick={() => scrollTo("markets")} className="w-full text-left px-4 py-3 rounded-lg hover:bg-brand-gold-500/10">{c.china}</button></div>}
+        </div>
+        {links.map(x => <button key={x.id} onClick={() => scrollTo(x.id)} className="px-3 py-3 hover:text-brand-gold-400 transition-colors cursor-pointer">{x.label}</button>)}
+      </nav>
+      <div className="flex items-center gap-3">
+        <div className="hidden sm:flex items-center bg-[#070d1d] border border-brand-gold-500/15 p-1 rounded-md text-[11px]">
+          {(["EN","ZH","AR"] as const).map((value, i) => <span key={value} className="flex items-center"><button onClick={() => setLang(value)} className={`px-2 py-1 rounded cursor-pointer ${lang === value ? "bg-brand-gold-500 text-[#030611] font-bold" : "text-brand-gold-200/60 hover:text-brand-gold-400"}`}>{value === "ZH" ? "中文" : value === "AR" ? "عربي" : value}</button>{i < 2 && <span className="text-brand-gold-500/15 px-0.5">|</span>}</span>)}
+        </div>
+        <button onClick={() => scrollTo("contact-section")} className="hidden xl:inline-flex bg-brand-gold-500 hover:bg-brand-gold-400 text-[#030611] px-4 py-2.5 rounded-lg text-sm font-bold transition-colors cursor-pointer">{c.talk}</button>
+        <button className="lg:hidden p-2 text-brand-gold-200" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation" aria-expanded={mobileOpen}>{mobileOpen ? <X/> : <Menu/>}</button>
       </div>
-    </header>
-  );
+    </div>
+    {mobileOpen && <div className="lg:hidden border-t border-brand-gold-500/10 bg-[#030611] px-5 py-5 max-h-[calc(100vh-5.5rem)] overflow-y-auto">
+      <div className="grid gap-1 text-sm">
+        <button onClick={() => scrollTo("platform-model")} className="text-left py-3 text-brand-gold-100">{c.about}</button>
+        <p className="pt-3 pb-1 text-[10px] uppercase tracking-[.18em] text-brand-gold-500/65">{c.capabilities}</p>
+        {[c.marketEntry,c.supply,c.ai].map(x=><button key={x} onClick={() => scrollTo("what-we-do")} className="text-left py-2 pl-3 text-brand-gold-200/75">{x}</button>)}
+        <p className="pt-3 pb-1 text-[10px] uppercase tracking-[.18em] text-brand-gold-500/65">{c.markets}</p>
+        <button onClick={() => scrollTo("markets")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.middleEast}</button><button onClick={() => scrollTo("europe")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.europe}</button><button onClick={() => scrollTo("markets")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.china}</button>
+        {links.map(x=><button key={x.id} onClick={() => scrollTo(x.id)} className="text-left py-3 text-brand-gold-100">{x.label}</button>)}
+        <div className="flex sm:hidden gap-2 pt-3">{(["EN","ZH","AR"] as const).map(value=><button key={value} onClick={() => setLang(value)} className={`px-3 py-2 rounded border ${lang===value ? "bg-brand-gold-500 text-[#030611] border-brand-gold-500" : "border-brand-gold-500/15 text-brand-gold-200"}`}>{value}</button>)}</div>
+      </div>
+    </div>}
+  </header>;
 }

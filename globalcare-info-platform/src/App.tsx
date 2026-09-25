@@ -2,11 +2,8 @@ import { useState } from "react";
 import { LANGUAGES, LanguagePack } from "./data/corporateData";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import WhoWeAre from "./components/WhoWeAre";
 import WhatWeDo from "./components/WhatWeDo";
-import CommercialNetwork from "./components/CommercialNetwork";
-import RegulatoryUpdates from "./components/RegulatoryUpdates";
-import BusinessOpportunities from "./components/BusinessOpportunities";
+import StrategicHomepage from "./components/StrategicHomepage";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -25,22 +22,13 @@ export default function App() {
         {/* 1. Hero with connected trade sphere */}
         <Hero lang={lang} pack={pack} />
 
-        {/* 2. What We Do Triad */}
+        {/* 2. Three core execution capabilities */}
         <WhatWeDo lang={lang} pack={pack} />
 
-        {/* 3. GCI Regulatory & Market Updates */}
-        <RegulatoryUpdates lang={lang} />
+        {/* 3—8. Platform model, markets, sectors, cases, Europe and intelligence */}
+        <StrategicHomepage lang={lang} />
 
-        {/* 4. Business Opportunities Hub */}
-        <BusinessOpportunities lang={lang} />
-
-        {/* 5. Commercial Network dynamic selector showcase */}
-        <CommercialNetwork lang={lang} pack={pack} />
-
-        {/* 6. Who We Are */}
-        <WhoWeAre lang={lang} pack={pack} />
-
-        {/* 7. Contact CTA & Consultations */}
+        {/* 9. Direction-led final CTA & contact */}
         <ContactSection lang={lang} pack={pack} />
       </main>
 

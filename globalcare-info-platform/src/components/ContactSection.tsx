@@ -9,28 +9,25 @@ interface ContactSectionProps {
 
 const INQUIRY_TYPES: Record<"EN" | "ZH" | "AR", string[]> = {
   EN: [
-    "Market Entry & Local Execution",
-    "Trade & Supply Chain",
-    "Project & Resource Solutions",
-    "AI & Business Systems",
-    "Workforce Recruitment & Deployment",
-    "Other Business Cooperation"
+    "China → Middle East",
+    "China → Europe",
+    "Europe → China",
+    "Cross-Border Projects",
+    "AI Business Transformation"
   ],
   ZH: [
-    "市场进入与本地执行",
-    "贸易与供应链",
-    "项目与资源解决方案",
-    "AI 与企业系统",
-    "劳动力招聘与部署",
-    "其他商业合作"
+    "中国 → 中东",
+    "中国 → 欧洲",
+    "欧洲 → 中国",
+    "跨境项目",
+    "AI 企业运营转型"
   ],
   AR: [
-    "دخول السوق والتنفيذ المحلي",
-    "التجارة وسلسلة الإمداد",
-    "حلول المشاريع والموارد",
-    "الذكاء الاصطناعي وأنظمة الأعمال",
-    "استقدام القوى العاملة ونشرها",
-    "تعاون تجاري آخر"
+    "الصين ← الشرق الأوسط",
+    "الصين ← أوروبا",
+    "أوروبا ← الصين",
+    "مشاريع عابرة للحدود",
+    "تحول عمليات الأعمال بالذكاء الاصطناعي"
   ]
 };
 
@@ -79,6 +76,11 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
           <p className="mt-4 text-base text-brand-gold-200/80 font-light leading-relaxed">
             {pack.contactSubtitle}
           </p>
+          <div className="flex flex-wrap gap-2 mt-7">
+            {inquiryTypes.map((direction) => (
+              <span key={direction} className="px-3 py-1.5 rounded-full border border-brand-gold-500/15 bg-brand-gold-500/5 text-xs text-brand-gold-200/75">{direction}</span>
+            ))}
+          </div>
         </div>
 
         {/* Form + Side Info Split Grid */}
