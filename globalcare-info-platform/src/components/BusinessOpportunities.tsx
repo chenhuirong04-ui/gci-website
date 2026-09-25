@@ -254,7 +254,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
   };
 
   return (
-    <section id="business-opportunities" className="pt-28 pb-16 md:pt-36 md:pb-20 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
+    <section id="business-opportunities" className="py-20 md:py-24 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/4 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
 

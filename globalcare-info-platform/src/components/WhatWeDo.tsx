@@ -55,11 +55,11 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
   }[lang];
 
   return (
-    <section id="what-we-do" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="what-we-do" className="py-14 md:py-16 bg-[#030611] border-b border-brand-gold-500/10">
       <div className="max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
-        <div className={`max-w-3xl mb-16 ${isRtl ? "text-right" : "text-left"}`}>
+        <div className={`max-w-3xl mb-10 ${isRtl ? "text-right" : "text-left"}`}>
           <div className="flex items-center gap-2 mb-4 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">
@@ -82,7 +82,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
             return (
             <div
               key={svc.idx}
-              className="relative p-6 sm:p-8 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
+              className="relative p-5 sm:p-6 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
             >
               <span className="absolute -right-2 -top-6 text-[7rem] font-display text-brand-gold-500/[0.035] select-none">{svc.idx}</span>
               <div className="relative flex-1">

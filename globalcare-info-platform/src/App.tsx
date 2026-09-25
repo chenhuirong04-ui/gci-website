@@ -4,6 +4,9 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import WhatWeDo from "./components/WhatWeDo";
 import StrategicHomepage from "./components/StrategicHomepage";
+import BusinessOpportunities from "./components/BusinessOpportunities";
+import RegulatoryUpdates from "./components/RegulatoryUpdates";
+import CommercialNetwork from "./components/CommercialNetwork";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 
@@ -25,10 +28,23 @@ export default function App() {
         {/* 2. Three core execution capabilities */}
         <WhatWeDo lang={lang} pack={pack} />
 
-        {/* 3—8. Platform model, markets, sectors, cases, Europe and intelligence */}
-        <StrategicHomepage lang={lang} />
+        {/* 3. Live business opportunities */}
+        <BusinessOpportunities lang={lang} />
 
-        {/* 9. Direction-led final CTA & contact */}
+        {/* 4—5. Execution proofs and core markets */}
+        <StrategicHomepage lang={lang} sections={["execution"]} />
+        <StrategicHomepage lang={lang} sections={["markets"]} />
+
+        {/* 6—7. Market updates, commercial network and media */}
+        <RegulatoryUpdates lang={lang} />
+        <CommercialNetwork lang={lang} pack={pack} />
+
+        {/* 8—10. Europe entry point, platform logic and sector strip */}
+        <StrategicHomepage lang={lang} sections={["europe"]} />
+        <StrategicHomepage lang={lang} sections={["platform"]} />
+        <StrategicHomepage lang={lang} sections={["sectors"]} />
+
+        {/* 11. Direction-led final CTA & contact */}
         <ContactSection lang={lang} pack={pack} />
       </main>
 
