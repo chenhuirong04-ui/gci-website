@@ -31,8 +31,7 @@ export default function App() {
         {/* 3. Live business opportunities */}
         <BusinessOpportunities lang={lang} />
 
-        {/* 4—5. Execution proofs and core markets */}
-        <StrategicHomepage lang={lang} sections={["execution"]} />
+        {/* 4. Core markets */}
         <StrategicHomepage lang={lang} sections={["markets"]} />
 
         {/* 6—7. Market updates, commercial network and media */}
