@@ -120,7 +120,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
 
   return (
     <>
-      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-16 md:py-20">
+      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-10 md:py-12">
         <div className="absolute inset-0 pointer-events-none opacity-70" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_26%,rgba(194,156,83,.12),transparent_24%),radial-gradient(circle_at_82%_64%,rgba(80,118,157,.12),transparent_28%)]" />
           <svg viewBox="0 0 1440 620" className="h-full w-full" preserveAspectRatio="none">
@@ -130,13 +130,13 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
-          <div className="grid gap-7 lg:grid-cols-[.72fr_1.28fr] lg:items-end mb-10 md:mb-12">
+          <div className="grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end mb-6">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[.2em] text-brand-gold-400">
                 <Waypoints className="h-4 w-4" />
                 <span>{selectorCopy.label}</span>
               </div>
-              <h2 className="mt-4 font-display text-3xl font-semibold tracking-wide text-brand-gold-100 md:text-4xl">
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-wide text-brand-gold-100 md:text-4xl">
                 {selectorCopy.title}
               </h2>
             </div>
@@ -153,7 +153,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   key={route.title}
                   href="#contact-section"
                   onClick={() => setFormData((current) => ({ ...current, inquiryTypeIndex: index }))}
-                  className={`group relative min-h-48 overflow-hidden px-6 py-6 transition-colors duration-300 hover:bg-brand-gold-500/[.045] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-brand-gold-400 ${index % 3 !== 2 ? "xl:border-r xl:border-brand-gold-500/10" : ""} ${index < 3 ? "border-b border-brand-gold-500/10" : index < 4 ? "border-b border-brand-gold-500/10 md:border-b-0" : ""} ${index % 2 === 0 ? "md:border-r md:border-brand-gold-500/10 xl:border-r" : ""}`}
+                  className={`group relative overflow-hidden px-5 py-3.5 transition-colors duration-300 hover:bg-brand-gold-500/[.045] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-brand-gold-400 ${index % 3 !== 2 ? "xl:border-r xl:border-brand-gold-500/10" : ""} ${index < 3 ? "border-b border-brand-gold-500/10" : index < 4 ? "border-b border-brand-gold-500/10 md:border-b-0" : ""} ${index % 2 === 0 ? "md:border-r md:border-brand-gold-500/10 xl:border-r" : ""}`}
                 >
                   <div className="flex items-center justify-between gap-4 text-[9px] uppercase tracking-[.16em] text-brand-gold-500/55">
                     <span>{route.start}</span>
@@ -161,7 +161,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                     <span>{route.end}</span>
                   </div>
 
-                  <div className="my-5 flex items-center" aria-hidden="true">
+                  <div className="my-4 flex items-center" aria-hidden="true">
                     <span className="h-2 w-2 shrink-0 rounded-full border border-brand-gold-400/70 bg-[#071021] shadow-[0_0_0_4px_rgba(194,156,83,.05)]" />
                     <span className="relative h-px flex-1 bg-brand-gold-500/20 after:absolute after:inset-y-0 after:left-0 after:w-0 after:bg-brand-gold-400 after:transition-all after:duration-300 group-hover:after:w-full" />
                     <ArrowRight className={`h-4 w-4 shrink-0 text-brand-gold-500/65 transition-colors group-hover:text-brand-gold-300 ${isRtl ? "rotate-180" : ""}`} />
@@ -171,10 +171,10 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   <h3 className="font-display text-lg text-brand-gold-100 transition-colors group-hover:text-brand-gold-50">
                     {route.title}
                   </h3>
-                  <p className="mt-3 text-xs leading-relaxed text-brand-gold-200/65">
+                  <p className="mt-2 text-xs leading-relaxed text-brand-gold-200/65">
                     {route.value}
                   </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-[9px] uppercase tracking-[.16em] text-brand-gold-500/55 transition-colors group-hover:text-brand-gold-300">
+                  <span className="mt-3 inline-flex items-center gap-2 text-[9px] uppercase tracking-[.16em] text-brand-gold-500/55 transition-colors group-hover:text-brand-gold-300">
                     {selectorCopy.action}
                     <ArrowRight className={`h-3 w-3 ${isRtl ? "rotate-180" : ""}`} />
                   </span>
@@ -185,12 +185,12 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
       </section>
 
-    <section id="contact-section" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="contact-section" className="py-10 md:py-12 bg-[#030611] border-b border-brand-gold-500/10">
       <div className="max-w-7xl mx-auto px-6 font-sans" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Head */}
-        <div className="max-w-3xl mb-12 text-left">
-          <div className="flex items-center gap-2 mb-4">
+        <div className="max-w-3xl mb-6 text-left">
+          <div className="flex items-center gap-2 mb-3">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">
               {pack.contactLabel}
@@ -202,10 +202,10 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
 
         {/* Form + Side Info Split Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl mx-auto">
           
           {/* Left Block: Premium Corporate Form */}
-          <div className="lg:col-span-7 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 p-6 md:p-8 flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 p-4 md:p-5 flex flex-col justify-between">
             {submitted === "success" ? (
               <div className="flex-1 flex flex-col items-center justify-center py-12 text-center select-none animate-in fade-in duration-300">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mb-6">
@@ -238,9 +238,9 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5 text-left">
+              <form onSubmit={handleSubmit} className="space-y-3 text-left">
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name field */}
                   <div>
                     <label className="text-xs font-sans tracking-wide text-brand-gold-300 block mb-2 font-medium">
@@ -251,7 +251,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3.5 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
+                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
                     />
                   </div>
 
@@ -265,12 +265,12 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3.5 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
+                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Company field */}
                   <div>
                     <label className="text-xs font-sans tracking-wide text-brand-gold-300 block mb-2 font-medium">
@@ -281,7 +281,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                       type="text"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3.5 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
+                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 font-sans"
                     />
                   </div>
 
@@ -293,7 +293,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                     <select
                       value={formData.inquiryTypeIndex}
                       onChange={(e) => setFormData({ ...formData, inquiryTypeIndex: Number(e.target.value) })}
-                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-brand-gold-400 cursor-pointer font-sans"
+                      className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-brand-gold-400 cursor-pointer font-sans"
                     >
                       {inquiryTypes.map((option, i) => (
                         <option key={i} value={i}>{option}</option>
@@ -309,7 +309,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   </label>
                   <textarea
                     required
-                    rows={4}
+                    rows={3}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full bg-[#030611] border border-brand-gold-500/12 text-brand-gold-100 p-4 rounded-xl text-sm tracking-wide focus:outline-none focus:border-brand-gold-400 outline-none leading-relaxed font-sans"
@@ -319,7 +319,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 disabled:opacity-50 text-[#030611] text-sm font-sans font-bold py-4 rounded-xl transition-all shadow-md shadow-brand-gold-500/15 cursor-pointer active:scale-98"
+                  className="w-full bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 disabled:opacity-50 text-[#030611] text-sm font-sans font-bold py-3.5 rounded-xl transition-all shadow-md shadow-brand-gold-500/15 cursor-pointer active:scale-98"
                 >
                   {sending ? (lang === "ZH" ? "正在传输至迪拜总部..." : "TRANSMITTING TO DUBAI HQ...") : pack.contactFormSubmit}
                 </button>
@@ -329,17 +329,17 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
           </div>
 
           {/* Right Block: Instant Connection Slots (WhatsApp, Email & Phone) */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4">
             
             {/* WhatsApp Business Slot */}
             <a 
               href="https://wa.me/971507188306" 
               target="_blank" 
               rel="noreferrer"
-              className="p-6 bg-[#0c1e13] border border-emerald-500/20 hover:border-emerald-500/40 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
+              className="p-4 bg-[#0c1e13] border border-emerald-500/20 hover:border-emerald-500/40 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
             >
               <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
                   💬
                 </div>
                 <div>
@@ -359,10 +359,10 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
             {/* Inquiries Email Slot */}
             <a 
               href="mailto:info@globalcareinfo.com" 
-              className="p-6 bg-[#040812] border border-brand-gold-500/10 hover:border-brand-gold-500/25 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
+              className="p-4 bg-[#040812] border border-brand-gold-500/10 hover:border-brand-gold-500/25 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
             >
               <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-xl bg-brand-gold-500/5 border border-brand-gold-500/15 flex items-center justify-center text-brand-gold-400 font-bold shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold-500/5 border border-brand-gold-500/15 flex items-center justify-center text-brand-gold-400 font-bold shrink-0">
                   ✉️
                 </div>
                 <div>
@@ -382,10 +382,10 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
             {/* Tel Call Line Slot */}
             <a 
               href="tel:+971507188306" 
-              className="p-6 bg-[#040812] border border-brand-gold-500/10 hover:border-brand-gold-500/25 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
+              className="p-4 bg-[#040812] border border-brand-gold-500/10 hover:border-brand-gold-500/25 rounded-2xl transition-all duration-300 flex items-center justify-between group cursor-pointer font-sans"
             >
               <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-xl bg-brand-gold-500/5 border border-brand-gold-500/15 flex items-center justify-center text-brand-gold-400 font-bold shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold-500/5 border border-brand-gold-500/15 flex items-center justify-center text-brand-gold-400 font-bold shrink-0">
                   📞
                 </div>
                 <div>
@@ -403,7 +403,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
             </a>
 
             {/* Headquarters address box */}
-            <div className="p-6 bg-[#040812] border border-brand-gold-500/5 rounded-2xl text-left font-sans">
+            <div className="p-4 bg-[#040812] border border-brand-gold-500/5 rounded-2xl text-left font-sans">
               <span className="text-xs font-sans text-brand-gold-400 block mb-2 font-semibold">
                 {pack.contactOffice}
               </span>

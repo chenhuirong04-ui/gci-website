@@ -369,7 +369,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   }[lang];
 
   return (
-    <section id="media-section" className="py-20 md:py-24 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
+    <section id="media-section" className="py-14 md:py-16 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
       {/* Decorative corporate laser light beams or spot glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
@@ -377,23 +377,23 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
       <div className="max-w-7xl mx-auto px-6 relative z-10" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Modern Corporate Header Block */}
-        <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
-          <div className="flex items-center gap-2 mb-4 justify-start">
+        <div className={`max-w-4xl mb-8 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-3 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
               {labelText}
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold text-brand-gold-100 tracking-tight leading-none uppercase">
+          <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-brand-gold-100 tracking-tight leading-none uppercase">
             {titleText}
           </h2>
-          <p className="mt-4 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
+          <p className="mt-3 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
             {subtitleText}
           </p>
         </div>
 
         {/* Premium Executive Selector Controls */}
-        <div className="mb-10">
+        <div className="mb-6">
           <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-3 bg-[#030611]/50 border border-brand-gold-500/10 p-2 sm:p-3 rounded-2xl backdrop-blur-md">
             {COUNTRIES_DATA.map((country) => {
               const isActive = country.key === selectedKey;
@@ -408,7 +408,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   key={country.key}
                   id={`btn-network-${country.key}`}
                   onClick={() => setSelectedKey(country.key)}
-                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-98 flex items-center gap-2 border ${
+                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-98 flex items-center gap-2 border ${
                     isActive
                       ? "bg-brand-gold-500 text-[#030611] border-brand-gold-400 font-bold shadow-md shadow-brand-gold-500/10"
                       : "bg-[#030611]/60 text-slate-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-brand-gold-300"
@@ -423,7 +423,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
         </div>
 
         {/* Main Landscape Cinematic Media Area & Information Sub-Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
           {/* Main Large-scale Video/Image Showcase (Visual Center) - cols 7 */}
           <div className="lg:col-span-8 flex flex-col justify-between">
@@ -545,29 +545,29 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
           </div>
 
           {/* Details & Information Context Panel - cols 4 */}
-          <div className="lg:col-span-4 flex flex-col justify-between p-6 sm:p-8 bg-[#070e20] rounded-2xl border border-brand-gold-500/10 shadow-xl relative overflow-hidden backdrop-blur-md">
+          <div className="lg:col-span-4 flex flex-col justify-between p-4 sm:p-5 bg-[#070e20] rounded-2xl border border-brand-gold-500/10 shadow-xl relative overflow-hidden backdrop-blur-md">
             {/* Fine decorative outline grid */}
             <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-brand-gold-500/5 pointer-events-none rounded-tr-2xl" />
             
             <div className="text-left flex flex-col justify-between h-full" dir={isRtl ? "rtl" : "ltr"}>
               <div>
                 {/* Selected Country Flag Icon watermark & title */}
-                <span className={`text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold mb-4 inline-block ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
+                <span className={`text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold mb-3 inline-block ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
                   {lang === "EN" ? activeCountry.nameEN : lang === "ZH" ? activeCountry.nameZH : activeCountry.nameAR}
                 </span>
 
-                <h3 className="text-2xl font-serif text-brand-gold-100 font-extrabold tracking-tight mt-1 mb-4 leading-snug">
+                <h3 className="text-2xl font-serif text-brand-gold-100 font-extrabold tracking-tight mt-1 mb-3 leading-snug">
                   {lang === "EN" ? activeCountry.nameEN : lang === "ZH" ? activeCountry.nameZH : activeCountry.nameAR}
                 </h3>
                 
-                <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed font-sans mb-6 min-h-[6rem] border-l-2 border-brand-gold-500/20 pl-4">
+                <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed font-sans mb-4 border-l-2 border-brand-gold-500/20 pl-4">
                   {lang === "EN" ? activeDescEN : lang === "ZH" ? activeDescZH : activeDescAR}
                 </p>
               </div>
 
               {/* Resource Tags Block */}
-              <div className="border-t border-brand-gold-500/10 pt-5">
-                <span className="text-[10px] uppercase font-mono tracking-wider text-brand-gold-400 block mb-3 font-semibold">
+              <div className="border-t border-brand-gold-500/10 pt-4">
+                <span className="text-[10px] uppercase font-mono tracking-wider text-brand-gold-400 block mb-2 font-semibold">
                   {tagsLabel}
                 </span>
                 <div className="flex flex-wrap gap-2">

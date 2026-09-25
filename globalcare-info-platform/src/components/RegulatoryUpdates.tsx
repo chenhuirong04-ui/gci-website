@@ -387,7 +387,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
     : articles.filter(art => art.category === activeCategory);
 
   return (
-    <section id="insights-section" className="py-20 md:py-24 bg-[#030611] border-b border-brand-gold-500/10 relative overflow-hidden">
+    <section id="insights-section" className="py-14 md:py-16 bg-[#030611] border-b border-brand-gold-500/10 relative overflow-hidden">
       {/* Aesthetic layout decorative lighting / glow effects */}
       <div className="absolute inset-0 opacity-[0.015] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-brand-navy-600/5 blur-[120px] pointer-events-none" />
@@ -452,15 +452,15 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
         {!selectedArticle && (
         <>
         {/* SECTION HEADER BLOCK */}
-        <div className={`max-w-4xl mb-12 ${isRtl ? "text-right" : "text-left"}`}>
-          <div className="flex items-center gap-2 mb-4 justify-start">
+        <div className={`max-w-4xl mb-8 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-3 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500/80" />
             <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
               {lang === "EN" ? "Market Intelligence Center" : lang === "ZH" ? "在岸市场特约情报中心" : "مركز الاستشارات والمؤشرات"}
             </span>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold text-[#f9f5eb] tracking-tight leading-none uppercase">
               {isAllView ? (isRtl ? "المستودع المعرفي الشامل" : lang === "ZH" ? "完整情报检索库" : "COMPLETE INTELLIGENCE REPOSITORY") : mainTitleText}
             </h2>
@@ -485,7 +485,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             )}
           </div>
 
-          <p className="mt-4 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
+          <p className="mt-3 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
             {mainDescriptionText}
           </p>
         </div>
@@ -493,15 +493,15 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
         {/* MODE 1: FEATURED INSIGHTS BENTO LAYOUT (max 6 articles: 1 main big card + 5 smaller visual cards) */}
         {!isAllView && (
           <div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch mb-8">
               
               {/* LARGE FEATURED CARD ( occupying lg:col-span-2, large high contrast visual focus ) */}
               <div
                 onClick={() => setSelectedArticle(leadArticle)}
-                className="lg:col-span-2 group flex flex-col justify-between bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-3xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-gold-500/5 min-h-[440px] cursor-pointer"
+                className="lg:col-span-2 group flex flex-col justify-between bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-3xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm hover:shadow-2xl hover:shadow-brand-gold-500/5 cursor-pointer"
               >
                 {/* Visual Cover Image — fixed h-52, fallback placeholder if broken */}
-                <div className="relative w-full h-52 shrink-0 overflow-hidden border-b border-brand-gold-500/10 bg-[#0a1428]">
+                <div className="relative w-full h-44 sm:h-48 shrink-0 overflow-hidden border-b border-brand-gold-500/10 bg-[#0a1428]">
                   <img
                     src={resolveArticleImg(leadArticle.coverImage, leadArticle.countryEN)}
                     alt=""
@@ -522,25 +522,25 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 </div>
 
                 {/* Content description partition */}
-                <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Meta line */}
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 mb-3 uppercase tracking-wider">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 mb-2 uppercase tracking-wider">
                       <span>{dateLabel}:</span>
                       <span>{formatDisplayDate(leadArticle)}</span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-[#f9f5eb] font-extrabold group-hover:text-white transition-colors leading-snug tracking-tight mb-4">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-[#f9f5eb] font-extrabold group-hover:text-white transition-colors leading-snug tracking-tight mb-3">
                       {lang === "EN" ? leadArticle.titleEN : lang === "ZH" ? leadArticle.titleZH : leadArticle.titleAR}
                     </h3>
 
-                    <p className="text-sm text-brand-gold-200/80 font-sans font-light leading-relaxed mb-6 max-w-2xl">
+                    <p className="text-sm text-brand-gold-200/80 font-sans font-light leading-relaxed mb-4 max-w-2xl">
                       {lang === "EN" ? leadArticle.summaryEN : lang === "ZH" ? leadArticle.summaryZH : leadArticle.summaryAR}
                     </p>
                   </div>
 
                   {/* High quality footer action */}
-                  <div className="border-t border-brand-gold-500/10 pt-5 flex items-center justify-between text-xs font-bold text-[#DFBB6B] group-hover:text-brand-gold-300">
+                  <div className="border-t border-brand-gold-500/10 pt-4 flex items-center justify-between text-xs font-bold text-[#DFBB6B] group-hover:text-brand-gold-300">
                     <span className={`uppercase ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>{readMoreText}</span>
                     <div className="w-8 h-8 rounded-full bg-brand-gold-500/5 group-hover:bg-brand-gold-500/15 flex items-center justify-center transition-colors">
                       <ArrowRight className={`w-4 h-4 stroke-[2] ${isRtl ? "rotate-180" : "group-hover:translate-x-0.5 transition-transform"}`} />
@@ -550,7 +550,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
               </div>
 
               {/* COMPANION SECONDARY CARDS Grid Structure ( occuping space elegantly ) */}
-              <div className="flex flex-col gap-6 justify-between lg:col-span-1">
+              <div className="flex flex-col gap-4 justify-between lg:col-span-1">
                 {companionArticles.slice(0, 2).map((article) => {
                   const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
                   const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
@@ -560,10 +560,10 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     <div
                       key={article.id}
                       onClick={() => setSelectedArticle(article)}
-                      className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm flex-1 cursor-pointer"
+                      className="group flex flex-col justify-between p-3.5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm flex-1 cursor-pointer"
                     >
                       {/* Image strip at top of card — fixed h-28 */}
-                      <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 border border-brand-gold-500/10 bg-[#0a1428] shrink-0">
+                      <div className="relative w-full h-24 rounded-xl overflow-hidden mb-2.5 border border-brand-gold-500/10 bg-[#0a1428] shrink-0">
                         <img
                           src={resolveArticleImg(article.coverImage, article.countryEN)}
                           alt=""
@@ -582,12 +582,12 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                             {formatDisplayDate(article)}
                           </span>
                         </div>
-                        <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-3 leading-snug break-words">
+                        <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-gold-100 group-hover:text-white transition-colors line-clamp-2 leading-snug break-words">
                           {title}
                         </h4>
                       </div>
 
-                      <p className="text-xs text-brand-gold-200/60 font-sans font-light line-clamp-2 mb-3">
+                      <p className="text-xs text-brand-gold-200/60 font-sans font-light line-clamp-1 mb-2">
                         {summary}
                       </p>
 
@@ -603,7 +603,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             </div>
 
             {/* THREE ADDITIONAL LOWER GRID ROW COMPANIONS IN BENTO MATRIX */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mb-8">
               {companionArticles.slice(2).map((article) => {
                 const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
                 const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
@@ -613,10 +613,10 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   <div
                     key={article.id}
                     onClick={() => setSelectedArticle(article)}
-                    className="group flex flex-col justify-between p-5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl cursor-pointer"
+                    className="group flex flex-col justify-between p-3.5 bg-[#070e20]/60 hover:bg-[#0c1834]/80 border border-brand-gold-500/15 hover:border-brand-gold-500/35 rounded-2xl transition-all duration-300 text-left relative overflow-hidden backdrop-blur-sm shadow-xl cursor-pointer"
                   >
                     {/* Visual Card Image — fixed h-40, bottom label overlay */}
-                    <div className="relative w-full h-40 shrink-0 rounded-xl overflow-hidden mb-4 border border-brand-gold-500/10 bg-[#0a1428]">
+                    <div className="relative w-full h-28 shrink-0 rounded-xl overflow-hidden mb-2.5 border border-brand-gold-500/10 bg-[#0a1428]">
                       <img
                         src={resolveArticleImg(article.coverImage, article.countryEN)}
                         alt=""
@@ -641,7 +641,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                         {title}
                       </h4>
 
-                      <p className="text-xs text-brand-gold-200/60 font-sans font-light line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-xs text-brand-gold-200/60 font-sans font-light line-clamp-1 leading-relaxed mb-2">
                         {summary}
                       </p>
                     </div>
@@ -656,7 +656,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             </div>
 
             {/* INTERACTIVE LOAD MORE / SWITCH TO DEEP DIRECTORY PORTAL BUTTON */}
-            <div className="flex justify-center mt-12">
+            <div className="flex justify-center mt-6">
               <button
                 id="btn-view-all-insights"
                 onClick={() => {
@@ -664,7 +664,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   // Scroll to top of the section nicely
                   window.scrollTo({ top: document.getElementById("insights-section")?.offsetTop, behavior: "smooth" });
                 }}
-                className={`px-8 py-4 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] font-sans font-bold text-sm ${lang === "EN" ? "tracking-widest" : "tracking-normal"} uppercase rounded-xl transition-all duration-300 shadow-lg shadow-brand-gold-500/10 hover:shadow-brand-gold-500/25 active:scale-95 cursor-pointer flex items-center gap-3 animate-pulse`}
+                className={`px-7 py-3 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] font-sans font-bold text-sm ${lang === "EN" ? "tracking-widest" : "tracking-normal"} uppercase rounded-xl transition-all duration-300 shadow-lg shadow-brand-gold-500/10 hover:shadow-brand-gold-500/25 active:scale-95 cursor-pointer flex items-center gap-3 animate-pulse`}
               >
                 <span>{viewAllButtonText}</span>
               </button>
