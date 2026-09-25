@@ -14,6 +14,15 @@ export default function Hero({ lang, pack }: HeroProps) {
 
   // Coordinates data for Dubai Junction and associated world corridor nodes
   const nodes = [
+    {
+      name: "Spain",
+      x: 145,
+      y: 92,
+      label: lang === "ZH" ? "西班牙" : lang === "AR" ? "إسبانيا" : "Spain",
+      curveX: 255,
+      curveY: 165,
+      info: lang === "ZH" ? "当前欧洲重点 · 巴塞罗那 / 加泰罗尼亚" : lang === "AR" ? "التركيز الحالي في أوروبا · برشلونة / كاتالونيا" : "Current Europe Focus · Barcelona / Catalonia"
+    },
     { 
       name: "Saudi Arabia", 
       x: 210, 
@@ -544,7 +553,9 @@ export default function Hero({ lang, pack }: HeroProps) {
                   <div className="flex items-center gap-1.5 border-b border-brand-gold-500/10 pb-2 mb-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500" />
                     <span className="text-xs font-sans text-brand-gold-300 font-semibold">
-                      {hoveredNode} Region Strategic Access
+                      {hoveredNode === "Spain"
+                        ? (lang === "ZH" ? "西班牙" : lang === "AR" ? "إسبانيا" : "Spain")
+                        : `${hoveredNode} Region Strategic Access`}
                     </span>
                   </div>
                   <p className="text-sm text-brand-gold-200 font-light leading-relaxed">
