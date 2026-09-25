@@ -7,6 +7,7 @@ import imgRoboticsDubai from "../assets/images/case_robotics_dubai_1780768291268
 import imgMedicalMombasa from "../assets/images/case_medical_mombasa_1780768328334.png";
 import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
 import imgPortShenzhen from "../assets/images/case_port_shenzhen_1780768345006.png";
+import { COUNTRY_GRID_IMG, resolveCountryArticleImage } from "../data/insightImages";
 
 const IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_solar_riyadh_1780768308627.png": imgSolarRiyadh,
@@ -14,23 +15,6 @@ const IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_medical_mombasa_1780768328334.png": imgMedicalMombasa,
   "/src/assets/images/gci_global_hub_connection_1780768265492.png": imgGlobalHub,
   "/src/assets/images/case_port_shenzhen_1780768345006.png": imgPortShenzhen,
-};
-
-// Country → local images in /public/images/countries/ (verified city photos, committed to repo)
-const COUNTRY_GRID_IMG: Record<string, string> = {
-  "UAE / Dubai":  "/images/countries/country-uae.jpg",      // Dubai Marina aerial
-  "Saudi Arabia": "/images/countries/country-saudi.jpg",    // Riyadh KAFD skyline
-  "Qatar":        "/images/countries/country-qatar.jpg",    // The Pearl, Doha (NOT Dubai)
-  "Bahrain":      "/images/countries/country-bahrain.jpg",  // Bahrain World Trade Center
-  "Oman":         "/images/countries/country-oman.jpg",     // Muttrah Corniche, Muscat
-  "Kuwait":       "/images/countries/country-kuwait.jpg",   // Kuwait City skyline
-  "Kenya":        "/images/countries/country-kenya.jpg",    // Nairobi skyline
-  "Tanzania":     "/images/countries/country-tanzania.jpg", // Dar es Salaam port
-  "Nigeria":      "/images/countries/country-nigeria.jpg",  // Lagos Lekki bridge
-  "Morocco":      "/images/countries/country-morocco.jpg",  // Casablanca Hassan II mosque
-  "China":        "/images/countries/country-china.jpg",    // Shanghai Bund skyline
-  "Brazil":       "/images/countries/country-brazil.jpg",   // Rio de Janeiro
-  "Global":       "/images/countries/country-global.jpg",   // Earth from space
 };
 
 // Country → local warm-gold image (overrides any external URL from Notion)
@@ -55,8 +39,10 @@ function resolveImg(path: string): string {
 }
 
 function resolveArticleImg(coverImage: string, countryEN: string): string {
-  // Always prefer country-mapped local image for visual consistency
-  return COUNTRY_COVER_MAP[countryEN] ?? resolveImg(coverImage);
+  // Prefer the existing country-specific image so different markets do not share a generic cover.
+  // Fall back to the legacy warm-gold mapping, then the article image, only for unknown countries.
+  const fallback = (COUNTRY_COVER_MAP[countryEN] ?? resolveImg(coverImage)) || imgGlobalHub;
+  return resolveCountryArticleImage(countryEN, fallback);
 }
 
 interface RegulatoryUpdatesProps {

@@ -27,10 +27,10 @@
 //
 // Run with `--dry-run` for a single-request preview (no OpenAI/Supabase writes, only a
 // read-only Supabase query to build a realistic preview for the first target market).
-// Run with `--simulate` to exercise the real per-market control flow against the live
-// Supabase rotation/dedup queries (read-only) with OpenAI and the Supabase insert replaced
-// by a scripted mock — no real OpenAI call or Supabase write happens. Set SIMULATE_SCENARIO
-// to one of: all_success (default), one_timeout, one_duplicate, one_low_relevance, one_skip.
+// Run with `--simulate` to exercise the real per-market control flow with in-memory OpenAI
+// and Supabase mocks — no external call or write happens. Set SIMULATE_SCENARIO to one of:
+// all_success (default), all_no_qualified, all_quota_error, one_timeout, one_duplicate,
+// one_low_relevance, or one_skip.
 
 import "dotenv/config";
 import * as supabase from "./supabase";
@@ -48,6 +48,29 @@ const DEDUP_WINDOW_SIZE = 25; // recent titles/URLs sent to the model, not the f
 
 const isDryRun = process.argv.includes("--dry-run") || process.env.DRY_RUN === "1" || process.env.DRY_RUN === "true";
 const isSimulate = process.argv.includes("--simulate") || process.env.SIMULATE === "1" || process.env.SIMULATE === "true";
+
+type FailureType =
+  | "NO_QUALIFIED_CONTENT"
+  | "API_ERROR"
+  | "AUTH_ERROR"
+  | "QUOTA_ERROR"
+  | "NETWORK_ERROR"
+  | "SUPABASE_ERROR";
+
+const SYSTEM_FAILURE_TYPES = new Set<FailureType>([
+  "API_ERROR",
+  "AUTH_ERROR",
+  "QUOTA_ERROR",
+  "NETWORK_ERROR",
+  "SUPABASE_ERROR",
+]);
+
+class InsightRunError extends Error {
+  constructor(public readonly failureType: Exclude<FailureType, "NO_QUALIFIED_CONTENT">, message: string) {
+    super(message);
+    this.name = "InsightRunError";
+  }
+}
 
 const CATEGORY_VALUES = ["Regulatory Updates", "Market News", "Trade Notes", "GCI Insights"] as const;
 const BUSINESS_AREA_VALUES = [
@@ -100,6 +123,31 @@ async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs: numbe
   } finally {
     clearTimeout(timer);
   }
+}
+
+function classifyOpenAIError(err: unknown): InsightRunError {
+  if (err instanceof InsightRunError) return err;
+  if (err instanceof Error && err.name === "AbortError") {
+    return new InsightRunError("NETWORK_ERROR", "OpenAI request timed out");
+  }
+  if (err instanceof TypeError) {
+    return new InsightRunError("NETWORK_ERROR", `OpenAI network request failed: ${err.message}`);
+  }
+  return new InsightRunError("API_ERROR", err instanceof Error ? err.message : String(err));
+}
+
+function openAIHttpError(status: number, body: string): InsightRunError {
+  const detail = body.slice(0, 500);
+  if (status === 401 || status === 403) {
+    return new InsightRunError("AUTH_ERROR", `OpenAI HTTP ${status}: ${detail}`);
+  }
+  if (
+    status === 429 &&
+    /insufficient_quota|credit_balance_exhausted|no credits remaining/i.test(detail)
+  ) {
+    return new InsightRunError("QUOTA_ERROR", `OpenAI HTTP ${status}: ${detail}`);
+  }
+  return new InsightRunError("API_ERROR", `OpenAI HTTP ${status}: ${detail}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -268,7 +316,7 @@ function extractMessageText(responseData: any): string {
 
 async function callOpenAIForMarket(apiKey: string, market: string, dedup: { titles: string[]; urls: string[] }): Promise<InsightItem> {
   const body = buildOpenAIRequestBody(market, dedup);
-  let lastError: unknown;
+  let lastError: InsightRunError | undefined;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
@@ -284,23 +332,24 @@ async function callOpenAIForMarket(apiKey: string, market: string, dedup: { titl
       );
       if (!r.ok) {
         const errText = await r.text().catch(() => "");
-        throw new Error(`OpenAI HTTP ${r.status}: ${errText.slice(0, 500)}`);
+        throw openAIHttpError(r.status, errText);
       }
       const data = await r.json();
       const text = extractMessageText(data);
       return JSON.parse(text) as InsightItem;
     } catch (err) {
-      lastError = err;
-      const isTimeout = err instanceof Error && err.name === "AbortError";
-      log(`attempt ${attempt} failed: ${isTimeout ? "timeout" : (err as Error).message}`);
-      if (attempt < MAX_ATTEMPTS) {
+      lastError = classifyOpenAIError(err);
+      log(`attempt ${attempt} failed [${lastError.failureType}]: ${lastError.message}`);
+      const retryable = lastError.failureType === "API_ERROR" || lastError.failureType === "NETWORK_ERROR";
+      if (retryable && attempt < MAX_ATTEMPTS) {
         const delay = RETRY_DELAYS_MS[attempt - 1] ?? RETRY_DELAYS_MS[RETRY_DELAYS_MS.length - 1];
         await sleep(delay);
+      } else {
+        break;
       }
     }
   }
-  // No further retries beyond MAX_ATTEMPTS — this market simply fails for today.
-  throw new Error(`OpenAI call failed after ${MAX_ATTEMPTS} attempts: ${(lastError as Error)?.message}`);
+  throw lastError ?? new InsightRunError("API_ERROR", "OpenAI call failed without an error response");
 }
 
 // ---------------------------------------------------------------------------
@@ -341,6 +390,7 @@ function validateItem(item: InsightItem, market: string, dedup: { titles: string
 interface AttemptRecord {
   market: string;
   outcome: "published" | "skipped" | "failed";
+  failureType?: FailureType;
   title?: string;
   reason?: string;
 }
@@ -348,8 +398,17 @@ interface AttemptRecord {
 async function runDailyRun(deps: {
   generateOne: (market: string, dedup: { titles: string[]; urls: string[] }) => Promise<InsightItem>;
   insert: (row: supabase.GciInsightInsert) => Promise<supabase.InsertResult>;
+  getCountryCounts?: (countryPool: string[]) => Promise<Record<string, number>>;
+  getRecentDedupWindow?: (limit: number) => Promise<{ titles: string[]; urls: string[] }>;
 }): Promise<{ records: AttemptRecord[]; published: number; targetMarkets: string[]; logicalCalls: number }> {
-  const counts = await supabase.getCountryCounts(COUNTRY_POOL);
+  const getCountryCounts = deps.getCountryCounts ?? supabase.getCountryCounts;
+  const getRecentDedupWindow = deps.getRecentDedupWindow ?? supabase.getRecentDedupWindow;
+  let counts: Record<string, number>;
+  try {
+    counts = await getCountryCounts(COUNTRY_POOL);
+  } catch (err) {
+    throw new InsightRunError("SUPABASE_ERROR", `Supabase country-count query failed: ${(err as Error).message}`);
+  }
   const { phase, markets: targetMarkets } = pickTargetMarkets(counts, TARGET_MARKETS_COUNT);
   log(`phase=${phase} target markets=[${targetMarkets.join(", ")}]`);
 
@@ -359,45 +418,61 @@ async function runDailyRun(deps: {
   for (const market of targetMarkets) {
     // Fresh dedup window per market so a market processed later in the loop already sees
     // anything an earlier market in this same run just published.
-    const dedup = await supabase.getRecentDedupWindow(DEDUP_WINDOW_SIZE);
+    let dedup: { titles: string[]; urls: string[] };
+    try {
+      dedup = await getRecentDedupWindow(DEDUP_WINDOW_SIZE);
+    } catch (err) {
+      const reason = `Supabase recent-window query failed: ${(err as Error).message}`;
+      log(`market ${market}: failed [SUPABASE_ERROR] — ${reason}`);
+      records.push({ market, outcome: "failed", failureType: "SUPABASE_ERROR", reason });
+      continue;
+    }
 
     let item: InsightItem;
     try {
       item = await deps.generateOne(market, dedup);
     } catch (err) {
-      const msg = (err as Error).message;
-      log(`market ${market}: OpenAI call failed — ${msg}`);
-      records.push({ market, outcome: "failed", reason: `OpenAI call failed: ${msg}` });
+      const classified = classifyOpenAIError(err);
+      log(`market ${market}: failed [${classified.failureType}] — ${classified.message}`);
+      records.push({ market, outcome: "failed", failureType: classified.failureType, reason: classified.message });
       continue;
     }
 
     const invalidReason = validateItem(item, market, dedup);
     if (invalidReason) {
       log(`market ${market}: skipped — ${invalidReason}`);
-      records.push({ market, outcome: "skipped", reason: invalidReason });
+      records.push({ market, outcome: "skipped", failureType: "NO_QUALIFIED_CONTENT", reason: invalidReason });
       continue;
     }
 
-    const result = await deps.insert({
-      title_en: item.title_en!,
-      title_zh: item.title_zh,
-      title_ar: item.title_ar,
-      summary_en: item.summary_en,
-      summary_zh: item.summary_zh,
-      summary_ar: item.summary_ar,
-      website_content_en: item.website_content_en,
-      website_content_zh: item.website_content_zh,
-      country: market,
-      category: item.category!,
-      business_area: item.business_area,
-      source_url: item.source_url,
-      source_name: item.source_name,
-      source_date: item.date,
-      business_impact: item.business_impact,
-      gci_recommendation: item.gci_recommendation,
-      relevance_score: item.relevance_score,
-      is_official_source: item.is_official_source,
-    });
+    let result: supabase.InsertResult;
+    try {
+      result = await deps.insert({
+        title_en: item.title_en!,
+        title_zh: item.title_zh,
+        title_ar: item.title_ar,
+        summary_en: item.summary_en,
+        summary_zh: item.summary_zh,
+        summary_ar: item.summary_ar,
+        website_content_en: item.website_content_en,
+        website_content_zh: item.website_content_zh,
+        country: market,
+        category: item.category!,
+        business_area: item.business_area,
+        source_url: item.source_url,
+        source_name: item.source_name,
+        source_date: item.date,
+        business_impact: item.business_impact,
+        gci_recommendation: item.gci_recommendation,
+        relevance_score: item.relevance_score,
+        is_official_source: item.is_official_source,
+      });
+    } catch (err) {
+      const reason = `Supabase insert failed: ${(err as Error).message}`;
+      log(`market ${market}: failed [SUPABASE_ERROR] — ${reason}`);
+      records.push({ market, outcome: "failed", failureType: "SUPABASE_ERROR", reason });
+      continue;
+    }
 
     if (result.ok === true) {
       published++;
@@ -405,10 +480,10 @@ async function runDailyRun(deps: {
       records.push({ market, outcome: "published", title: item.title_en! });
     } else if (result.duplicate === true) {
       log(`market ${market}: skipped — Supabase unique constraint conflict (source_url or title_fingerprint)`);
-      records.push({ market, outcome: "skipped", reason: "Supabase unique constraint conflict (duplicate)" });
+      records.push({ market, outcome: "skipped", failureType: "NO_QUALIFIED_CONTENT", reason: "Supabase unique constraint conflict (duplicate)" });
     } else {
       log(`market ${market}: failed — Supabase insert error: ${result.error}`);
-      records.push({ market, outcome: "failed", reason: `Supabase insert failed: ${result.error}` });
+      records.push({ market, outcome: "failed", failureType: "SUPABASE_ERROR", reason: `Supabase insert failed: ${result.error}` });
     }
   }
 
@@ -419,6 +494,10 @@ function buildSummary(records: AttemptRecord[], published: number, targetMarkets
   const skipped = records.filter((r) => r.outcome === "skipped").length;
   const failed = records.filter((r) => r.outcome === "failed").length;
   const publishedRecords = records.filter((r) => r.outcome === "published");
+  const failureCounts = records.reduce<Partial<Record<FailureType, number>>>((counts, record) => {
+    if (record.failureType) counts[record.failureType] = (counts[record.failureType] ?? 0) + 1;
+    return counts;
+  }, {});
 
   const lines: string[] = [
     "",
@@ -429,6 +508,7 @@ function buildSummary(records: AttemptRecord[], published: number, targetMarkets
     `published: ${published}`,
     `skipped: ${skipped}`,
     `failed: ${failed}`,
+    `failure types: ${Object.entries(failureCounts).map(([type, count]) => `${type}=${count}`).join(", ") || "none"}`,
     "",
     "published countries:",
     ...publishedRecords.map((r) => `- ${r.market}`),
@@ -447,6 +527,19 @@ function buildSummary(records: AttemptRecord[], published: number, targetMarkets
   }
 
   return lines.join("\n");
+}
+
+function allTargetsFailedFromSystemErrors(records: AttemptRecord[], targetMarkets: string[]): boolean {
+  return targetMarkets.length > 0
+    && records.length === targetMarkets.length
+    && records.every((record) => record.outcome === "failed" && record.failureType && SYSTEM_FAILURE_TYPES.has(record.failureType));
+}
+
+function applyRunExitStatus(records: AttemptRecord[], targetMarkets: string[]) {
+  if (allTargetsFailedFromSystemErrors(records, targetMarkets)) {
+    console.error("[gci-insights] FATAL: all target markets failed because of system errors");
+    process.exitCode = 1;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -474,11 +567,13 @@ async function main() {
 
   if (isSimulate) {
     const scenario = process.env.SIMULATE_SCENARIO || "all_success";
-    log(`SIMULATE (scenario="${scenario}") — running the real per-market control flow against live Supabase rotation/dedup queries (read-only); OpenAI + insert are scripted mocks, nothing real is written`);
+    log(`SIMULATE (scenario="${scenario}") — running the real per-market control flow with in-memory OpenAI/Supabase mocks; nothing external is called or written`);
 
-    type Kind = "publish" | "timeout" | "duplicate" | "low_relevance" | "skip_true";
+    type Kind = "publish" | "timeout" | "quota_error" | "duplicate" | "low_relevance" | "skip_true";
     const SCENARIOS: Record<string, Kind[]> = {
       all_success: ["publish", "publish", "publish"],
+      all_no_qualified: ["skip_true", "skip_true", "skip_true"],
+      all_quota_error: ["quota_error", "quota_error", "quota_error"],
       one_timeout: ["timeout", "publish", "publish"],
       one_duplicate: ["duplicate", "publish", "publish"],
       one_low_relevance: ["low_relevance", "publish", "publish"],
@@ -492,7 +587,10 @@ async function main() {
       marketIdx++;
 
       if (kind === "timeout") {
-        throw new Error("[simulated] OpenAI request timed out after 3 attempts");
+        throw new InsightRunError("NETWORK_ERROR", "[simulated] OpenAI request timed out after 3 attempts");
+      }
+      if (kind === "quota_error") {
+        throw new InsightRunError("QUOTA_ERROR", "[simulated] OpenAI quota exhausted");
       }
       if (kind === "skip_true") {
         return {
@@ -539,15 +637,18 @@ async function main() {
     const { records, published, targetMarkets, logicalCalls } = await runDailyRun({
       generateOne: mockGenerateOne,
       insert: mockInsert,
+      getCountryCounts: async () => Object.fromEntries(COUNTRY_POOL.map((country) => [country, 0])),
+      getRecentDedupWindow: async () => ({ titles: [], urls: [] }),
     });
 
     console.log(buildSummary(records, published, targetMarkets, logicalCalls));
+    applyRunExitStatus(records, targetMarkets);
     log("simulate complete — no real OpenAI call or Supabase write was made");
     return;
   }
 
   const openaiKey = process.env.OPENAI_API_KEY;
-  if (!openaiKey) fail("OPENAI_API_KEY not set");
+  if (!openaiKey) throw new InsightRunError("AUTH_ERROR", "OPENAI_API_KEY not set");
 
   log(`starting daily run — ${TARGET_MARKETS_COUNT} target markets, one independent OpenAI call each`);
 
@@ -557,6 +658,10 @@ async function main() {
   });
 
   console.log(buildSummary(records, published, targetMarkets, logicalCalls));
+  applyRunExitStatus(records, targetMarkets);
 }
 
-main().catch((err) => fail(err?.message || String(err)));
+main().catch((err) => {
+  if (err instanceof InsightRunError) fail(`[${err.failureType}] ${err.message}`);
+  fail(err?.message || String(err));
+});
