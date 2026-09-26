@@ -61,6 +61,12 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
       ]
     }
   }[lang];
+  const aiSystemsLinkText = {
+    EN: "Explore 25H Business Systems →",
+    ZH: "查看 25H 企业运营系统 →",
+    AR: "استكشف أنظمة الأعمال 25H ←",
+    ES: "Explorar sistemas empresariales 25H →"
+  }[lang];
 
   return (
     <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
@@ -125,6 +131,11 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
               <p className="relative mt-3 pt-3 border-t border-brand-gold-500/10 text-[10px] leading-snug text-brand-gold-300/60 flex gap-2">
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 mt-0.5" />{svc.note}
               </p>
+              {svc.idx === "03" && (
+                <a href="https://25h.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                  {aiSystemsLinkText}
+                </a>
+              )}
             </div>
           )})}
         </div>
