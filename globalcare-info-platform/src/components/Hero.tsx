@@ -1,19 +1,37 @@
 import React, { useState } from "react";
-import { LanguagePack } from "../data/corporateData";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 import { ArrowRight, Globe } from "lucide-react";
 import gciDoorIcon from "../assets/gci-door-icon.png";
 
 interface HeroProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   pack: LanguagePack;
 }
+
+const ES_NODE_COPY: Record<string, { label: string; info: string }> = {
+  Spain: { label: "España", info: "Foco actual en Europa · Barcelona / Cataluña" },
+  "Saudi Arabia": { label: "Arabia Saudí / Riad", info: "Coordinación de entrada al mercado, conexiones comerciales y ejecución local en Arabia Saudí." },
+  Qatar: { label: "Catar", info: "Mercado estratégico del CCG para inteligencia de inversión, zonas francas e infraestructura." },
+  Kuwait: { label: "Kuwait", info: "Seguimiento de regulación comercial, aduanas y políticas de importación." },
+  Bahrain: { label: "Baréin", info: "Nodo regional para coordinación aduanera, logística y comercial." },
+  Oman: { label: "Omán / Sohar", info: "Coordinación marítima y logística a través de Mascate y Sohar." },
+  Tanzania: { label: "Tanzania", info: "Seguimiento de políticas portuarias, comercio y aranceles de importación." },
+  Nigeria: { label: "Nigeria", info: "Cobertura de inteligencia comercial y oportunidades en África Occidental." },
+  Kenya: { label: "Kenia / Mombasa", info: "Conexión portuaria y logística para África Oriental." },
+  China: { label: "China / Red industrial", info: "Conexión de proveedores, fabricación y recursos de cadena de suministro con mercados globales." },
+  Vietnam: { label: "Vietnam", info: "Cobertura de fabricación y suministro en el Sudeste Asiático." },
+  Cambodia: { label: "Camboya", info: "Coordinación de componentes y fabricación ligera." },
+  Indonesia: { label: "Indonesia", info: "Coordinación de suministro industrial y logística marítima." },
+  Morocco: { label: "Marruecos / Puerta de África", info: "Conexión de corredores comerciales del norte de África con Europa y el Golfo." },
+  Brazil: { label: "Brasil", info: "Coordinación de recursos comerciales y logística de larga distancia." }
+};
 
 export default function Hero({ lang, pack }: HeroProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const isRtl = lang === "AR";
 
   // Coordinates data for Dubai Junction and associated world corridor nodes
-  const nodes = [
+  const rawNodes = [
     {
       name: "Spain",
       x: 145,
@@ -150,6 +168,7 @@ export default function Hero({ lang, pack }: HeroProps) {
       info: lang === "ZH" ? "南美远洋机械与大宗集物：协调农业特机与精密传感器散柜，无缝并入 GCI 低税仓配大盘。" : lang === "AR" ? "إدارة وتوجيه المعدات الثقيلة والمحركات الزراعية وتأمين عبورها دبي والرياض." : "Facilitates long-range agricultural machinery and critical raw material logistics straight into Dubai-managed storage hubs." 
     }
   ];
+  const nodes = lang === "ES" ? rawNodes.map((node) => ({ ...node, ...(ES_NODE_COPY[node.name] || {}) })) : rawNodes;
 
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -245,7 +264,7 @@ export default function Hero({ lang, pack }: HeroProps) {
             <div className="w-full max-w-2xl mx-auto flex items-center justify-between border-b border-brand-gold-500/15 pb-3 mb-5 text-xs font-sans text-brand-gold-300 select-none">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium tracking-wide">China · Middle East · Africa · Europe</span>
+                <span className="font-medium tracking-wide">{lang === "ES" ? "China · Oriente Medio · África · Europa" : "China · Middle East · Africa · Europe"}</span>
               </div>
               <span>
                 {hoveredNode ? (
@@ -499,7 +518,7 @@ export default function Hero({ lang, pack }: HeroProps) {
                   <text x="370" y="310" textAnchor="middle" fontSize="11" fontWeight="800"
                     fill="#FFFBEF"
                     style={{ fontFamily: 'var(--font-sans)', letterSpacing: '0.06em', filter: 'drop-shadow(0 0 8px rgba(245,158,11,1)) drop-shadow(0 2px 5px rgba(0,0,0,1))' }}>
-                    {lang === "ZH" ? "迪拜管理总部 (阿联酋旗舰)" : lang === "AR" ? "مقر دبي الرئيسي (الإمارات)" : "Dubai HQ / UAE Corporate Core"}
+                    {lang === "ZH" ? "迪拜管理总部 (阿联酋旗舰)" : lang === "AR" ? "مقر دبي الرئيسي (الإمارات)" : lang === "ES" ? "Centro corporativo de Dubái / EAU" : "Dubai HQ / UAE Corporate Core"}
                   </text>
                 </g>
 
@@ -554,13 +573,13 @@ export default function Hero({ lang, pack }: HeroProps) {
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500" />
                     <span className="text-xs font-sans text-brand-gold-300 font-semibold">
                       {hoveredNode === "Spain"
-                        ? (lang === "ZH" ? "西班牙" : lang === "AR" ? "إسبانيا" : "Spain")
+                        ? (lang === "ZH" ? "西班牙" : lang === "AR" ? "إسبانيا" : lang === "ES" ? "España" : "Spain")
                         : `${hoveredNode} Region Strategic Access`}
                     </span>
                   </div>
                   <p className="text-sm text-brand-gold-200 font-light leading-relaxed">
                     {hoveredNode === "Dubai" 
-                      ? (lang === "ZH" ? "GCI 迪拜管理总部 - 托管大厅现场、实装样机物料现场展示及商会买家直签约" : lang === "AR" ? "مقر إدارة GCI دبي الرئيسي - صالات العرض الميدانية لتوطين المنتجات وتنسيق المشترين" : "GCI Dubai Operational Management HQ - Hosts custom sample display halls and handles bilateral legal execution.")
+                      ? (lang === "ZH" ? "GCI 迪拜管理总部 - 托管大厅现场、实装样机物料现场展示及商会买家直签约" : lang === "AR" ? "مقر إدارة GCI دبي الرئيسي - صالات العرض الميدانية لتوطين المنتجات وتنسيق المشترين" : lang === "ES" ? "Centro operativo de GCI en Dubái para coordinación comercial, exposición de productos y ejecución transfronteriza." : "GCI Dubai Operational Management HQ - Hosts custom sample display halls and handles bilateral legal execution.")
                       : (nodes.find(n => n.name === hoveredNode)?.info || "")
                     }
                   </p>

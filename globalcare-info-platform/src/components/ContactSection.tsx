@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { LanguagePack } from "../data/corporateData";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 import { ArrowRight, Check, Waypoints } from "lucide-react";
 
 interface ContactSectionProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   pack: LanguagePack;
 }
 
-const INQUIRY_TYPES: Record<"EN" | "ZH" | "AR", string[]> = {
+const INQUIRY_TYPES: Record<LanguageCode, string[]> = {
   EN: [
     "China → Middle East",
     "China → Europe",
@@ -31,7 +31,8 @@ const INQUIRY_TYPES: Record<"EN" | "ZH" | "AR", string[]> = {
     "أفريقيا ← الخليج / العالم",
     "مشاريع عابرة للحدود",
     "عمليات الأعمال بالذكاء الاصطناعي"
-  ]
+  ],
+  ES: ["China → Oriente Medio", "China → Europa", "Europa → China", "África → CCG / Global", "Proyectos transfronterizos", "Operaciones empresariales con IA"]
 };
 
 type RouteCopy = {
@@ -41,7 +42,7 @@ type RouteCopy = {
   value: string;
 };
 
-const SELECTOR_COPY: Record<"EN" | "ZH" | "AR", { label: string; title: string; subtitle: string; action: string }> = {
+const SELECTOR_COPY: Record<LanguageCode, { label: string; title: string; subtitle: string; action: string }> = {
   EN: {
     label: "Market Path Selector",
     title: "Where Is Your Next Market?",
@@ -59,10 +60,11 @@ const SELECTOR_COPY: Record<"EN" | "ZH" | "AR", { label: string; title: string; 
     title: "أين سوقك التالي؟",
     subtitle: "اختر مساراً واكتشف كيف تربط GCI بين دخول السوق والموارد والتنفيذ.",
     action: "اختر المسار"
-  }
+  },
+  ES: { label: "Selector de rutas de mercado", title: "¿Cuál es su próximo mercado?", subtitle: "Elija un corredor y descubra cómo GCI conecta acceso al mercado, recursos y ejecución.", action: "Seleccionar ruta" }
 };
 
-const ROUTES: Record<"EN" | "ZH" | "AR", RouteCopy[]> = {
+const ROUTES: Record<LanguageCode, RouteCopy[]> = {
   EN: [
     { title: "China → Middle East", start: "China", end: "Middle East", value: "Market Entry · Local Partners · Project Execution" },
     { title: "China → Europe", start: "China", end: "Europe", value: "Market Access · Partnerships · Supply Chain" },
@@ -86,6 +88,14 @@ const ROUTES: Record<"EN" | "ZH" | "AR", RouteCopy[]> = {
     { title: "أفريقيا ← الخليج / العالم", start: "أفريقيا", end: "الخليج / العالم", value: "القوى العاملة · موارد المشاريع · سلسلة التوريد" },
     { title: "مشاريع عابرة للحدود", start: "احتياج المشروع", end: "التسليم", value: "المشتريات · التنسيق · التسليم" },
     { title: "عمليات الأعمال بالذكاء الاصطناعي", start: "عمليات الأعمال", end: "عمليات مدعومة بالذكاء الاصطناعي", value: "الأنظمة · سير العمل · عمليات مدعومة بالذكاء الاصطناعي" }
+  ],
+  ES: [
+    { title: "China → Oriente Medio", start: "China", end: "Oriente Medio", value: "Entrada al mercado · Socios locales · Ejecución de proyectos" },
+    { title: "China → Europa", start: "China", end: "Europa", value: "Acceso al mercado · Alianzas · Cadena de suministro" },
+    { title: "Europa → China", start: "Europa", end: "China", value: "Proveedores · Fabricación · Tecnología" },
+    { title: "África → CCG / Global", start: "África", end: "CCG / Global", value: "Personal · Recursos de proyecto · Cadena de suministro" },
+    { title: "Proyectos transfronterizos", start: "Necesidad del proyecto", end: "Entrega", value: "Compras · Coordinación · Entrega" },
+    { title: "Operaciones empresariales con IA", start: "Proceso empresarial", end: "Operaciones con IA", value: "Sistemas · Flujos de trabajo · Operaciones con IA" }
   ]
 };
 
@@ -212,7 +222,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   <Check className="w-8 h-8 stroke-[3]" />
                 </div>
                 <h4 className="text-lg font-serif text-brand-gold-100 font-bold mb-3">
-                  {lang === "ZH" ? "商业意向安全送达" : "Inbound Inquiry Transmitted"}
+                  {lang === "ZH" ? "商业意向安全送达" : lang === "ES" ? "Consulta enviada de forma segura" : "Inbound Inquiry Transmitted"}
                 </h4>
                 <p className="text-xs text-brand-gold-300/80 max-w-md leading-relaxed">
                   {pack.contactFormSuccess}
@@ -321,7 +331,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   disabled={sending}
                   className="w-full bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 disabled:opacity-50 text-[#030611] text-sm font-sans font-bold py-3.5 rounded-xl transition-all shadow-md shadow-brand-gold-500/15 cursor-pointer active:scale-98"
                 >
-                  {sending ? (lang === "ZH" ? "正在传输至迪拜总部..." : "TRANSMITTING TO DUBAI HQ...") : pack.contactFormSubmit}
+                  {sending ? (lang === "ZH" ? "正在传输至迪拜总部..." : lang === "ES" ? "ENVIANDO A DUBÁI..." : "TRANSMITTING TO DUBAI HQ...") : pack.contactFormSubmit}
                 </button>
 
               </form>
@@ -415,7 +425,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
                   : "Dubai Traders Market, 2317-1, Jebel Ali"}
               </p>
               <p className="text-xs font-sans font-medium text-brand-gold-500">
-                {lang === "ZH" ? "阿联酋迪拜" : lang === "AR" ? "دبي، الإمارات العربية المتحدة" : "Dubai, United Arab Emirates"}
+                {lang === "ZH" ? "阿联酋迪拜" : lang === "AR" ? "دبي، الإمارات العربية المتحدة" : lang === "ES" ? "Dubái, Emiratos Árabes Unidos" : "Dubai, United Arab Emirates"}
               </p>
             </div>
 

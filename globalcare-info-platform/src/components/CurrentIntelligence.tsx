@@ -3,23 +3,25 @@ import { ArrowRight, CalendarDays, ExternalLink, MapPin } from "lucide-react";
 import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
 import { resolveCountryArticleImage } from "../data/insightImages";
 import type { DailyBriefingItem, DailyBriefingResponse } from "../data/dailyBriefing";
+import type { LanguageCode } from "../data/corporateData";
 
-type Lang = "EN" | "ZH" | "AR";
+type Lang = LanguageCode;
 
 const copy = {
-  label: { EN: "DAILY INTELLIGENCE", ZH: "每日商业情报", AR: "معلومات السوق اليومية" },
-  title: { EN: "CURRENT OPPORTUNITIES & MARKET INTELLIGENCE", ZH: "当前机会与市场情报", AR: "الفرص الحالية ومعلومات السوق" },
+  label: { EN: "DAILY INTELLIGENCE", ZH: "每日商业情报", AR: "معلومات السوق اليومية", ES: "INTELIGENCIA DIARIA" },
+  title: { EN: "CURRENT OPPORTUNITIES & MARKET INTELLIGENCE", ZH: "当前机会与市场情报", AR: "الفرص الحالية ومعلومات السوق", ES: "OPORTUNIDADES ACTUALES E INTELIGENCIA DE MERCADO" },
   subtitle: {
     EN: "Selected from the latest market, project, procurement and investment intelligence.",
     ZH: "从最新市场、项目、采购与投资动态中筛选。",
     AR: "مختارات من أحدث معلومات السوق والمشاريع والمشتريات والاستثمار.",
+    ES: "Selección de la información más reciente sobre mercados, proyectos, compras e inversión.",
   },
-  opportunity: { EN: "GCI OPPORTUNITY", ZH: "GCI 机会判断", AR: "فرصة GCI" },
-  stage: { EN: "STAGE", ZH: "阶段", AR: "المرحلة" },
-  source: { EN: "SOURCE", ZH: "查看来源", AR: "المصدر" },
-  all: { EN: "VIEW DAILY BRIEFING", ZH: "查看完整每日晨报", AR: "عرض الإحاطة اليومية" },
-  latest: { EN: "LATEST PUBLISHED BRIEFING", ZH: "最近发布晨报", AR: "أحدث إحاطة منشورة" },
-  updated: { EN: "UPDATED", ZH: "更新时间", AR: "آخر تحديث" },
+  opportunity: { EN: "GCI OPPORTUNITY", ZH: "GCI 机会判断", AR: "فرصة GCI", ES: "OPORTUNIDAD PARA GCI" },
+  stage: { EN: "STAGE", ZH: "阶段", AR: "المرحلة", ES: "ETAPA" },
+  source: { EN: "SOURCE", ZH: "查看来源", AR: "المصدر", ES: "FUENTE" },
+  all: { EN: "VIEW DAILY BRIEFING", ZH: "查看完整每日晨报", AR: "عرض الإحاطة اليومية", ES: "VER INFORME DIARIO" },
+  latest: { EN: "LATEST PUBLISHED BRIEFING", ZH: "最近发布晨报", AR: "أحدث إحاطة منشورة", ES: "ÚLTIMO INFORME PUBLICADO" },
+  updated: { EN: "UPDATED", ZH: "更新时间", AR: "آخر تحديث", ES: "ACTUALIZADO" },
 };
 
 function displayTimestamp(value: string | null): string | null {

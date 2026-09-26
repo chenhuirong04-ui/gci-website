@@ -108,7 +108,9 @@ export interface LanguagePack {
   contactOffice: string;
 }
 
-export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
+export type LanguageCode = "EN" | "ZH" | "AR" | "ES";
+
+const BASE_LANGUAGES: Record<Exclude<LanguageCode, "ES">, LanguagePack> = {
   EN: {
     navHome: "Home",
     navWhoWeAre: "About GCI",
@@ -501,6 +503,51 @@ export const LANGUAGES: Record<"EN" | "ZH" | "AR", LanguagePack> = {
     contactEmailUs: "البريد الرسمي للمعاملات",
     contactCallUs: "هاتف المقر الرئيسي دبي",
     contactOffice: "الموقع الجغرافي والمبنى المقر"
+  }
+};
+
+export const LANGUAGES: Record<LanguageCode, LanguagePack> = {
+  ...BASE_LANGUAGES,
+  ES: {
+    ...BASE_LANGUAGES.EN,
+    navHome: "Inicio",
+    navWhoWeAre: "Sobre GCI",
+    navWhatWeDo: "Capacidades",
+    navWhereWeOperate: "Mercados",
+    navWhyGCI: "Proyectos",
+    navMedia: "Red comercial",
+    navInsights: "Inteligencia",
+    navBusinessOpportunities: "Oportunidades",
+    navContact: "Contacto",
+    contactBtn: "Hablar con GCI",
+    heroBadge: "Plataforma de ejecución empresarial transfronteriza",
+    heroTitle: "Global Resources.\nGLOBAL EXECUTION.",
+    heroSubtitle: "Conectamos empresas, mercados y capacidades de ejecución entre China, Oriente Medio, África y Europa.",
+    heroDesc: "GCI ayuda a las empresas a entrar en nuevos mercados, crear alianzas locales, ejecutar proyectos transfronterizos y transformar sus operaciones mediante tecnología e IA.",
+    heroCtaPrimary: "Explorar capacidades",
+    heroCtaSecondary: "Analizar entrada al mercado",
+    heroHoverTip: "Pase el cursor por los nodos regionales para explorar los corredores bilaterales de GCI",
+    visualLabel: "Red global",
+    visualTitle: "RED COMERCIAL",
+    visualSubtitle: "Una red empresarial regional construida mediante alianzas locales, recursos comerciales y años de ejecución en mercados regionales y globales.",
+    visualTab1: "Espacios de exposición",
+    visualTab2: "Delegaciones empresariales",
+    visualTab3: "Inspecciones portuarias",
+    visualPlayText: "Ver material de campo",
+    contactLabel: "Contacto",
+    contactTitle: "¿CUÁL ES SU PRÓXIMO MERCADO?",
+    contactSubtitle: "Elija una dirección y hable con GCI sobre el mercado, los socios, los recursos y las capacidades operativas necesarias para avanzar.",
+    contactFormName: "Nombre de contacto",
+    contactFormEmail: "Correo corporativo",
+    contactFormCompany: "Empresa",
+    contactFormCorridor: "Tipo de consulta",
+    contactFormMsg: "Cuéntenos qué necesita",
+    contactFormSubmit: "Hablar con GCI",
+    contactFormSuccess: "Gracias. Hemos recibido su consulta y nuestro equipo de Dubái responderá en un plazo de 12 horas.",
+    contactWhatsApp: "Chat por WhatsApp",
+    contactEmailUs: "Consulta por correo",
+    contactCallUs: "Llamar a Dubái",
+    contactOffice: "Dirección en Dubái"
   }
 };
 

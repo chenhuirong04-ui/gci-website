@@ -1,12 +1,15 @@
-import { LanguagePack } from "../data/corporateData";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 
 interface FooterProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   pack: LanguagePack;
 }
 
 export default function Footer({ lang, pack }: FooterProps) {
   const isRtl = lang === "AR";
+  const platform = lang === "ES" ? "Plataforma de ejecución empresarial transfronteriza" : "Cross-Border Business Execution Platform";
+  const summary = lang === "ES" ? "Acceso a mercados, cadena de suministro, ejecución de proyectos y operaciones empresariales entre China, Oriente Medio, África y Europa." : "Market access, supply chain, project execution and business operations across China, the Middle East and Europe.";
+  const rights = lang === "ES" ? "Todos los derechos reservados." : "All Rights Reserved.";
 
   return (
     <footer className="bg-[#02040a] border-t border-brand-gold-500/10 py-12 text-brand-gold-300/40 text-xs font-light">
@@ -18,17 +21,17 @@ export default function Footer({ lang, pack }: FooterProps) {
             GlobalCare Info (GCI)
           </span>
           <span className="text-xs font-sans text-[#DFBA6B] block">
-            Cross-Border Business Execution Platform
+            {platform}
           </span>
         </div>
 
         {/* Legal disclosures and copyrights */}
         <div className="text-center md:text-right max-w-md">
           <p className="text-xs leading-relaxed text-brand-gold-300/50 mb-1.5 font-sans">
-            Market access, supply chain, project execution and business operations across China, the Middle East and Europe.
+            {summary}
           </p>
           <p className="text-xs font-sans text-brand-gold-300/50">
-            © {new Date().getFullYear()} GlobalCare Info Group. All Rights Reserved.
+            © {new Date().getFullYear()} GlobalCare Info Group. {rights}
           </p>
         </div>
 

@@ -1,30 +1,42 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
-import { LanguagePack } from "../data/corporateData";
+import { ChevronDown, Globe2, Menu, X } from "lucide-react";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 import gciLogo from "../assets/gci-logo-header-transparent.png";
 
 interface HeaderProps {
-  lang: "EN" | "ZH" | "AR";
-  setLang: (lang: "EN" | "ZH" | "AR") => void;
+  lang: LanguageCode;
+  setLang: (lang: LanguageCode) => void;
   pack: LanguagePack;
 }
 
 const NAV_COPY = {
   EN: { about: "About", capabilities: "Capabilities", markets: "Markets", sectors: "Sectors", insights: "Insights", contact: "Contact", marketEntry: "Market Entry", supply: "Supply Chain & Projects", ai: "AI & Business Operations", middleEast: "Middle East", europe: "Europe", china: "China", talk: "Talk to GCI" },
   ZH: { about: "关于", capabilities: "核心能力", markets: "市场", sectors: "行业", insights: "市场情报", contact: "联系", marketEntry: "市场进入", supply: "供应链与项目", ai: "AI 与企业运营", middleEast: "中东", europe: "欧洲", china: "中国", talk: "联系 GCI" },
-  AR: { about: "من نحن", capabilities: "القدرات", markets: "الأسواق", sectors: "القطاعات", insights: "المعلومات", contact: "اتصل بنا", marketEntry: "دخول السوق", supply: "سلسلة الإمداد والمشاريع", ai: "الذكاء الاصطناعي والعمليات", middleEast: "الشرق الأوسط", europe: "أوروبا", china: "الصين", talk: "تحدث مع GCI" }
+  AR: { about: "من نحن", capabilities: "القدرات", markets: "الأسواق", sectors: "القطاعات", insights: "المعلومات", contact: "اتصل بنا", marketEntry: "دخول السوق", supply: "سلسلة الإمداد والمشاريع", ai: "الذكاء الاصطناعي والعمليات", middleEast: "الشرق الأوسط", europe: "أوروبا", china: "الصين", talk: "تحدث مع GCI" },
+  ES: { about: "Sobre GCI", capabilities: "Capacidades", markets: "Mercados", sectors: "Sectores", insights: "Inteligencia", contact: "Contacto", marketEntry: "Entrada al mercado", supply: "Cadena de suministro y proyectos", ai: "IA y operaciones", middleEast: "Oriente Medio", europe: "Europa", china: "China", talk: "Hablar con GCI" }
 } as const;
+
+const LANGUAGE_OPTIONS: { code: LanguageCode; label: string; short: string }[] = [
+  { code: "EN", label: "English", short: "EN" },
+  { code: "ZH", label: "中文", short: "中文" },
+  { code: "AR", label: "العربية", short: "AR" },
+  { code: "ES", label: "Español", short: "ES" }
+];
 
 export default function Header({ lang, setLang }: HeaderProps) {
   const c = NAV_COPY[lang];
   const isRtl = lang === "AR";
   const [openMenu, setOpenMenu] = useState<null | "capabilities" | "markets">(null);
+  const [languageOpen, setLanguageOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const close = (event: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(event.target as Node)) setOpenMenu(null);
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setOpenMenu(null);
+        setLanguageOpen(false);
+      }
     };
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
@@ -62,8 +74,15 @@ export default function Header({ lang, setLang }: HeaderProps) {
         {links.map(x => <button key={x.id} onClick={() => scrollTo(x.id)} className="px-3 py-3 hover:text-brand-gold-400 transition-colors cursor-pointer">{x.label}</button>)}
       </nav>
       <div className="flex items-center gap-3">
-        <div className="hidden sm:flex items-center bg-[#070d1d] border border-brand-gold-500/15 p-1 rounded-md text-[11px]">
-          {(["EN","ZH","AR"] as const).map((value, i) => <span key={value} className="flex items-center"><button onClick={() => setLang(value)} className={`px-2 py-1 rounded cursor-pointer ${lang === value ? "bg-brand-gold-500 text-[#030611] font-bold" : "text-brand-gold-200/60 hover:text-brand-gold-400"}`}>{value === "ZH" ? "中文" : value === "AR" ? "عربي" : value}</button>{i < 2 && <span className="text-brand-gold-500/15 px-0.5">|</span>}</span>)}
+        <div className="relative">
+          <button onClick={() => setLanguageOpen(!languageOpen)} className="inline-flex min-w-[5.5rem] items-center justify-center gap-2 rounded-lg border border-brand-gold-500/15 bg-[#070d1d] px-3 py-2 text-xs font-semibold text-brand-gold-200 transition-colors hover:border-brand-gold-500/30 hover:text-brand-gold-400" aria-label="Select language" aria-expanded={languageOpen}>
+            <Globe2 className="h-4 w-4" />
+            <span>{LANGUAGE_OPTIONS.find((option) => option.code === lang)?.short}</span>
+            <ChevronDown className={`h-3.5 w-3.5 transition-transform ${languageOpen ? "rotate-180" : ""}`} />
+          </button>
+          {languageOpen && <div className={`absolute top-[calc(100%+.5rem)] z-50 min-w-40 rounded-xl border border-brand-gold-500/15 bg-[#050a15] p-2 shadow-2xl ${isRtl ? "left-0" : "right-0"}`}>
+            {LANGUAGE_OPTIONS.map((option) => <button key={option.code} onClick={() => { setLang(option.code); setLanguageOpen(false); }} className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${lang === option.code ? "bg-brand-gold-500/15 text-brand-gold-300" : "text-brand-gold-100/75 hover:bg-brand-gold-500/10 hover:text-brand-gold-300"}`}><span>{option.label}</span>{lang === option.code && <span className="h-1.5 w-1.5 rounded-full bg-brand-gold-400" />}</button>)}
+          </div>}
         </div>
         <button onClick={() => scrollTo("contact-section")} className="hidden xl:inline-flex bg-brand-gold-500 hover:bg-brand-gold-400 text-[#030611] px-4 py-2.5 rounded-lg text-sm font-bold transition-colors cursor-pointer">{c.talk}</button>
         <button className="lg:hidden p-2 text-brand-gold-200" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation" aria-expanded={mobileOpen}>{mobileOpen ? <X/> : <Menu/>}</button>
@@ -77,7 +96,6 @@ export default function Header({ lang, setLang }: HeaderProps) {
         <p className="pt-3 pb-1 text-[10px] uppercase tracking-[.18em] text-brand-gold-500/65">{c.markets}</p>
         <button onClick={() => scrollTo("markets")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.middleEast}</button><button onClick={() => scrollTo("europe")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.europe}</button><button onClick={() => scrollTo("markets")} className="text-left py-2 pl-3 text-brand-gold-200/75">{c.china}</button>
         {links.map(x=><button key={x.id} onClick={() => scrollTo(x.id)} className="text-left py-3 text-brand-gold-100">{x.label}</button>)}
-        <div className="flex sm:hidden gap-2 pt-3">{(["EN","ZH","AR"] as const).map(value=><button key={value} onClick={() => setLang(value)} className={`px-3 py-2 rounded border ${lang===value ? "bg-brand-gold-500 text-[#030611] border-brand-gold-500" : "border-brand-gold-500/15 text-brand-gold-200"}`}>{value}</button>)}</div>
       </div>
     </div>}
   </header>;

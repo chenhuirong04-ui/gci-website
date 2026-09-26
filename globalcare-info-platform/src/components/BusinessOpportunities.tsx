@@ -6,55 +6,68 @@ function getYouTubeId(url: string): string | null {
   return m ? m[1] : null;
 }
 import { OPPORTUNITIES, Opportunity } from "../data/opportunitiesData";
+import type { LanguageCode } from "../data/corporateData";
 
 interface BusinessOpportunitiesProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
 }
 
 const t = {
-  sectionLabel: { EN: "BUSINESS OPPORTUNITIES HUB", ZH: "商业机会平台", AR: "منصة فرص الأعمال" },
-  sectionTitle: { EN: "ACTIVE BUSINESS OPPORTUNITIES", ZH: "活跃商业机会", AR: "فرص الأعمال النشطة" },
+  sectionLabel: { EN: "BUSINESS OPPORTUNITIES HUB", ZH: "商业机会平台", AR: "منصة فرص الأعمال", ES: "CENTRO DE OPORTUNIDADES" },
+  sectionTitle: { EN: "ACTIVE BUSINESS OPPORTUNITIES", ZH: "活跃商业机会", AR: "فرص الأعمال النشطة", ES: "OPORTUNIDADES EMPRESARIALES ACTIVAS" },
   subtitle: {
     EN: "Selected projects and business opportunities that GCI is tracking, evaluating or actively supporting.",
     ZH: "展示 GCI 正在跟踪、评估或实际参与的重点项目与商业机会。",
-    AR: "مشاريع وفرص أعمال مختارة تتابعها GCI أو تقيّمها أو تدعمها بشكل نشط."
+    AR: "مشاريع وفرص أعمال مختارة تتابعها GCI أو تقيّمها أو تدعمها بشكل نشط.",
+    ES: "Proyectos y oportunidades empresariales seleccionados que GCI sigue, evalúa o apoya activamente."
   },
-  placeholderText: { EN: "Video Coming Soon", ZH: "视频即将发布", AR: "الفيديو قريباً" },
-  tagsLabel: { EN: "Key Sectors", ZH: "核心领域", AR: "القطاعات الرئيسية" },
-  contactBtn: { EN: "Contact GCI to Explore →", ZH: "联系 GCI 了解详情 →", AR: "← تواصل مع GCI" },
-  detailBtn: { EN: "View Full Details →", ZH: "查看完整详情 →", AR: "← عرض التفاصيل" },
-  backToAll: { EN: "← Back to Opportunities", ZH: "← 返回机会列表", AR: "العودة للفرص →" },
-  overviewTitle: { EN: "Opportunity Overview", ZH: "机会概述", AR: "نظرة عامة" },
-  currentFocusTitle: { EN: "Current Focus", ZH: "当前重点", AR: "التركيز الحالي" },
-  potentialTitle: { EN: "Potential Opportunities", ZH: "潜在合作机会", AR: "الفرص المحتملة" },
-  whoTitle: { EN: "Who Should Contact Us", ZH: "适合参与企业", AR: "من يجب التواصل" },
+  placeholderText: { EN: "Video Coming Soon", ZH: "视频即将发布", AR: "الفيديو قريباً", ES: "Vídeo próximamente" },
+  tagsLabel: { EN: "Key Sectors", ZH: "核心领域", AR: "القطاعات الرئيسية", ES: "Sectores clave" },
+  contactBtn: { EN: "Contact GCI to Explore →", ZH: "联系 GCI 了解详情 →", AR: "← تواصل مع GCI", ES: "Contactar con GCI →" },
+  detailBtn: { EN: "View Full Details →", ZH: "查看完整详情 →", AR: "← عرض التفاصيل", ES: "Ver detalles →" },
+  backToAll: { EN: "← Back to Opportunities", ZH: "← 返回机会列表", AR: "العودة للفرص →", ES: "← Volver a oportunidades" },
+  overviewTitle: { EN: "Opportunity Overview", ZH: "机会概述", AR: "نظرة عامة", ES: "Resumen de la oportunidad" },
+  currentFocusTitle: { EN: "Current Focus", ZH: "当前重点", AR: "التركيز الحالي", ES: "Enfoque actual" },
+  potentialTitle: { EN: "Potential Opportunities", ZH: "潜在合作机会", AR: "الفرص المحتملة", ES: "Oportunidades potenciales" },
+  whoTitle: { EN: "Who Should Contact Us", ZH: "适合参与企业", AR: "من يجب التواصل", ES: "Quién debería contactarnos" },
 };
 
-function getTitle(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+const ES_OPPORTUNITY_CARD: Record<string, { title: string; country: string; status: string; type: string; tags: string[] }> = {
+  "opp-1": { title: "Ampliación del Aeropuerto Internacional Al Maktoum", country: "EAU / Dubái", status: "En desarrollo", type: "Oportunidad de mercado", tags: ["Aviación", "Infraestructura", "Construcción"] },
+  "opp-2": { title: "Plan Maestro Dubai Walk", country: "EAU / Dubái", status: "Desarrollo e implementación", type: "Oportunidad de mercado", tags: ["Infraestructura urbana", "Espacio público"] },
+  "opp-3": { title: "Programa de Espacios Azules y Verdes de Dubái", country: "EAU / Dubái", status: "En desarrollo", type: "Oportunidad de mercado", tags: ["Desarrollo urbano", "Paisajismo", "Infraestructura"] }
+};
+
+function getTitle(opp: Opportunity, lang: LanguageCode) {
+  if (lang === "ES") return ES_OPPORTUNITY_CARD[opp.id]?.title || opp.titleEN;
   return lang === "ZH" ? opp.titleZH : lang === "AR" ? opp.titleAR : opp.titleEN;
 }
-function getCountry(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getCountry(opp: Opportunity, lang: LanguageCode) {
+  if (lang === "ES") return ES_OPPORTUNITY_CARD[opp.id]?.country || opp.country;
   return lang === "ZH" ? opp.countryZH : lang === "AR" ? opp.countryAR : opp.country;
 }
-function getStatus(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getStatus(opp: Opportunity, lang: LanguageCode) {
+  if (lang === "ES") return ES_OPPORTUNITY_CARD[opp.id]?.status || opp.status;
   return lang === "ZH" ? opp.statusZH : lang === "AR" ? opp.statusAR : opp.status;
 }
-function getTags(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getTags(opp: Opportunity, lang: LanguageCode) {
+  if (lang === "ES") return ES_OPPORTUNITY_CARD[opp.id]?.tags || opp.tags;
   return lang === "ZH" ? opp.tagsZH : lang === "AR" ? opp.tagsAR : opp.tags;
 }
-function getOpportunityType(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getOpportunityType(opp: Opportunity, lang: LanguageCode) {
+  if (lang === "ES") return ES_OPPORTUNITY_CARD[opp.id]?.type || opp.opportunityType;
   return lang === "ZH" ? opp.opportunityTypeZH : lang === "AR" ? opp.opportunityTypeAR : opp.opportunityType;
 }
-function getOverview(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getOverview(opp: Opportunity, lang: LanguageCode) {
   return lang === "ZH" ? opp.overviewZH : lang === "AR" ? opp.overviewAR : opp.overviewEN;
 }
-function getCurrentFocus(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getCurrentFocus(opp: Opportunity, lang: LanguageCode) {
   return lang === "ZH" ? opp.currentFocusZH : lang === "AR" ? opp.currentFocusAR : opp.currentFocusEN;
 }
-function getPotential(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getPotential(opp: Opportunity, lang: LanguageCode) {
   return lang === "ZH" ? opp.potentialOpportunitiesZH : lang === "AR" ? opp.potentialOpportunitiesAR : opp.potentialOpportunitiesEN;
 }
-function getWhoShouldContact(opp: Opportunity, lang: "EN" | "ZH" | "AR") {
+function getWhoShouldContact(opp: Opportunity, lang: LanguageCode) {
   return lang === "ZH" ? opp.whoShouldContactZH : lang === "AR" ? opp.whoShouldContactAR : opp.whoShouldContactEN;
 }
 
@@ -83,7 +96,7 @@ function DetailView({
   onBack,
 }: {
   opp: Opportunity;
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   onBack: () => void;
 }) {
   const isRtl = lang === "AR";
@@ -404,8 +417,8 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                         className="mt-2 text-xs text-brand-gold-400 hover:text-brand-gold-300 font-medium transition-colors duration-200"
                       >
                         {expanded
-                          ? (lang === "ZH" ? "收起 ↑" : lang === "AR" ? "↑ طي" : "Read Less ↑")
-                          : (lang === "ZH" ? "阅读更多 ↓" : lang === "AR" ? "↓ اقرأ المزيد" : "Read More ↓")}
+                          ? (lang === "ZH" ? "收起 ↑" : lang === "AR" ? "↑ طي" : lang === "ES" ? "Ver menos ↑" : "Read Less ↑")
+                          : (lang === "ZH" ? "阅读更多 ↓" : lang === "AR" ? "↓ اقرأ المزيد" : lang === "ES" ? "Leer más ↓" : "Read More ↓")}
                       </button>
                     </div>
                   </div>

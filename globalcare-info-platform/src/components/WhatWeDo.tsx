@@ -1,9 +1,9 @@
 import React from "react";
-import { LanguagePack } from "../data/corporateData";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 import { ArrowUpRight, BrainCircuit, CheckCircle2, Compass, Network } from "lucide-react";
 
 interface WhatWeDoProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   pack: LanguagePack;
 }
 
@@ -50,6 +50,14 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
         { idx: "01", icon: Compass, title: "دخول السوق وتطوير الأعمال", desc: "مساعدة الشركات على دخول الأسواق الجديدة والتأسيس والتوسع عبر الاستراتيجية والشراكات المحلية ودعم التنفيذ المنسق.", bullets: ["استراتيجية دخول السوق", "الشراكات المحلية", "دعم تأسيس الشركات", "تنسيق اللوائح والتراخيص", "تطوير الأعمال", "تنسيق البنوك والضرائب", "تطوير الأعمال والتنسيق التجاري", "دعم التنفيذ المحلي المستمر"], note: "تنسق GCI متطلبات التأسيس والتراخيص والبنوك والضرائب والامتثال مع مزودي خدمات محليين مؤهلين، بينما تبقى الاستشارات المنظمة لدى المهنيين المرخصين." },
         { idx: "02", icon: Network, title: "سلسلة الإمداد وتنفيذ المشاريع", desc: "ربط الموردين المؤهلين وموارد المشتريات ودعم التنفيذ الميداني عبر الصين ودول الخليج والمشاريع العابرة للحدود.", bullets: ["البحث عن الموردين والمشتريات", "تنسيق سلاسل الإمداد بين الصين والخليج", "تحديد الموردين والتحقق منهم", "دعم تنفيذ المشاريع والمواقع", "موارد القوى العاملة والموقع", "مواد البناء وFF&E", "تنسيق اللوجستيات والتعبئة", "تنسيق المشاريع العابرة للحدود"], note: "يتم تنسيق القوى العاملة والسكن والنقل وموارد الموقع كجزء من تنفيذ سلسلة الإمداد والمشروع." },
         { idx: "03", icon: BrainCircuit, title: "الذكاء الاصطناعي وعمليات الأعمال", desc: "مساعدة الشركات على إعادة تصميم ورقمنة العمل من خلال عمليات مدعومة بالذكاء الاصطناعي وأنظمة داخلية مترابطة وأدوات إدارة.", bullets: ["رقمنة عمليات الأعمال", "عمليات مدعومة بالذكاء الاصطناعي", "إدارة العملاء وCRM", "سير العمل والأنظمة الداخلية", "الذكاء التشغيلي", "أدوات الأتمتة والإدارة", "عمليات المشتريات والمشاريع", "أنظمة القوى العاملة والإدارة"], note: "تركز GCI على نماذج التشغيل وكفاءة التنفيذ، وليس على التعهيد البرمجي المستقل." }
+      ]
+    },
+    ES: {
+      label: "Capacidades", title: "TRES CAPACIDADES. UNA PLATAFORMA DE EJECUCIÓN.", subtitle: "GCI integra acceso a mercados, recursos transfronterizos y sistemas operativos para convertir oportunidades en ejecución.", supportingLabel: "Capacidades complementarias",
+      services: [
+        { idx: "01", icon: Compass, title: "ENTRADA AL MERCADO Y EXPANSIÓN EMPRESARIAL", desc: "Ayudamos a las empresas a entrar, establecerse y crecer en nuevos mercados mediante estrategia, alianzas locales y apoyo coordinado a la ejecución.", bullets: ["Estrategia de entrada al mercado", "Alianzas locales", "Apoyo al establecimiento empresarial", "Coordinación regulatoria y de licencias", "Expansión empresarial", "Coordinación bancaria y fiscal", "Desarrollo de negocio y coordinación comercial", "Apoyo continuo a la ejecución local"], note: "GCI coordina requisitos de establecimiento, licencias, banca, fiscalidad y cumplimiento con proveedores locales cualificados; el asesoramiento regulado corresponde a profesionales autorizados." },
+        { idx: "02", icon: Network, title: "CADENA DE SUMINISTRO Y EJECUCIÓN DE PROYECTOS", desc: "Conectamos proveedores cualificados, recursos de compras y apoyo a la ejecución en China, el CCG y proyectos transfronterizos.", bullets: ["Búsqueda de proveedores y compras", "Coordinación de suministro China / CCG", "Identificación y verificación de proveedores", "Apoyo a proyectos y obra", "Personal y recursos de obra", "Materiales de construcción y FF&E", "Coordinación logística / movilización", "Coordinación de proyectos transfronterizos"], note: "El personal, alojamiento, transporte y los recursos de obra se coordinan como parte de la ejecución integral de la cadena de suministro y del proyecto." },
+        { idx: "03", icon: BrainCircuit, title: "IA Y OPERACIONES EMPRESARIALES", desc: "Ayudamos a rediseñar y digitalizar el trabajo mediante operaciones con IA, sistemas internos conectados y herramientas de gestión.", bullets: ["Digitalización de procesos", "Operaciones habilitadas por IA", "CRM y operaciones de clientes", "Flujos de trabajo y sistemas internos", "Inteligencia operativa", "Automatización y herramientas de gestión", "Operaciones de compras y proyectos", "Sistemas de personal y gestión"], note: "GCI se centra en modelos operativos y eficiencia de ejecución, no en la subcontratación aislada de software." }
       ]
     }
   }[lang];

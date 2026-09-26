@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LanguagePack } from "../data/corporateData";
+import { LanguagePack, LanguageCode } from "../data/corporateData";
 import { Globe, Video, FileText, Compass, AlertCircle, Layers } from "lucide-react";
 
 // Vite production-safe imports — /src/assets/ paths break after build hashing
@@ -35,7 +35,7 @@ function getYouTubeId(url: string): string | null {
 }
 
 interface CommercialNetworkProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
   pack: LanguagePack;
 }
 
@@ -290,6 +290,27 @@ const COUNTRIES_DATA: CountryRecord[] = [
   }
 ];
 
+const ES_COUNTRY_COPY: Record<string, { name: string; desc: string; tags: string[] }> = {
+  uae: { name: "EAU / Dubái", desc: "Centro de coordinación en Dubái para exposición, almacenamiento, desarrollo empresarial y proyectos.", tags: ["Exposición", "Almacenamiento", "Centro empresarial", "Coordinación de proyectos"] },
+  saudi: { name: "Arabia Saudí", desc: "Cobertura de mercado, alianzas comerciales, seguimiento de oportunidades y apoyo a la ejecución local.", tags: ["Entrada al mercado", "Apoyo a proyectos", "Alianzas locales"] },
+  qatar: { name: "Catar", desc: "Mercado estratégico del CCG con inversión en infraestructura y evolución regulatoria activa.", tags: ["Inteligencia", "Comercio", "Entrada al mercado"] },
+  bahrain: { name: "Baréin", desc: "Conexiones comerciales regionales, red de socios y apoyo empresarial.", tags: ["Comercio", "Alianzas locales", "Entrada al mercado"] },
+  oman: { name: "Omán", desc: "Coordinación logística, recursos de suministro y acceso comercial regional.", tags: ["Logística", "Cadena de suministro", "Acceso al mercado"] },
+  kuwait: { name: "Kuwait", desc: "Inteligencia comercial, coordinación de compras y acceso a socios locales.", tags: ["Inteligencia", "Compras", "Socios locales"] },
+  tanzania: { name: "Tanzania", desc: "Cobertura de mercado y coordinación de recursos para África Oriental.", tags: ["Cobertura de mercado", "Comercio", "Recursos de proyecto"] },
+  nigeria: { name: "Nigeria", desc: "Acceso comercial y coordinación de oportunidades en África Occidental.", tags: ["Desarrollo empresarial", "Comercio", "Socios locales"] },
+  kenya: { name: "Kenia", desc: "Conexiones portuarias, logísticas y comerciales para África Oriental.", tags: ["Logística", "Comercio", "Coordinación regional"] },
+  china: { name: "China", desc: "Red de proveedores, fabricación, tecnología, productos y recursos de cadena de suministro.", tags: ["Proveedores", "Fabricación", "Tecnología", "Compras"] },
+  vietnam: { name: "Vietnam", desc: "Cobertura de fabricación y suministro en el Sudeste Asiático.", tags: ["Fabricación", "Suministro", "Comercio"] },
+  cambodia: { name: "Camboya", desc: "Recursos de fabricación ligera y componentes para cadenas regionales.", tags: ["Fabricación ligera", "Componentes", "Suministro"] },
+  indonesia: { name: "Indonesia", desc: "Recursos industriales, marítimos y de suministro regional.", tags: ["Industria", "Logística marítima", "Suministro"] },
+  singapore: { name: "Singapur", desc: "Nodo regional para coordinación comercial, financiera y logística.", tags: ["Comercio", "Coordinación", "Logística"] },
+  malaysia: { name: "Malasia", desc: "Cobertura industrial y de cadena de suministro en el Sudeste Asiático.", tags: ["Industria", "Cadena de suministro", "Comercio"] },
+  thailand: { name: "Tailandia", desc: "Red de fabricación, productos y conexiones comerciales regionales.", tags: ["Fabricación", "Productos", "Red comercial"] },
+  morocco: { name: "Marruecos", desc: "Puerta comercial entre África, Europa y los mercados del Golfo.", tags: ["Acceso al mercado", "Comercio", "Logística"] },
+  brazil: { name: "Brasil", desc: "Cobertura de oportunidades y recursos comerciales en América Latina.", tags: ["Desarrollo de oportunidades", "Comercio", "Recursos"] }
+};
+
 export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps) {
   const [selectedKey, setSelectedKey] = useState<string>("uae");
   const [overlays, setOverlays] = useState<Record<string, NotionOverlay>>({});
@@ -313,32 +334,39 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   const activeDescEN = overlay?.descEN || activeCountry.descEN;
   const activeDescZH = overlay?.descZH || activeCountry.descZH;
   const activeDescAR = overlay?.descAR || activeCountry.descAR;
+  const activeDescES = ES_COUNTRY_COPY[activeCountry.key]?.desc || activeDescEN;
   const activeTagsEN = (overlay?.tagsEN?.length ? overlay.tagsEN : activeCountry.tagsEN);
   const activeTagsZH = (overlay?.tagsZH?.length ? overlay.tagsZH : activeCountry.tagsZH);
+  const activeTagsES = ES_COUNTRY_COPY[activeCountry.key]?.tags || activeTagsEN;
+  const activeName = lang === "ZH" ? activeCountry.nameZH : lang === "AR" ? activeCountry.nameAR : lang === "ES" ? (ES_COUNTRY_COPY[activeCountry.key]?.name || activeCountry.nameEN) : activeCountry.nameEN;
 
   // Helper translations for UI labels
   const labelText = {
     EN: "Global Footprint",
     ZH: "环球网点",
-    AR: "خطوط العمل الإقليمية"
+    AR: "خطوط العمل الإقليمية",
+    ES: "Red global"
   }[lang];
 
   const titleText = {
     EN: "COMMERCIAL NETWORK",
     ZH: "全球商业网络",
-    AR: "COMMERCIAL NETWORK"
+    AR: "COMMERCIAL NETWORK",
+    ES: "RED COMERCIAL"
   }[lang];
 
   const subtitleText = {
     EN: "A regional business network built through local partnerships, commercial resources and years of market execution across regional and global markets.",
     ZH: "由本地合作伙伴、商业资源及多年市场执行经验共同构筑的区域及全球商业网络。",
-    AR: "شبكة تجارية إقليمية مبنية من خلال الشراكات المحلية، والموارد التجارية، وسنوات من التنفيذ في الأسواق الإقليمية والعالمية."
+    AR: "شبكة تجارية إقليمية مبنية من خلال الشراكات المحلية، والموارد التجارية، وسنوات من التنفيذ في الأسواق الإقليمية والعالمية.",
+    ES: "Una red empresarial regional construida mediante alianzas locales, recursos comerciales y años de ejecución en mercados regionales y globales."
   }[lang];
 
   const liveFeedText = {
     EN: "Live Connectivity Feed",
     ZH: "实时在岸连接图像",
-    AR: "لقطات الربط الميداني الحية"
+    AR: "لقطات الربط الميداني الحية",
+    ES: "Conectividad en directo"
   }[lang];
 
   // Distinguishes the 3 markets with a real, verified GCI video (unchanged: UAE, China,
@@ -347,25 +375,29 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   const verifiedBadgeText = {
     EN: "Verified GCI Activity",
     ZH: "GCI 真实活动",
-    AR: "نشاط موثق لدى GCI"
+    AR: "نشاط موثق لدى GCI",
+    ES: "Actividad GCI verificada"
   }[lang];
 
   const marketCoverageBadgeText = {
     EN: "Market Coverage",
     ZH: "市场覆盖",
-    AR: "تغطية السوق"
+    AR: "تغطية السوق",
+    ES: "Cobertura de mercado"
   }[lang];
 
   const networkNodeLabel = {
     EN: "GCI Commercial Network",
     ZH: "GCI 商业网络",
-    AR: "شبكة GCI التجارية"
+    AR: "شبكة GCI التجارية",
+    ES: "Red comercial de GCI"
   }[lang];
 
   const tagsLabel = {
     EN: "Core Capabilities",
     ZH: "核心资源标签",
-    AR: "القدرات العقدية"
+    AR: "القدرات العقدية",
+    ES: "Capacidades principales"
   }[lang];
 
   return (
@@ -400,7 +432,8 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
               const countryName = {
                 EN: country.nameEN,
                 ZH: country.nameZH,
-                AR: country.nameAR
+                AR: country.nameAR,
+                ES: ES_COUNTRY_COPY[country.key]?.name || country.nameEN
               }[lang];
 
               return (
@@ -463,7 +496,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   <div className="absolute top-4 left-4 z-20">
                     <span className={`inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full ${lang === "EN" ? "tracking-wide uppercase" : "tracking-normal"}`}>
                       <Globe className="w-3 h-3 shrink-0 text-brand-gold-400" />
-                      {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                      {activeName}
                     </span>
                   </div>
 
@@ -516,7 +549,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                         <Globe className="w-8 h-8 stroke-[1.5]" />
                       </div>
                       <span className="text-xl sm:text-2xl font-serif font-extrabold text-brand-gold-100 tracking-tight">
-                        {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                        {activeName}
                       </span>
                       <span className="text-[10px] uppercase font-sans text-brand-gold-500/40 tracking-wider mt-1 block font-medium">
                         {networkNodeLabel}
@@ -527,7 +560,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                     <div className="absolute top-4 left-4 z-20">
                       <span className={`inline-flex items-center gap-1.5 bg-[#030611]/85 backdrop-blur-sm border border-brand-gold-500/25 text-brand-gold-300 text-[10px] font-mono font-bold px-3 py-1.5 rounded-full ${lang === "EN" ? "tracking-wide uppercase" : "tracking-normal"}`}>
                         <Globe className="w-3 h-3 shrink-0 text-brand-gold-400" />
-                        {{ EN: activeCountry.nameEN, ZH: activeCountry.nameZH, AR: activeCountry.nameAR }[lang]}
+                        {activeName}
                       </span>
                     </div>
 
@@ -553,15 +586,15 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
               <div>
                 {/* Selected Country Flag Icon watermark & title */}
                 <span className={`text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold mb-3 inline-block ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
-                  {lang === "EN" ? activeCountry.nameEN : lang === "ZH" ? activeCountry.nameZH : activeCountry.nameAR}
+                  {activeName}
                 </span>
 
                 <h3 className="text-2xl font-serif text-brand-gold-100 font-extrabold tracking-tight mt-1 mb-3 leading-snug">
-                  {lang === "EN" ? activeCountry.nameEN : lang === "ZH" ? activeCountry.nameZH : activeCountry.nameAR}
+                  {activeName}
                 </h3>
                 
                 <p className="text-sm text-brand-gold-200/95 font-light leading-relaxed font-sans mb-4 border-l-2 border-brand-gold-500/20 pl-4">
-                  {lang === "EN" ? activeDescEN : lang === "ZH" ? activeDescZH : activeDescAR}
+                  {lang === "ZH" ? activeDescZH : lang === "AR" ? activeDescAR : lang === "ES" ? activeDescES : activeDescEN}
                 </p>
               </div>
 
@@ -574,7 +607,8 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   {({
                     EN: activeTagsEN,
                     ZH: activeTagsZH,
-                    AR: activeCountry.tagsAR
+                    AR: activeCountry.tagsAR,
+                    ES: activeTagsES
                   }[lang]).map((tag, idx) => (
                     <span
                       key={idx}

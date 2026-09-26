@@ -8,6 +8,7 @@ import imgMedicalMombasa from "../assets/images/case_medical_mombasa_17807683283
 import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
 import imgPortShenzhen from "../assets/images/case_port_shenzhen_1780768345006.png";
 import { COUNTRY_GRID_IMG, resolveCountryArticleImage } from "../data/insightImages";
+import type { LanguageCode } from "../data/corporateData";
 
 const IMG_MAP: Record<string, string> = {
   "/src/assets/images/case_solar_riyadh_1780768308627.png": imgSolarRiyadh,
@@ -46,7 +47,7 @@ function resolveArticleImg(coverImage: string, countryEN: string): string {
 }
 
 interface RegulatoryUpdatesProps {
-  lang: "EN" | "ZH" | "AR";
+  lang: LanguageCode;
 }
 
 interface Article {
@@ -96,40 +97,48 @@ const CATEGORIES = {
     EN: "Regulatory Updates",
     ZH: "法律法规更新",
     AR: "التحديثات والأنظمة",
+    ES: "Actualizaciones regulatorias",
     subcategories: {
       EN: ["Entity Setup Policy", "Import Regulations", "Customs Rules", "Tax Protocols", "Market Access Requirements"],
       ZH: ["公司设立政策", "进口法规", "海关要求", "税务政策", "行业准入要求"],
       AR: ["سياسة تأسيس الشركات", "لوائح الاستيراد", "متطلبات الجمارك", "السياسات الضريبية", "متطلبات دخول الأسواق"]
+      ,ES: ["Constitución de empresas", "Regulación de importación", "Normas aduaneras", "Fiscalidad", "Acceso al mercado"]
     }
   },
   market: {
     EN: "Market News",
     ZH: "市场动态",
     AR: "أخبار ومؤشرات السوق",
+    ES: "Noticias de mercado",
     subcategories: {
       EN: ["GCC Market Opportunities", "Saudi Mega-projects", "UAE Business Landscape", "East Africa Ports Info", "Emerging Market Watch"],
       ZH: ["GCC市场机会", "沙特项目动态", "UAE商业环境", "肯尼亚市场信息", "新兴市场观察"],
       AR: ["فرص أسواق الخليج", "مشاريع السعودية الكبرى", "بيئة الأعمال بالإمارات", "معلومات أسواق كينيا", "مرصد الأسواق الناشئة"]
+      ,ES: ["Oportunidades del CCG", "Megaproyectos saudíes", "Entorno empresarial de EAU", "Mercado de África Oriental", "Mercados emergentes"]
     }
   },
   trade: {
     EN: "Trade & Supply Chain Notes",
     ZH: "贸易与供应链提示",
     AR: "إرشادات التجارة وسلاسل الإمداد",
+    ES: "Comercio y cadena de suministro",
     subcategories: {
       EN: ["Clearance Roadblocks", "Freight Log Changes", "Overseas Warehousing", "Local Distribution Channels"],
       ZH: ["清关注意事项", "物流变化", "海外仓政策", "分销渠道变化"],
       AR: ["تنبيهات التخليص الجمركي", "تغيرات الشحن واللوجستيات", "سياسات المستودعات الخارجية", "قنوات التوزيع المحلية"]
+      ,ES: ["Despacho aduanero", "Cambios logísticos", "Almacenamiento internacional", "Distribución local"]
     }
   },
   gci: {
     EN: "GCI Insights",
     ZH: "GCI观察",
     AR: "رؤى وبصائر GCI",
+    ES: "Perspectivas de GCI",
     subcategories: {
       EN: ["Market Entry Advice", "Localization Handbooks", "Partner FAQs", "Investment Risk Warning"],
       ZH: ["市场进入建议", "本地化落地经验", "客户常见问题", "出海风险提示"],
       AR: ["نصائح دخول السوق", "خبرات التوطين الميداني", "الأسئلة الشائعة للشركاء", "تنبيهات مخاطر الاستثمار"]
+      ,ES: ["Entrada al mercado", "Ejecución local", "Preguntas de socios", "Riesgos de inversión"]
     }
   }
 };
@@ -280,20 +289,32 @@ const ARTICLES_DATA: Article[] = [
 
 // All intelligence markets — order matters for display
 const INTELLIGENCE_MARKETS = [
-  { key: "UAE / Dubai",   labelEN: "UAE / Dubai",    labelZH: "阿联酋·迪拜",  labelAR: "الإمارات / دبي",    region: "GCC" },
-  { key: "Saudi Arabia",  labelEN: "Saudi Arabia",   labelZH: "沙特阿拉伯",   labelAR: "المملكة العربية السعودية", region: "GCC" },
-  { key: "Qatar",         labelEN: "Qatar",          labelZH: "卡塔尔",       labelAR: "قطر",               region: "GCC" },
-  { key: "Bahrain",       labelEN: "Bahrain",        labelZH: "巴林",         labelAR: "البحرين",           region: "GCC" },
-  { key: "Oman",          labelEN: "Oman",           labelZH: "阿曼",         labelAR: "سلطنة عُمان",       region: "GCC" },
-  { key: "Kuwait",        labelEN: "Kuwait",         labelZH: "科威特",       labelAR: "الكويت",            region: "GCC" },
-  { key: "Kenya",         labelEN: "Kenya",          labelZH: "肯尼亚",       labelAR: "كينيا",             region: "Africa" },
-  { key: "Tanzania",      labelEN: "Tanzania",       labelZH: "坦桑尼亚",     labelAR: "تنزانيا",           region: "Africa" },
-  { key: "Nigeria",       labelEN: "Nigeria",        labelZH: "尼日利亚",     labelAR: "نيجيريا",           region: "Africa" },
-  { key: "Morocco",       labelEN: "Morocco",        labelZH: "摩洛哥",       labelAR: "المغرب",            region: "Africa" },
-  { key: "China",         labelEN: "China",          labelZH: "中国",         labelAR: "الصين",             region: "Asia" },
-  { key: "Brazil",        labelEN: "Brazil",         labelZH: "巴西",         labelAR: "البرازيل",          region: "LatAm" },
-  { key: "Global",        labelEN: "Global",         labelZH: "全球",         labelAR: "عالمي",             region: "Global" },
+  { key: "UAE / Dubai", labelEN: "UAE / Dubai", labelZH: "阿联酋·迪拜", labelAR: "الإمارات / دبي", labelES: "EAU / Dubái", region: "GCC" },
+  { key: "Saudi Arabia", labelEN: "Saudi Arabia", labelZH: "沙特阿拉伯", labelAR: "المملكة العربية السعودية", labelES: "Arabia Saudí", region: "GCC" },
+  { key: "Qatar", labelEN: "Qatar", labelZH: "卡塔尔", labelAR: "قطر", labelES: "Catar", region: "GCC" },
+  { key: "Bahrain", labelEN: "Bahrain", labelZH: "巴林", labelAR: "البحرين", labelES: "Baréin", region: "GCC" },
+  { key: "Oman", labelEN: "Oman", labelZH: "阿曼", labelAR: "سلطنة عُمان", labelES: "Omán", region: "GCC" },
+  { key: "Kuwait", labelEN: "Kuwait", labelZH: "科威特", labelAR: "الكويت", labelES: "Kuwait", region: "GCC" },
+  { key: "Kenya", labelEN: "Kenya", labelZH: "肯尼亚", labelAR: "كينيا", labelES: "Kenia", region: "Africa" },
+  { key: "Tanzania", labelEN: "Tanzania", labelZH: "坦桑尼亚", labelAR: "تنزانيا", labelES: "Tanzania", region: "Africa" },
+  { key: "Nigeria", labelEN: "Nigeria", labelZH: "尼日利亚", labelAR: "نيجيريا", labelES: "Nigeria", region: "Africa" },
+  { key: "Morocco", labelEN: "Morocco", labelZH: "摩洛哥", labelAR: "المغرب", labelES: "Marruecos", region: "Africa" },
+  { key: "China", labelEN: "China", labelZH: "中国", labelAR: "الصين", labelES: "China", region: "Asia" },
+  { key: "Brazil", labelEN: "Brazil", labelZH: "巴西", labelAR: "البرازيل", labelES: "Brasil", region: "LatAm" },
+  { key: "Global", labelEN: "Global", labelZH: "全球", labelAR: "عالمي", labelES: "Global", region: "Global" },
 ];
+
+function articleCopy(article: Article, lang: LanguageCode) {
+  return {
+    title: lang === "ZH" ? article.titleZH : lang === "AR" ? article.titleAR : article.titleEN,
+    country: lang === "ZH" ? article.countryZH : lang === "AR" ? article.countryAR : article.countryEN,
+    summary: lang === "ZH" ? article.summaryZH : lang === "AR" ? article.summaryAR : article.summaryEN
+  };
+}
+
+function marketLabel(market: (typeof INTELLIGENCE_MARKETS)[number], lang: LanguageCode) {
+  return lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : lang === "ES" ? market.labelES : market.labelEN;
+}
 
 export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
   const [isAllView, setIsAllView] = useState<boolean>(false);
@@ -320,44 +341,50 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
     EN: "GCI Regulatory & Market Updates",
     ZH: "法规与市场动态",
     AR: "التحديثات والأنظمة والأسواق"
+    ,ES: "Actualizaciones regulatorias y de mercado"
   }[lang];
 
   const mainDescriptionText = {
     EN: "A curated knowledge base for regulatory changes, market updates and cross-border business insights across GCC and selected growth markets.",
     ZH: "作为 GCI 平台的市场知识库，定期上传 GCC、非洲及重点市场的法律法规、政策变化、进口要求、行业动态和市场机会。",
     AR: "قاعدة معرفية منسقة للتغيرات التنظيمية، وتحديثات السوق، ورؤى الأعمال العابرة للحدود في دول الخليج العربي والأسواق الواعدة."
+    ,ES: "Una selección de cambios regulatorios, novedades de mercado e inteligencia empresarial transfronteriza del CCG y mercados de crecimiento."
   }[lang];
 
   const categoryLabels = {
-    all: { EN: "All Intelligence", ZH: "全部情报", AR: "كافة المؤشرات" },
-    regulatory: { EN: "Regulatory Updates", ZH: "法律法规更新", AR: "التحديثات والأنظمة" },
-    market: { EN: "Market News", ZH: "市场动态", AR: "أخبار ومؤشرات السوق" },
-    trade: { EN: "Trade & Supply Notes", ZH: "贸易与供应链提示", AR: "التجارة وسلاسل الإمداد" },
-    gci: { EN: "GCI Insights", ZH: "GCI 观察", AR: "رؤى وبصائر GCI" }
+    all: { EN: "All Intelligence", ZH: "全部情报", AR: "كافة المؤشرات", ES: "Toda la inteligencia" },
+    regulatory: { EN: "Regulatory Updates", ZH: "法律法规更新", AR: "التحديثات والأنظمة", ES: "Actualizaciones regulatorias" },
+    market: { EN: "Market News", ZH: "市场动态", AR: "أخبار ومؤشرات السوق", ES: "Noticias de mercado" },
+    trade: { EN: "Trade & Supply Notes", ZH: "贸易与供应链提示", AR: "التجارة وسلاسل الإمداد", ES: "Comercio y suministro" },
+    gci: { EN: "GCI Insights", ZH: "GCI 观察", AR: "رؤى وبصائر GCI", ES: "Perspectivas de GCI" }
   };
 
   const readMoreText = {
     EN: "Read Full Intelligence Report",
     ZH: "阅读完整市场报告",
     AR: "قراءة التقرير الكامل"
+    ,ES: "Leer informe completo"
   }[lang];
 
   const dateLabel = {
     EN: "Published",
     ZH: "发布时间",
     AR: "تاريخ النشر"
+    ,ES: "Publicado"
   }[lang];
 
   const viewAllButtonText = {
     EN: "View All Insights →",
     ZH: "查看全部情报动态 →",
     AR: "عرض كافة المؤشرات والتحديثات ←"
+    ,ES: "Ver toda la inteligencia →"
   }[lang];
 
   const backToFeaturedText = {
     EN: "← Back to Featured Insights",
     ZH: "← 返回精选情报",
     AR: "→ العودة إلى التحديثات المميزة"
+    ,ES: "← Volver a destacados"
   }[lang];
 
   // Logic to separate first 6 articles for Featured Insights display
@@ -383,9 +410,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
         {/* IN-SITE ARTICLE DETAIL VIEW — shown when a card is clicked, replaces list below */}
         {selectedArticle && (() => {
           const a = selectedArticle;
-          const title = { EN: a.titleEN, ZH: a.titleZH, AR: a.titleAR }[lang];
-          const country = { EN: a.countryEN, ZH: a.countryZH, AR: a.countryAR }[lang];
-          const body = lang === "EN" ? (a.contentEN || a.summaryEN) : (a.contentZH || a.summaryZH || a.summaryEN);
+          const { title, country } = articleCopy(a, lang);
+          const body = lang === "EN" || lang === "ES" ? (a.contentEN || a.summaryEN) : (a.contentZH || a.summaryZH || a.summaryEN);
           return (
             <div className="max-w-3xl mx-auto">
               <button
@@ -393,7 +419,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 className="mb-8 text-xs sm:text-sm font-sans font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>{lang === "ZH" ? "← 返回情报列表" : lang === "AR" ? "→ العودة" : "← Back to Insights"}</span>
+                <span>{lang === "ZH" ? "← 返回情报列表" : lang === "AR" ? "→ العودة" : lang === "ES" ? "← Volver a inteligencia" : "← Back to Insights"}</span>
               </button>
 
               <div className="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden mb-6 border border-brand-gold-500/15 bg-[#0a1428]">
@@ -427,8 +453,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
 
               <div className="border-t border-brand-gold-500/10 pt-5">
                 <span className="text-xs font-bold text-brand-gold-400">
-                  {(lang === "ZH" ? "来源：" : lang === "AR" ? "المصدر: " : "Source: ") +
-                    (a.sourceName || (lang === "ZH" ? "公开市场信息" : lang === "AR" ? "معلومات السوق العامة" : "Public Market Information"))}
+                  {(lang === "ZH" ? "来源：" : lang === "AR" ? "المصدر: " : lang === "ES" ? "Fuente: " : "Source: ") +
+                    (a.sourceName || (lang === "ZH" ? "公开市场信息" : lang === "AR" ? "معلومات السوق العامة" : lang === "ES" ? "Información pública de mercado" : "Public Market Information"))}
                 </span>
               </div>
             </div>
@@ -442,13 +468,13 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
           <div className="flex items-center gap-2 mb-3 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500/80" />
             <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
-              {lang === "EN" ? "Market Intelligence Center" : lang === "ZH" ? "在岸市场特约情报中心" : "مركز الاستشارات والمؤشرات"}
+              {lang === "EN" ? "Market Intelligence Center" : lang === "ZH" ? "在岸市场特约情报中心" : lang === "AR" ? "مركز الاستشارات والمؤشرات" : "Centro de inteligencia de mercado"}
             </span>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold text-[#f9f5eb] tracking-tight leading-none uppercase">
-              {isAllView ? (isRtl ? "المستودع المعرفي الشامل" : lang === "ZH" ? "完整情报检索库" : "COMPLETE INTELLIGENCE REPOSITORY") : mainTitleText}
+              {isAllView ? (isRtl ? "المستودع المعرفي الشامل" : lang === "ZH" ? "完整情报检索库" : lang === "ES" ? "REPOSITORIO COMPLETO DE INTELIGENCIA" : "COMPLETE INTELLIGENCE REPOSITORY") : mainTitleText}
             </h2>
 
             {/* If in All View, show a quick back link in the header */}
@@ -465,7 +491,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                 className="text-xs sm:text-sm font-sans font-bold text-brand-gold-400 hover:text-brand-gold-300 transition-colors flex items-center gap-2 cursor-pointer self-start"
               >
                 {selectedCountry
-                  ? (lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ الأسواق" : "← All Markets")
+                  ? (lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ الأسواق" : lang === "ES" ? "← Todos los mercados" : "← All Markets")
                   : backToFeaturedText}
               </button>
             )}
@@ -502,7 +528,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     </span>
                     <span className="text-[10px] font-sans font-bold bg-[#030611]/85 backdrop-blur text-brand-gold-200 border border-brand-gold-500/20 px-2.5 py-1 rounded-md flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-brand-gold-400 shrink-0" />
-                      {lang === "EN" ? leadArticle.countryEN : lang === "ZH" ? leadArticle.countryZH : leadArticle.countryAR}
+                      {articleCopy(leadArticle, lang).country}
                     </span>
                   </div>
                 </div>
@@ -517,11 +543,11 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     </div>
 
                     <h3 className="text-xl sm:text-2xl lg:text-3xl font-serif text-[#f9f5eb] font-extrabold group-hover:text-white transition-colors leading-snug tracking-tight mb-3">
-                      {lang === "EN" ? leadArticle.titleEN : lang === "ZH" ? leadArticle.titleZH : leadArticle.titleAR}
+                      {articleCopy(leadArticle, lang).title}
                     </h3>
 
                     <p className="text-sm text-brand-gold-200/80 font-sans font-light leading-relaxed mb-4 max-w-2xl">
-                      {lang === "EN" ? leadArticle.summaryEN : lang === "ZH" ? leadArticle.summaryZH : leadArticle.summaryAR}
+                      {articleCopy(leadArticle, lang).summary}
                     </p>
                   </div>
 
@@ -538,9 +564,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
               {/* COMPANION SECONDARY CARDS Grid Structure ( occuping space elegantly ) */}
               <div className="flex flex-col gap-4 justify-between lg:col-span-1">
                 {companionArticles.slice(0, 2).map((article) => {
-                  const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
-                  const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
-                  const summary = { EN: article.summaryEN, ZH: article.summaryZH, AR: article.summaryAR }[lang];
+                  const { title, country, summary } = articleCopy(article, lang);
 
                   return (
                     <div
@@ -591,9 +615,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             {/* THREE ADDITIONAL LOWER GRID ROW COMPANIONS IN BENTO MATRIX */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mb-8">
               {companionArticles.slice(2).map((article) => {
-                const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
-                const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
-                const summary = { EN: article.summaryEN, ZH: article.summaryZH, AR: article.summaryAR }[lang];
+                const { title, country, summary } = articleCopy(article, lang);
 
                 return (
                   <div
@@ -666,13 +688,13 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             {!selectedCountry && (
               <div>
                 <p className="text-xs font-mono text-brand-gold-400/60 uppercase tracking-widest mb-8">
-                  {lang === "ZH" ? "选择市场，查看该国最新情报" : lang === "AR" ? "اختر السوق لعرض أحدث التقارير" : "Select a market to browse its intelligence reports"}
+                  {lang === "ZH" ? "选择市场，查看该国最新情报" : lang === "AR" ? "اختر السوق لعرض أحدث التقارير" : lang === "ES" ? "Seleccione un mercado para consultar sus informes" : "Select a market to browse its intelligence reports"}
                 </p>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
                   {INTELLIGENCE_MARKETS.map((market) => {
                     const countArticles = articles.filter(a => a.countryEN === market.key).length;
-                    const label = lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : market.labelEN;
+                    const label = marketLabel(market, lang);
                     const coverImg = COUNTRY_GRID_IMG[market.key] ?? COUNTRY_COVER_MAP[market.key] ?? imgGlobalHub;
 
                     return (
@@ -708,8 +730,8 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                           <div className="flex items-center justify-between">
                             <span className="text-[10px] font-mono text-brand-gold-400/70">
                               {countArticles > 0
-                                ? `${countArticles} ${lang === "ZH" ? "篇情报" : lang === "AR" ? "تقرير" : "reports"}`
-                                : lang === "ZH" ? "即将更新" : lang === "AR" ? "قريباً" : "Coming soon"}
+                                ? `${countArticles} ${lang === "ZH" ? "篇情报" : lang === "AR" ? "تقرير" : lang === "ES" ? "informes" : "reports"}`
+                                : lang === "ZH" ? "即将更新" : lang === "AR" ? "قريباً" : lang === "ES" ? "Próximamente" : "Coming soon"}
                             </span>
                             <ArrowRight className="w-3.5 h-3.5 text-brand-gold-500/50 group-hover:text-brand-gold-400 group-hover:translate-x-0.5 transition-all" />
                           </div>
@@ -738,7 +760,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
             {/* ── LEVEL 2: Articles for selected country ── */}
             {selectedCountry && (() => {
               const market = INTELLIGENCE_MARKETS.find(m => m.key === selectedCountry)!;
-              const countryLabel = lang === "ZH" ? market.labelZH : lang === "AR" ? market.labelAR : market.labelEN;
+              const countryLabel = marketLabel(market, lang);
               const countryArticles = articles.filter(a => a.countryEN === selectedCountry);
               const filteredByCategory = activeCategory === "all"
                 ? countryArticles
@@ -755,12 +777,12 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                       }}
                       className="hover:text-brand-gold-300 transition-colors cursor-pointer"
                     >
-                      {lang === "ZH" ? "全部市场" : lang === "AR" ? "كل الأسواق" : "All Markets"}
+                      {lang === "ZH" ? "全部市场" : lang === "AR" ? "كل الأسواق" : lang === "ES" ? "Todos los mercados" : "All Markets"}
                     </button>
                     <span>/</span>
                     <span className="text-brand-gold-300 font-bold">{countryLabel}</span>
                     <span className="ml-2 bg-brand-gold-500/10 border border-brand-gold-500/20 text-brand-gold-400 px-2 py-0.5 rounded text-[9px]">
-                      {countryArticles.length} {lang === "ZH" ? "篇" : lang === "AR" ? "تقرير" : "reports"}
+                      {countryArticles.length} {lang === "ZH" ? "篇" : lang === "AR" ? "تقرير" : lang === "ES" ? "informes" : "reports"}
                     </span>
                   </div>
 
@@ -800,9 +822,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                   {filteredByCategory.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mb-12">
                       {filteredByCategory.map((article) => {
-                        const title = { EN: article.titleEN, ZH: article.titleZH, AR: article.titleAR }[lang];
-                        const country = { EN: article.countryEN, ZH: article.countryZH, AR: article.countryAR }[lang];
-                        const summary = { EN: article.summaryEN, ZH: article.summaryZH, AR: article.summaryAR }[lang];
+                        const { title, country, summary } = articleCopy(article, lang);
                         return (
                           <div
                             key={article.id}
@@ -843,7 +863,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                     </div>
                   ) : (
                     <div className="text-center py-20 text-brand-gold-400/40 font-mono text-sm">
-                      {lang === "ZH" ? "该类别暂无文章" : lang === "AR" ? "لا توجد تقارير في هذه الفئة" : "No reports in this category yet"}
+                      {lang === "ZH" ? "该类别暂无文章" : lang === "AR" ? "لا توجد تقارير في هذه الفئة" : lang === "ES" ? "Aún no hay informes en esta categoría" : "No reports in this category yet"}
                     </div>
                   )}
 
@@ -857,7 +877,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
                       className="px-6 py-3.5 bg-[#030611]/80 hover:bg-[#070e20] border border-brand-gold-500/30 text-brand-gold-300 hover:text-brand-gold-200 font-sans font-bold text-xs tracking-wider uppercase rounded-xl transition-all duration-300 cursor-pointer flex items-center gap-2 active:scale-98"
                     >
                       <ArrowLeft className="w-4 h-4" />
-                      <span>{lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ العودة إلى الأسواق" : "← Back to Markets"}</span>
+                      <span>{lang === "ZH" ? "← 返回市场列表" : lang === "AR" ? "→ العودة إلى الأسواق" : lang === "ES" ? "← Volver a mercados" : "← Back to Markets"}</span>
                     </button>
                   </div>
                 </div>

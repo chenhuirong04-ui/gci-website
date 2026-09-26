@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LANGUAGES, LanguagePack } from "./data/corporateData";
+import { LANGUAGES, LanguagePack, LanguageCode } from "./data/corporateData";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import WhatWeDo from "./components/WhatWeDo";
@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 import DailyBriefingPage from "./components/DailyBriefingPage";
 
 export default function App() {
-  const [lang, setLang] = useState<"EN" | "ZH" | "AR">("EN");
+  const [lang, setLang] = useState<LanguageCode>("EN");
   const pack: LanguagePack = LANGUAGES[lang];
   const isDailyBriefing = window.location.pathname === "/intelligence/daily";
 
