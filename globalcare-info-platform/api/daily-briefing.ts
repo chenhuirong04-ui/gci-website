@@ -1,6 +1,43 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import type { DailyBriefingItem } from "../src/data/dailyBriefing";
-import { selectPublishedBriefing } from "../src/data/dailyBriefing";
+
+interface DailyBriefingItem {
+  id: string;
+  briefing_date: string;
+  title: string;
+  country: string | null;
+  sector: string | null;
+  category: string | null;
+  summary: string | null;
+  why_it_matters: string | null;
+  gci_opportunity: string | null;
+  stage: string | null;
+  source_name: string | null;
+  source_url: string | null;
+  image_url: string | null;
+  sort_order: number | null;
+  is_featured: boolean;
+  status: "draft" | "approved" | "published";
+  published_at: string | null;
+}
+
+function selectPublishedBriefing(rows: DailyBriefingItem[], today: string, requestedDate?: string) {
+  const available_dates = [...new Set(rows.map((item) => item.briefing_date))].sort().reverse();
+  const briefing_date = requestedDate && available_dates.includes(requestedDate)
+    ? requestedDate
+    : available_dates.includes(today)
+      ? today
+      : available_dates[0] ?? null;
+  const items = briefing_date
+    ? rows
+      .filter((item) => item.briefing_date === briefing_date)
+      .sort((a, b) => (a.sort_order ?? Number.MAX_SAFE_INTEGER) - (b.sort_order ?? Number.MAX_SAFE_INTEGER) || a.title.localeCompare(b.title))
+    : [];
+  const published_at = items.reduce<string | null>((latest, item) => {
+    if (!item.published_at) return latest;
+    return !latest || item.published_at > latest ? item.published_at : latest;
+  }, null);
+  return { briefing_date, published_at, available_dates, items };
+}
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").replace(/\/rest\/v1\/?$/, "").replace(/\/$/, "");
 const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "";
