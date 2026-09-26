@@ -56,7 +56,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
 
   return (
     <section id="what-we-do" className="py-10 md:py-12 bg-[#030611] border-b border-brand-gold-500/10">
-      <div className="max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
         <div className={`max-w-3xl mb-7 ${isRtl ? "text-right" : "text-left"}`}>

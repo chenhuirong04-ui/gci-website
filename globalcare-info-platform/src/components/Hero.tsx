@@ -202,7 +202,7 @@ export default function Hero({ lang, pack }: HeroProps) {
             </div>
 
             {/* Main Headline with prestigious Cinzel font with gold ivory coloration */}
-            <h1 className="text-4xl sm:text-5xl lg:text-5xl font-display font-medium leading-snug text-brand-gold-100 tracking-wide whitespace-pre-line">
+            <h1 className="text-4xl sm:text-5xl lg:text-[42px] font-display font-medium leading-snug text-brand-gold-100 tracking-wide whitespace-pre-line">
               {pack.heroTitle}
             </h1>
 

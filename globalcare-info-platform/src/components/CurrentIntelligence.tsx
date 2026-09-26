@@ -71,7 +71,7 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
 
   return (
     <section id="current-intelligence" className="border-t border-brand-gold-500/10 bg-[#030712] py-12 md:py-14 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-7">
           <div className="max-w-4xl">
             <div className="flex items-center gap-2 mb-3">

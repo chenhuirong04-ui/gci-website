@@ -378,7 +378,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
       <div className="absolute inset-0 opacity-[0.015] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-brand-navy-600/5 blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
 
         {/* IN-SITE ARTICLE DETAIL VIEW — shown when a card is clicked, replaces list below */}
         {selectedArticle && (() => {

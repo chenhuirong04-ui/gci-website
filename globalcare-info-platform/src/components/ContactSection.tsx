@@ -129,7 +129,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
           </svg>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6" dir={isRtl ? "rtl" : "ltr"}>
+        <div className="relative w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
           <div className="grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end mb-6">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[.2em] text-brand-gold-400">
@@ -186,7 +186,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
       </section>
 
     <section id="contact-section" className="py-10 md:py-12 bg-[#030611] border-b border-brand-gold-500/10">
-      <div className="max-w-7xl mx-auto px-6 font-sans" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 font-sans" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Head */}
         <div className="max-w-3xl mb-6 text-left">
