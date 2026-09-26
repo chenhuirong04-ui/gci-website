@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/intelligence/daily",
+      "destination": "/"
+    }
+  ]
+}
