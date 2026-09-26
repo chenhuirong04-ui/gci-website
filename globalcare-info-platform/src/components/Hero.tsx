@@ -182,7 +182,7 @@ export default function Hero({ lang, pack }: HeroProps) {
   };
 
   return (
-    <section id="home" className="relative pt-8 pb-20 md:pt-8 md:pb-40 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
+    <section id="home" className="relative pt-8 pb-4 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
       
       {/* Decorative Atmosphere glow arcs */}
       <div className="absolute top-0 left-[20%] w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[150px] pointer-events-none" />

@@ -63,11 +63,11 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
   }[lang];
 
   return (
-    <section id="what-we-do" className="py-10 md:py-12 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
       <div className="w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
-        <div className={`max-w-3xl mb-7 ${isRtl ? "text-right" : "text-left"}`}>
+        <div className={`max-w-3xl mb-4 ${isRtl ? "text-right" : "text-left"}`}>
           <div className="flex items-center gap-2 mb-3 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">

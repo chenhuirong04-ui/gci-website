@@ -400,7 +400,7 @@ export default function RegulatoryUpdates({ lang }: RegulatoryUpdatesProps) {
     : articles.filter(art => art.category === activeCategory);
 
   return (
-    <section id="insights-section" className="py-14 md:py-16 bg-[#030611] border-b border-brand-gold-500/10 relative overflow-hidden">
+    <section id="insights-section" className="py-8 md:py-9 bg-[#030611] border-b border-brand-gold-500/10 relative overflow-hidden">
       {/* Aesthetic layout decorative lighting / glow effects */}
       <div className="absolute inset-0 opacity-[0.015] bg-[radial-gradient(#C59B3F_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-brand-navy-600/5 blur-[120px] pointer-events-none" />

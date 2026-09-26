@@ -130,7 +130,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
 
   return (
     <>
-      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-10 md:py-12">
+      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-8 md:py-9">
         <div className="absolute inset-0 pointer-events-none opacity-70" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_26%,rgba(194,156,83,.12),transparent_24%),radial-gradient(circle_at_82%_64%,rgba(80,118,157,.12),transparent_28%)]" />
           <svg viewBox="0 0 1440 620" className="h-full w-full" preserveAspectRatio="none">
@@ -195,7 +195,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
       </section>
 
-    <section id="contact-section" className="py-10 md:py-12 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="contact-section" className="py-8 md:py-9 bg-[#030611] border-b border-brand-gold-500/10">
       <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 font-sans" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Head */}

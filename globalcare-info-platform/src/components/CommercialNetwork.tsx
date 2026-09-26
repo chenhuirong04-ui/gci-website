@@ -401,7 +401,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   }[lang];
 
   return (
-    <section id="media-section" className="py-14 md:py-16 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
+    <section id="media-section" className="py-8 md:py-9 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
       {/* Decorative corporate laser light beams or spot glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
