@@ -7,135 +7,106 @@ on:
         description: "Complete FINAL Daily Briefing JSON"
         required: true
         type: string
-  issues:
-    types: [opened]
+  push:
+    branches: [main]
+    paths:
+      - "briefing-publish/*.json"
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   publish:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'issues' &&
-      startsWith(github.event.issue.title, 'GCI Daily Briefing Publish') &&
-      contains(github.event.issue.labels.*.name, 'gci-daily-briefing-publish'))
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        if: github.event_name == 'push'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Validate JSON and call Production Publisher
-        id: publish
         shell: bash
         env:
-          BRIEFING_JSON: ${{ github.event_name == 'issues' && github.event.issue.body || inputs.briefing_json }}
+          BRIEFING_JSON: ${{ inputs.briefing_json }}
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
           PUBLISH_TOKEN: ${{ secrets.GCI_DAILY_BRIEFING_PUBLISH_TOKEN }}
-          RESULT_FILE: ${{ runner.temp }}/daily-briefing-publish-result.txt
         run: |
           set -euo pipefail
 
-          fail() {
-            {
-              echo "failure"
-              echo "Publish failed"
-              echo "$1"
-            } > "$RESULT_FILE"
-            echo "::error::$1"
-            exit 1
-          }
-
-          if [[ -z "${BRIEFING_JSON//[[:space:]]/}" ]]; then
-            fail "briefing_json is required"
-          fi
-
           if [[ -z "$PUBLISH_TOKEN" ]]; then
-            fail "GCI_DAILY_BRIEFING_PUBLISH_TOKEN is not configured"
+            echo "::error::GCI_DAILY_BRIEFING_PUBLISH_TOKEN is not configured"
+            exit 1
           fi
 
-          if ! printf '%s' "$BRIEFING_JSON" | jq -e . >/dev/null; then
-            fail "briefing_json must be valid JSON"
-          fi
-
+          payload_list="$(mktemp)"
+          dispatch_payload="$(mktemp)"
           response_file="$(mktemp)"
-          trap 'rm -f "$response_file"' EXIT
+          trap 'rm -f "$payload_list" "$dispatch_payload" "$response_file"' EXIT
 
-          http_status="$(
-            printf '%s' "$BRIEFING_JSON" |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            if [[ -z "${BRIEFING_JSON//[[:space:]]/}" ]]; then
+              echo "::error::briefing_json is required"
+              exit 1
+            fi
+            printf '%s' "$BRIEFING_JSON" > "$dispatch_payload"
+            printf '%s\n' "$dispatch_payload" > "$payload_list"
+          else
+            if [[ "$BEFORE_SHA" == "0000000000000000000000000000000000000000" ]]; then
+              git diff-tree --no-commit-id --name-only --diff-filter=AM -r "$CURRENT_SHA" -- 'briefing-publish/*.json' > "$payload_list"
+            else
+              git diff --name-only --diff-filter=AM "$BEFORE_SHA" "$CURRENT_SHA" -- 'briefing-publish/*.json' > "$payload_list"
+            fi
+
+            if [[ ! -s "$payload_list" ]]; then
+              echo "::error::No added or modified briefing JSON was found in this push"
+              exit 1
+            fi
+          fi
+
+          while IFS= read -r payload_file; do
+            if ! jq -e . "$payload_file" >/dev/null; then
+              echo "::error::$payload_file must contain valid JSON"
+              exit 1
+            fi
+
+            http_status="$(
               curl --silent --show-error \
                 --output "$response_file" \
                 --write-out '%{http_code}' \
                 --request POST \
                 --header "Authorization: Bearer $PUBLISH_TOKEN" \
                 --header 'Content-Type: application/json' \
-                --data-binary @- \
+                --data-binary "@$payload_file" \
                 'https://www.globalcareinfo.com/api/admin/daily-briefing/publish'
-          )"
+            )"
 
-          if [[ "$http_status" -lt 200 || "$http_status" -ge 300 ]]; then
-            publisher_error="$(jq -c . "$response_file" 2>/dev/null || cat "$response_file")"
-            fail "Publisher HTTP $http_status: $publisher_error"
-          fi
+            if [[ "$http_status" -lt 200 || "$http_status" -ge 300 ]]; then
+              publisher_error="$(jq -c . "$response_file" 2>/dev/null || cat "$response_file")"
+              echo "::error::Publisher HTTP $http_status for $payload_file: $publisher_error"
+              exit 1
+            fi
 
-          if ! jq -e 'type == "object"' "$response_file" >/dev/null; then
-            fail "Publisher returned an invalid response"
-          fi
+            briefing_date="$(jq -er '.briefing_date' "$response_file")"
+            published_count="$(jq -er '.published_count' "$response_file")"
+            api_ok="$(jq -er '.api_check.ok' "$response_file")"
+            homepage_ok="$(jq -er '.homepage_check.ok' "$response_file")"
+            daily_page_ok="$(jq -er '.daily_page_check.ok' "$response_file")"
 
-          briefing_date="$(jq -er '.briefing_date' "$response_file")"
-          published_count="$(jq -er '.published_count' "$response_file")"
-          api_ok="$(jq -er '.api_check.ok' "$response_file")"
-          homepage_ok="$(jq -er '.homepage_check.ok' "$response_file")"
-          daily_page_ok="$(jq -er '.daily_page_check.ok' "$response_file")"
+            if [[ "$api_ok" != "true" || "$homepage_ok" != "true" || "$daily_page_ok" != "true" ]]; then
+              echo "::error::Publisher website verification did not pass for $payload_file"
+              exit 1
+            fi
 
-          if [[ "$api_ok" != "true" || "$homepage_ok" != "true" || "$daily_page_ok" != "true" ]]; then
-            fail "Publisher website verification did not pass"
-          fi
+            echo "briefing_date: $briefing_date"
+            echo "published_count: $published_count"
+            echo "Publisher PASS"
 
-          echo "briefing_date: $briefing_date"
-          echo "published_count: $published_count"
-          echo "Publisher returned PASS"
-          echo "Website verification: API=$api_ok Homepage=$homepage_ok DailyPage=$daily_page_ok"
-
-          {
-            echo "success"
-            echo "Published successfully"
-            echo "- briefing_date: $briefing_date"
-            echo "- published_count: $published_count"
-            echo "- website: PASS"
-          } > "$RESULT_FILE"
-
-          {
-            echo "### Daily Briefing Publisher"
-            echo "- briefing_date: $briefing_date"
-            echo "- published_count: $published_count"
-            echo "- Publisher returned PASS"
-            echo "- Website verification: API=$api_ok, Homepage=$homepage_ok, DailyPage=$daily_page_ok"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Comment result on Issue
-        if: always() && github.event_name == 'issues' && steps.publish.outcome != 'skipped'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RESULT_FILE: ${{ runner.temp }}/daily-briefing-publish-result.txt
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: |
-          set -euo pipefail
-          comment_file="$(mktemp)"
-          trap 'rm -f "$comment_file"' EXIT
-
-          if [[ -f "$RESULT_FILE" ]]; then
-            tail -n +2 "$RESULT_FILE" > "$comment_file"
-          else
-            printf '%s\n' 'Publish failed' 'Workflow ended before Publisher returned a result.' > "$comment_file"
-          fi
-
-          gh issue comment "$ISSUE_NUMBER" \
-            --repo "$GITHUB_REPOSITORY" \
-            --body-file "$comment_file"
-
-      - name: Close successfully published Issue
-        if: github.event_name == 'issues' && steps.publish.outcome == 'success'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY"
+            {
+              echo "### Daily Briefing Publisher"
+              echo "- briefing_date: $briefing_date"
+              echo "- published_count: $published_count"
+              echo "- Publisher PASS"
+            } >> "$GITHUB_STEP_SUMMARY"
+          done < "$payload_list"
