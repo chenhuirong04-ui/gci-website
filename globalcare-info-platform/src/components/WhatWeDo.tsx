@@ -1,6 +1,6 @@
 import React from "react";
 import { LanguagePack, LanguageCode } from "../data/corporateData";
-import { ArrowUpRight, BrainCircuit, CheckCircle2, Compass, Network } from "lucide-react";
+import { ArrowUpRight, BrainCircuit, CheckCircle2, Compass, Network, UsersRound } from "lucide-react";
 
 interface WhatWeDoProps {
   lang: LanguageCode;
@@ -12,7 +12,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
   const copy = {
     EN: {
       label: "What We Do",
-      title: "THREE CAPABILITIES. ONE EXECUTION PLATFORM.",
+      title: "FOUR CAPABILITIES. ONE EXECUTION PLATFORM.",
       subtitle: "GCI brings market access, cross-border resources and operating systems together so opportunities can move into execution.",
       supportingLabel: "Supporting capabilities",
       services: [
@@ -25,11 +25,17 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
         {
           idx: "02", icon: Network, title: "SUPPLY CHAIN & PROJECT EXECUTION",
           desc: "Connecting qualified suppliers, procurement resources and site execution support across China, the GCC and cross-border projects.",
-          bullets: ["Supplier Sourcing & Procurement", "China / GCC Supply Chain Coordination", "Supplier Identification & Verification", "Project & Site Execution Support", "Workforce & Site Resources", "Building Materials & FF&E", "Logistics / Mobilization Coordination", "Cross-Border Project Coordination"],
-          note: "Workforce, accommodation, transportation and site resources are coordinated as one part of wider supply chain and project execution."
+          bullets: ["Supplier Sourcing & Procurement", "China / GCC Supply Chain Coordination", "Supplier Identification & Verification", "Project & Site Execution Support", "Logistics / Mobilization Coordination", "Building Materials & FF&E", "Equipment & Industrial Supply", "Cross-Border Project Coordination"],
+          note: "GCI coordinates sourcing, procurement, logistics and project supply with qualified suppliers and execution partners."
         },
         {
-          idx: "03", icon: BrainCircuit, title: "AI & BUSINESS OPERATIONS",
+          idx: "03", icon: UsersRound, title: "WORKFORCE NETWORK & SITE RESOURCES",
+          desc: "Connecting UAE and GCC project workforce requirements with qualified recruitment partners and workforce resources across Asia and Africa.",
+          bullets: ["Overseas Recruitment Partner Network", "Skilled, Semi-skilled & General Workforce Coordination", "Candidate Screening & Trade Test Coordination", "Mobilization, Documentation & Deployment Coordination", "Accommodation, Transport & Site Resource Coordination", "UAE / GCC Project Workforce Support", "Multi-country Workforce Sourcing", "Licensed Recruitment Partner Coordination"],
+          note: "GCI coordinates workforce solutions through appropriately licensed recruitment and manpower partners. Regulated recruitment, employment, visa and labour supply services are performed by licensed third-party providers."
+        },
+        {
+          idx: "04", icon: BrainCircuit, title: "AI & BUSINESS OPERATIONS",
           desc: "Helping businesses redesign and digitize how work gets done through AI-enabled operations, connected internal systems and management tools.",
           bullets: ["Business Process Digitization", "AI-enabled Operations", "CRM & Customer Operations", "Workflow & Internal Systems", "Operational Intelligence", "Automation & Management Tools", "Procurement & Project Operations", "Workforce & Management Systems"],
           note: "GCI focuses on operating models and execution efficiency — not standalone software outsourcing."
@@ -37,27 +43,30 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
       ]
     },
     ZH: {
-      label: "核心能力", title: "三大能力，一个跨境商业执行平台。", subtitle: "GCI 将市场准入、跨境资源与企业运营系统整合在同一执行框架中。", supportingLabel: "支持性子能力",
+      label: "核心能力", title: "四大能力，一个跨境商业执行平台。", subtitle: "GCI 将市场准入、跨境资源与企业运营系统整合在同一执行框架中。", supportingLabel: "支持性子能力",
       services: [
         { idx: "01", icon: Compass, title: "市场进入与业务拓展", desc: "通过市场进入策略、本地合作伙伴和协调执行支持，帮助企业进入、落地并拓展新市场。", bullets: ["市场进入策略", "本地合作伙伴", "公司设立支持", "监管与许可协调", "业务拓展", "银行与税务协调", "业务开发与商业协调", "持续本地执行支持"], note: "GCI 与具备资质的本地服务机构协调公司设立、许可、银行、税务及合规需求；受监管的法律、税务和会计意见由持牌专业机构提供。" },
-        { idx: "02", icon: Network, title: "供应链与项目执行", desc: "连接中国、海湾地区及跨境项目所需的合格供应商、采购资源与现场执行支持。", bullets: ["供应商寻源与采购", "中国 / 海湾供应链协调", "供应商识别与核验", "项目与现场执行支持", "劳动力与现场资源", "建材与 FF&E", "物流 / 动员协调", "跨境项目协调"], note: "劳动力、住宿、交通和现场资源作为供应链与项目执行整体能力的一部分进行协调。" },
-        { idx: "03", icon: BrainCircuit, title: "AI 与企业运营", desc: "通过 AI 驱动运营、互联内部系统和管理工具，帮助企业重构并数字化实际工作方式。", bullets: ["业务流程数字化", "AI 驱动运营", "CRM 与客户运营", "工作流与内部系统", "运营智能", "自动化与管理工具", "采购与项目运营", "劳动力与管理系统"], note: "GCI 聚焦运营模式与执行效率提升，而不是单纯的软件外包开发。" }
+        { idx: "02", icon: Network, title: "供应链与项目执行", desc: "连接中国、海湾地区及跨境项目所需的合格供应商、采购资源与现场执行支持。", bullets: ["供应商寻源与采购", "中国 / 海湾供应链协调", "供应商识别与核验", "项目与现场执行支持", "物流 / 动员协调", "建材与 FF&E", "设备与工业品供应", "跨境项目协调"], note: "GCI 与合格供应商及执行合作伙伴协调寻源、采购、物流与项目供应。" },
+        { idx: "03", icon: UsersRound, title: "跨境劳动力与现场资源", desc: "连接阿联酋及海湾项目用工需求，与亚洲、非洲等多国合格招聘合作伙伴和劳动力资源进行协调。", bullets: ["海外招聘合作网络", "熟练 / 半熟练 / 普工资源协调", "候选人筛选与技能测试协调", "动员、文件与到岗协调", "住宿、交通与现场资源协调", "阿联酋 / 海湾项目用工支持", "多国劳动力资源协调", "持牌招聘合作伙伴协同"], note: "GCI 通过具备相应资质的招聘及劳务合作伙伴协调劳动力资源。涉及招聘、雇佣、签证及受监管劳务供应的服务，由持牌第三方机构执行。" },
+        { idx: "04", icon: BrainCircuit, title: "AI 与企业运营", desc: "通过 AI 驱动运营、互联内部系统和管理工具，帮助企业重构并数字化实际工作方式。", bullets: ["业务流程数字化", "AI 驱动运营", "CRM 与客户运营", "工作流与内部系统", "运营智能", "自动化与管理工具", "采购与项目运营", "劳动力与管理系统"], note: "GCI 聚焦运营模式与执行效率提升，而不是单纯的软件外包开发。" }
       ]
     },
     AR: {
-      label: "قدراتنا", title: "ثلاث قدرات. منصة تنفيذ واحدة.", subtitle: "تجمع GCI بين دخول الأسواق والموارد العابرة للحدود وأنظمة التشغيل لتحويل الفرص إلى تنفيذ.", supportingLabel: "قدرات داعمة",
+      label: "قدراتنا", title: "أربع قدرات. منصة تنفيذ واحدة.", subtitle: "تجمع GCI بين دخول الأسواق والموارد العابرة للحدود وأنظمة التشغيل لتحويل الفرص إلى تنفيذ.", supportingLabel: "قدرات داعمة",
       services: [
         { idx: "01", icon: Compass, title: "دخول السوق وتطوير الأعمال", desc: "مساعدة الشركات على دخول الأسواق الجديدة والتأسيس والتوسع عبر الاستراتيجية والشراكات المحلية ودعم التنفيذ المنسق.", bullets: ["استراتيجية دخول السوق", "الشراكات المحلية", "دعم تأسيس الشركات", "تنسيق اللوائح والتراخيص", "تطوير الأعمال", "تنسيق البنوك والضرائب", "تطوير الأعمال والتنسيق التجاري", "دعم التنفيذ المحلي المستمر"], note: "تنسق GCI متطلبات التأسيس والتراخيص والبنوك والضرائب والامتثال مع مزودي خدمات محليين مؤهلين، بينما تبقى الاستشارات المنظمة لدى المهنيين المرخصين." },
-        { idx: "02", icon: Network, title: "سلسلة الإمداد وتنفيذ المشاريع", desc: "ربط الموردين المؤهلين وموارد المشتريات ودعم التنفيذ الميداني عبر الصين ودول الخليج والمشاريع العابرة للحدود.", bullets: ["البحث عن الموردين والمشتريات", "تنسيق سلاسل الإمداد بين الصين والخليج", "تحديد الموردين والتحقق منهم", "دعم تنفيذ المشاريع والمواقع", "موارد القوى العاملة والموقع", "مواد البناء وFF&E", "تنسيق اللوجستيات والتعبئة", "تنسيق المشاريع العابرة للحدود"], note: "يتم تنسيق القوى العاملة والسكن والنقل وموارد الموقع كجزء من تنفيذ سلسلة الإمداد والمشروع." },
-        { idx: "03", icon: BrainCircuit, title: "الذكاء الاصطناعي وعمليات الأعمال", desc: "مساعدة الشركات على إعادة تصميم ورقمنة العمل من خلال عمليات مدعومة بالذكاء الاصطناعي وأنظمة داخلية مترابطة وأدوات إدارة.", bullets: ["رقمنة عمليات الأعمال", "عمليات مدعومة بالذكاء الاصطناعي", "إدارة العملاء وCRM", "سير العمل والأنظمة الداخلية", "الذكاء التشغيلي", "أدوات الأتمتة والإدارة", "عمليات المشتريات والمشاريع", "أنظمة القوى العاملة والإدارة"], note: "تركز GCI على نماذج التشغيل وكفاءة التنفيذ، وليس على التعهيد البرمجي المستقل." }
+        { idx: "02", icon: Network, title: "سلسلة الإمداد وتنفيذ المشاريع", desc: "ربط الموردين المؤهلين وموارد المشتريات ودعم التنفيذ الميداني عبر الصين ودول الخليج والمشاريع العابرة للحدود.", bullets: ["البحث عن الموردين والمشتريات", "تنسيق سلاسل الإمداد بين الصين والخليج", "تحديد الموردين والتحقق منهم", "دعم تنفيذ المشاريع والمواقع", "تنسيق الخدمات اللوجستية والتعبئة", "مواد البناء وFF&E", "توريد المعدات والمنتجات الصناعية", "تنسيق المشاريع العابرة للحدود"], note: "تنسق GCI أعمال التوريد والمشتريات والخدمات اللوجستية وإمدادات المشاريع مع الموردين وشركاء التنفيذ المؤهلين." },
+        { idx: "03", icon: UsersRound, title: "شبكة القوى العاملة وموارد الموقع", desc: "ربط احتياجات القوى العاملة لمشاريع الإمارات ودول الخليج بشركاء توظيف مؤهلين وموارد قوى عاملة في آسيا وأفريقيا.", bullets: ["شبكة شركاء التوظيف في الخارج", "تنسيق العمالة الماهرة وشبه الماهرة والعامة", "تنسيق فحص المرشحين واختبارات المهارات", "تنسيق التعبئة والوثائق والوصول إلى مواقع العمل", "تنسيق السكن والنقل وموارد الموقع", "دعم القوى العاملة لمشاريع الإمارات والخليج", "تنسيق مصادر القوى العاملة من عدة دول", "التنسيق مع شركاء توظيف مرخصين"], note: "تنسق GCI حلول القوى العاملة من خلال شركاء توظيف وقوى عاملة مرخصين حسب الأصول. وتتولى جهات خارجية مرخصة خدمات التوظيف والعمل والتأشيرات وتوريد العمالة الخاضعة للتنظيم." },
+        { idx: "04", icon: BrainCircuit, title: "الذكاء الاصطناعي وعمليات الأعمال", desc: "مساعدة الشركات على إعادة تصميم ورقمنة العمل من خلال عمليات مدعومة بالذكاء الاصطناعي وأنظمة داخلية مترابطة وأدوات إدارة.", bullets: ["رقمنة عمليات الأعمال", "عمليات مدعومة بالذكاء الاصطناعي", "إدارة العملاء وCRM", "سير العمل والأنظمة الداخلية", "الذكاء التشغيلي", "أدوات الأتمتة والإدارة", "عمليات المشتريات والمشاريع", "أنظمة القوى العاملة والإدارة"], note: "تركز GCI على نماذج التشغيل وكفاءة التنفيذ، وليس على التعهيد البرمجي المستقل." }
       ]
     },
     ES: {
-      label: "Capacidades", title: "TRES CAPACIDADES. UNA PLATAFORMA DE EJECUCIÓN.", subtitle: "GCI integra acceso a mercados, recursos transfronterizos y sistemas operativos para convertir oportunidades en ejecución.", supportingLabel: "Capacidades complementarias",
+      label: "Capacidades", title: "CUATRO CAPACIDADES. UNA PLATAFORMA DE EJECUCIÓN.", subtitle: "GCI integra acceso a mercados, recursos transfronterizos y sistemas operativos para convertir oportunidades en ejecución.", supportingLabel: "Capacidades complementarias",
       services: [
         { idx: "01", icon: Compass, title: "ENTRADA AL MERCADO Y EXPANSIÓN EMPRESARIAL", desc: "Ayudamos a las empresas a entrar, establecerse y crecer en nuevos mercados mediante estrategia, alianzas locales y apoyo coordinado a la ejecución.", bullets: ["Estrategia de entrada al mercado", "Alianzas locales", "Apoyo al establecimiento empresarial", "Coordinación regulatoria y de licencias", "Expansión empresarial", "Coordinación bancaria y fiscal", "Desarrollo de negocio y coordinación comercial", "Apoyo continuo a la ejecución local"], note: "GCI coordina requisitos de establecimiento, licencias, banca, fiscalidad y cumplimiento con proveedores locales cualificados; el asesoramiento regulado corresponde a profesionales autorizados." },
-        { idx: "02", icon: Network, title: "CADENA DE SUMINISTRO Y EJECUCIÓN DE PROYECTOS", desc: "Conectamos proveedores cualificados, recursos de compras y apoyo a la ejecución en China, el CCG y proyectos transfronterizos.", bullets: ["Búsqueda de proveedores y compras", "Coordinación de suministro China / CCG", "Identificación y verificación de proveedores", "Apoyo a proyectos y obra", "Personal y recursos de obra", "Materiales de construcción y FF&E", "Coordinación logística / movilización", "Coordinación de proyectos transfronterizos"], note: "El personal, alojamiento, transporte y los recursos de obra se coordinan como parte de la ejecución integral de la cadena de suministro y del proyecto." },
-        { idx: "03", icon: BrainCircuit, title: "IA Y OPERACIONES EMPRESARIALES", desc: "Ayudamos a rediseñar y digitalizar el trabajo mediante operaciones con IA, sistemas internos conectados y herramientas de gestión.", bullets: ["Digitalización de procesos", "Operaciones habilitadas por IA", "CRM y operaciones de clientes", "Flujos de trabajo y sistemas internos", "Inteligencia operativa", "Automatización y herramientas de gestión", "Operaciones de compras y proyectos", "Sistemas de personal y gestión"], note: "GCI se centra en modelos operativos y eficiencia de ejecución, no en la subcontratación aislada de software." }
+        { idx: "02", icon: Network, title: "CADENA DE SUMINISTRO Y EJECUCIÓN DE PROYECTOS", desc: "Conectamos proveedores cualificados, recursos de compras y apoyo a la ejecución en China, el CCG y proyectos transfronterizos.", bullets: ["Búsqueda de proveedores y compras", "Coordinación de suministro China / CCG", "Identificación y verificación de proveedores", "Apoyo a proyectos y obra", "Coordinación logística / movilización", "Materiales de construcción y FF&E", "Suministro de equipos y productos industriales", "Coordinación de proyectos transfronterizos"], note: "GCI coordina el abastecimiento, las compras, la logística y el suministro para proyectos con proveedores y socios de ejecución cualificados." },
+        { idx: "03", icon: UsersRound, title: "RED DE FUERZA LABORAL Y RECURSOS DE OBRA", desc: "Conectamos las necesidades de personal para proyectos en EAU y el CCG con socios de contratación cualificados y recursos laborales en Asia y África.", bullets: ["Red Internacional de Socios de Contratación", "Coordinación de Personal Cualificado, Semicualificado y General", "Coordinación de Selección de Candidatos y Pruebas de Oficio", "Coordinación de Movilización, Documentación y Despliegue", "Coordinación de Alojamiento, Transporte y Recursos de Obra", "Apoyo de Personal para Proyectos en EAU / CCG", "Abastecimiento de Personal Multipaís", "Coordinación con Socios de Contratación Autorizados"], note: "GCI coordina soluciones de personal mediante socios de contratación y mano de obra debidamente autorizados. Los servicios regulados de contratación, empleo, visados y suministro de mano de obra son prestados por proveedores externos autorizados." },
+        { idx: "04", icon: BrainCircuit, title: "IA Y OPERACIONES EMPRESARIALES", desc: "Ayudamos a rediseñar y digitalizar el trabajo mediante operaciones con IA, sistemas internos conectados y herramientas de gestión.", bullets: ["Digitalización de procesos", "Operaciones habilitadas por IA", "CRM y operaciones de clientes", "Flujos de trabajo y sistemas internos", "Inteligencia operativa", "Automatización y herramientas de gestión", "Operaciones de compras y proyectos", "Sistemas de personal y gestión"], note: "GCI se centra en modelos operativos y eficiencia de ejecución, no en la subcontratación aislada de software." }
       ]
     }
   }[lang];
@@ -72,6 +81,12 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
     ZH: "查看产品展厅 →",
     AR: "استكشف معرض المنتجات →",
     ES: "Explorar catálogo de productos →"
+  }[lang];
+  const workforceLinkText = {
+    EN: "Explore Workforce Network →",
+    ZH: "查看劳动力网络 →",
+    AR: "استكشف شبكة القوى العاملة →",
+    ES: "Explorar Red de Fuerza Laboral →"
   }[lang];
 
   return (
@@ -94,7 +109,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
           {copy.services.map((svc) => {
             const Icon = svc.icon;
             const primaryBullets = svc.bullets.slice(0, 5);
@@ -143,6 +158,11 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
                 </a>
               )}
               {svc.idx === "03" && (
+                <a href="https://workforce.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                  {workforceLinkText}
+                </a>
+              )}
+              {svc.idx === "04" && (
                 <a href="https://25h.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
                   {aiSystemsLinkText}
                 </a>
