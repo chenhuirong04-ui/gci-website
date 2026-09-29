@@ -9,12 +9,16 @@ function items(): PublisherItem[] {
   return Array.from({ length: 7 }, (_, index) => ({
     briefing_date: today,
     title: `TEST-UAT Daily Briefing ${index + 1}`,
+    title_en: `TEST-UAT Daily Briefing EN ${index + 1}`,
     country: "TEST-UAT Country",
     sector: "TEST-UAT Sector",
     category: "TEST-UAT Category",
     summary: `TEST-UAT Summary ${index + 1}`,
+    summary_en: `TEST-UAT Summary EN ${index + 1}`,
     why_it_matters: `TEST-UAT Why ${index + 1}`,
+    why_it_matters_en: `TEST-UAT Why EN ${index + 1}`,
     gci_opportunity: `TEST-UAT Opportunity ${index + 1}`,
+    gci_opportunity_en: `TEST-UAT Opportunity EN ${index + 1}`,
     stage: "TEST-UAT Stage",
     source_name: "TEST-UAT Source",
     source_url: `https://example.com/TEST-UAT-${index + 1}`,
@@ -54,7 +58,8 @@ function fakeEnvironment(options: { failApi?: boolean } = {}) {
         const date = url.searchParams.get("briefing_date")?.replace(/^eq\./, "");
         const status = url.searchParams.get("status")?.replace(/^eq\./, "");
         const publishedAt = url.searchParams.get("published_at")?.replace(/^eq\./, "");
-        const changed = rows.filter((row) => row.briefing_date === date && (!status || row.status === status) && (!publishedAt || row.published_at === decodeURIComponent(publishedAt)));
+        const id = url.searchParams.get("id")?.replace(/^eq\./, "");
+        const changed = rows.filter((row) => (!date || row.briefing_date === date) && (!id || row.id === decodeURIComponent(id)) && (!status || row.status === status) && (!publishedAt || row.published_at === decodeURIComponent(publishedAt)));
         changed.forEach((row) => Object.assign(row, body));
         return json(changed);
       }
@@ -149,4 +154,20 @@ test("8. identical resubmission is idempotent", async () => {
   const second = await publishDailyBriefing(items(), dependencies(env.fakeFetch));
   assert.equal(second.idempotent, true);
   assert.equal(env.rows.length, 7);
+});
+
+test("9. published content can be enriched with English fields without duplicate rows", async () => {
+  const env = fakeEnvironment();
+  const input = items();
+  await publishDailyBriefing(input, dependencies(env.fakeFetch));
+  env.rows.forEach((row) => {
+    row.title_en = null;
+    row.summary_en = null;
+    row.why_it_matters_en = null;
+    row.gci_opportunity_en = null;
+  });
+  const result = await publishDailyBriefing(input, dependencies(env.fakeFetch));
+  assert.equal(result.published_count, 7);
+  assert.equal(env.rows.length, 7);
+  assert.equal(env.rows.every((row) => row.title_en?.startsWith("TEST-UAT")), true);
 });

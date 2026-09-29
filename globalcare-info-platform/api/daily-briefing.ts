@@ -4,12 +4,16 @@ interface DailyBriefingItem {
   id: string;
   briefing_date: string;
   title: string;
+  title_en: string | null;
   country: string | null;
   sector: string | null;
   category: string | null;
   summary: string | null;
+  summary_en: string | null;
   why_it_matters: string | null;
+  why_it_matters_en: string | null;
   gci_opportunity: string | null;
+  gci_opportunity_en: string | null;
   stage: string | null;
   source_name: string | null;
   source_url: string | null;
@@ -63,8 +67,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const fields = [
-      "id", "briefing_date", "title", "country", "sector", "category", "summary",
-      "why_it_matters", "gci_opportunity", "stage", "source_name", "source_url",
+      "id", "briefing_date", "title", "title_en", "country", "sector", "category", "summary", "summary_en",
+      "why_it_matters", "why_it_matters_en", "gci_opportunity", "gci_opportunity_en", "stage", "source_name", "source_url",
       "image_url", "sort_order", "is_featured", "status", "published_at", "created_at", "updated_at",
     ].join(",");
     const response = await fetch(

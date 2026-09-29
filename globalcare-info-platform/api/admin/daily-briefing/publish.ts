@@ -4,12 +4,16 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 export interface PublisherItem {
   briefing_date: string;
   title: string;
+  title_en: string;
   country: string;
   sector: string;
   category: string;
   summary: string;
+  summary_en: string;
   why_it_matters: string;
+  why_it_matters_en: string;
   gci_opportunity: string;
+  gci_opportunity_en: string;
   stage: string;
   source_name: string;
   source_url: string;
@@ -58,8 +62,8 @@ export class PublisherError extends Error {
 }
 
 const REQUIRED_TEXT_FIELDS: Array<keyof PublisherItem> = [
-  "briefing_date", "title", "country", "sector", "category", "summary",
-  "why_it_matters", "gci_opportunity", "stage", "source_name", "source_url",
+  "briefing_date", "title", "title_en", "country", "sector", "category", "summary", "summary_en",
+  "why_it_matters", "why_it_matters_en", "gci_opportunity", "gci_opportunity_en", "stage", "source_name", "source_url",
 ];
 
 export function normalizeTitle(title: string) {
@@ -133,12 +137,16 @@ function validateItems(input: unknown, today: string): PublisherItem[] {
   return validated.map((item) => ({
     briefing_date: item.briefing_date,
     title: item.title.trim(),
+    title_en: item.title_en.trim(),
     country: item.country.trim(),
     sector: item.sector.trim(),
     category: item.category.trim(),
     summary: item.summary.trim(),
+    summary_en: item.summary_en.trim(),
     why_it_matters: item.why_it_matters.trim(),
+    why_it_matters_en: item.why_it_matters_en.trim(),
     gci_opportunity: item.gci_opportunity.trim(),
+    gci_opportunity_en: item.gci_opportunity_en.trim(),
     stage: item.stage.trim(),
     source_name: item.source_name.trim(),
     source_url: item.source_url.trim(),
@@ -154,6 +162,21 @@ function samePublishedContent(existing: StoredItem[], items: PublisherItem[]) {
     const stored = byTitle.get(normalizeTitle(item.title));
     return stored?.status === "published" && (Object.keys(item) as Array<keyof PublisherItem>)
       .every((key) => stored[key] === item[key]);
+  });
+}
+
+const CORE_CONTENT_KEYS: Array<keyof PublisherItem> = [
+  "briefing_date", "title", "country", "sector", "category", "summary",
+  "why_it_matters", "gci_opportunity", "stage", "source_name", "source_url",
+  "sort_order", "is_featured",
+];
+
+function samePublishedCoreContent(existing: StoredItem[], items: PublisherItem[]) {
+  if (existing.length !== items.length) return false;
+  const byTitle = new Map(existing.map((item) => [item.normalized_title, item]));
+  return items.every((item) => {
+    const stored = byTitle.get(normalizeTitle(item.title));
+    return stored?.status === "published" && CORE_CONTENT_KEYS.every((key) => stored[key] === item[key]);
   });
 }
 
@@ -232,7 +255,7 @@ export async function publishDailyBriefing(input: unknown, dependencies: Publish
     throw new PublisherError(400, "MIXED_DATES", "All items must use the same briefing_date");
   }
   const expectedTitles = new Set(items.map((item) => normalizeTitle(item.title)));
-  const select = "id,briefing_date,title,normalized_title,country,sector,category,summary,why_it_matters,gci_opportunity,stage,source_name,source_url,sort_order,is_featured,status,published_at";
+  const select = "id,briefing_date,title,title_en,normalized_title,country,sector,category,summary,summary_en,why_it_matters,why_it_matters_en,gci_opportunity,gci_opportunity_en,stage,source_name,source_url,sort_order,is_featured,status,published_at";
   const sameDay = await loadRows(fetchFn, supabaseUrl, dependencies.serviceRoleKey, new URLSearchParams({
     select,
     briefing_date: `eq.${date}`,
@@ -240,6 +263,41 @@ export async function publishDailyBriefing(input: unknown, dependencies: Publish
   }));
 
   if (samePublishedContent(sameDay, items)) {
+    const checks = await verifyPublicSurfaces(fetchFn, siteOrigin, date, expectedTitles);
+    return {
+      briefing_date: date,
+      approved_count: 0,
+      published_count: items.length,
+      items_count: items.length,
+      duplicate_check: { ok: true, same_day: "idempotent", recent_7_days: "clear" },
+      source_check: { ok: true, checked: items.length },
+      ...checks,
+      idempotent: true,
+    };
+  }
+  if (samePublishedCoreContent(sameDay, items)) {
+    const byTitle = new Map(sameDay.map((item) => [item.normalized_title, item]));
+    for (const item of items) {
+      const stored = byTitle.get(normalizeTitle(item.title));
+      const enrichmentResponse = await fetchFn(
+        `${supabaseUrl}/rest/v1/gci_daily_briefing?id=eq.${encodeURIComponent(stored?.id ?? "")}&status=eq.published`,
+        {
+          method: "PATCH",
+          headers: serviceHeaders(dependencies.serviceRoleKey, {
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          }),
+          body: JSON.stringify({
+            title_en: item.title_en,
+            summary_en: item.summary_en,
+            why_it_matters_en: item.why_it_matters_en,
+            gci_opportunity_en: item.gci_opportunity_en,
+          }),
+        },
+      );
+      const enriched = await responseJson<StoredItem[]>(enrichmentResponse, "English content enrichment");
+      if (enriched.length !== 1) throw new PublisherError(502, "SELF_CHECK_FAILED", "English content enrichment count mismatch");
+    }
     const checks = await verifyPublicSurfaces(fetchFn, siteOrigin, date, expectedTitles);
     return {
       briefing_date: date,

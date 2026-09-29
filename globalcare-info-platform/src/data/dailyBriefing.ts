@@ -4,12 +4,16 @@ export interface DailyBriefingItem {
   id: string;
   briefing_date: string;
   title: string;
+  title_en: string | null;
   country: string | null;
   sector: string | null;
   category: string | null;
   summary: string | null;
+  summary_en: string | null;
   why_it_matters: string | null;
+  why_it_matters_en: string | null;
   gci_opportunity: string | null;
+  gci_opportunity_en: string | null;
   stage: string | null;
   source_name: string | null;
   source_url: string | null;
@@ -20,6 +24,42 @@ export interface DailyBriefingItem {
   published_at: string | null;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface LocalizedBriefingContent {
+  title: string;
+  summary: string;
+  why_it_matters: string;
+  gci_opportunity: string;
+}
+
+function safeEnglishFallback(item: DailyBriefingItem): LocalizedBriefingContent {
+  const country = item.country || "Global";
+  const sector = item.sector || "business";
+  return {
+    title: `${country} — ${sector} opportunity update`,
+    summary: `Latest verified market and project intelligence for ${country} in ${sector}.`,
+    why_it_matters: "This development may affect market access, procurement, investment or project execution.",
+    gci_opportunity: "Review the original source and assess relevant partnership, supply and execution opportunities.",
+  };
+}
+
+export function localizeBriefingItem(item: DailyBriefingItem, lang: "EN" | "ZH" | "AR" | "ES"): LocalizedBriefingContent {
+  if (lang === "ZH") {
+    return {
+      title: item.title,
+      summary: item.summary || "",
+      why_it_matters: item.why_it_matters || "",
+      gci_opportunity: item.gci_opportunity || "",
+    };
+  }
+  const fallback = safeEnglishFallback(item);
+  return {
+    title: item.title_en?.trim() || fallback.title,
+    summary: item.summary_en?.trim() || fallback.summary,
+    why_it_matters: item.why_it_matters_en?.trim() || fallback.why_it_matters,
+    gci_opportunity: item.gci_opportunity_en?.trim() || fallback.gci_opportunity,
+  };
 }
 
 export interface DailyBriefingResponse {

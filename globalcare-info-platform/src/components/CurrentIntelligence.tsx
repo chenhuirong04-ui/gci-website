@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, CalendarDays, ExternalLink, MapPin } from "lucide-react";
-import imgGlobalHub from "../assets/images/gci_global_hub_connection_1780768265492.png";
-import { resolveCountryArticleImage } from "../data/insightImages";
-import type { DailyBriefingItem, DailyBriefingResponse } from "../data/dailyBriefing";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { resolveDailyBriefingImage } from "../data/insightImages";
+import { localizeBriefingItem, type DailyBriefingItem, type DailyBriefingResponse } from "../data/dailyBriefing";
 import type { LanguageCode } from "../data/corporateData";
 
 type Lang = LanguageCode;
@@ -18,7 +17,7 @@ const copy = {
   },
   opportunity: { EN: "GCI OPPORTUNITY", ZH: "GCI 机会判断", AR: "فرصة GCI", ES: "OPORTUNIDAD PARA GCI" },
   stage: { EN: "STAGE", ZH: "阶段", AR: "المرحلة", ES: "ETAPA" },
-  source: { EN: "SOURCE", ZH: "查看来源", AR: "المصدر", ES: "FUENTE" },
+  details: { EN: "VIEW BRIEFING", ZH: "查看详情", AR: "عرض الإحاطة", ES: "VER INFORME" },
   all: { EN: "VIEW DAILY BRIEFING", ZH: "查看完整每日晨报", AR: "عرض الإحاطة اليومية", ES: "VER INFORME DIARIO" },
   latest: { EN: "LATEST PUBLISHED BRIEFING", ZH: "最近发布晨报", AR: "أحدث إحاطة منشورة", ES: "ÚLTIMO INFORME PUBLICADO" },
   updated: { EN: "UPDATED", ZH: "更新时间", AR: "آخر تحديث", ES: "ACTUALIZADO" },
@@ -37,7 +36,7 @@ function displayTimestamp(value: string | null): string | null {
 }
 
 function itemImage(item: DailyBriefingItem): string {
-  return item.image_url || resolveCountryArticleImage(item.country || "Global", imgGlobalHub);
+  return resolveDailyBriefingImage(item.country, item.sector, item.image_url);
 }
 
 function Meta({ item }: { item: DailyBriefingItem }) {
@@ -97,19 +96,21 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
                 <img src={itemImage(item)} alt="" className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-90" />
               </div>
               <div className="p-5">
+                {(() => { const content = localizeBriefingItem(item, lang); return <>
                 <Meta item={item} />
-                <h3 className="mt-3 text-lg font-serif font-bold leading-snug text-brand-gold-100">{item.title}</h3>
-                {item.summary && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-300">{item.summary}</p>}
-                {item.gci_opportunity && (
+                <h3 className="mt-3 text-lg font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
+                {content.summary && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-300">{content.summary}</p>}
+                {content.gci_opportunity && (
                   <p className="mt-4 border-l border-brand-gold-500/40 pl-3 text-xs leading-relaxed text-brand-gold-200/85">
                     <span className="block mb-1 font-mono font-bold text-brand-gold-400">{copy.opportunity[lang]}</span>
-                    {item.gci_opportunity}
+                    {content.gci_opportunity}
                   </p>
                 )}
                 <div className="mt-4 flex items-center justify-between gap-3 border-t border-brand-gold-500/10 pt-3 text-xs">
                   {item.stage ? <span className="text-slate-400">{copy.stage[lang]} · {item.stage}</span> : <span />}
-                  {item.source_url && <a href={item.source_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-brand-gold-400 hover:text-brand-gold-300">{copy.source[lang]}<ExternalLink className="h-3 w-3" /></a>}
+                  <a href={`/intelligence/daily#briefing-${item.id}`} className="inline-flex items-center gap-1 font-bold text-brand-gold-400 hover:text-brand-gold-300">{copy.details[lang]}<ArrowRight className="h-3 w-3" /></a>
                 </div>
+                </>; })()}
               </div>
             </article>
           ))}
@@ -121,13 +122,15 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
               <article key={item.id} className="grid grid-cols-[88px_1fr] gap-4 rounded-xl border border-brand-gold-500/10 bg-[#060c1a] p-3">
                 <img src={itemImage(item)} alt="" className="h-full min-h-24 w-full rounded-lg object-cover opacity-75" />
                 <div className="min-w-0 py-1">
+                  {(() => { const content = localizeBriefingItem(item, lang); return <>
                   <Meta item={item} />
-                  <h3 className="mt-2 text-sm font-serif font-bold leading-snug text-brand-gold-100">{item.title}</h3>
-                  {item.summary && <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-400">{item.summary}</p>}
+                  <h3 className="mt-2 text-sm font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
+                  {content.summary && <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-400">{content.summary}</p>}
                   <div className="mt-2 flex items-center justify-between gap-2 text-[11px]">
-                    <span className="truncate text-brand-gold-300/75">{item.gci_opportunity}</span>
-                    {item.source_url && <a href={item.source_url} target="_blank" rel="noreferrer" aria-label={`${copy.source[lang]}: ${item.title}`} className="shrink-0 text-brand-gold-400"><ExternalLink className="h-3.5 w-3.5" /></a>}
+                    <span className="truncate text-brand-gold-300/75">{content.gci_opportunity}</span>
+                    <a href={`/intelligence/daily#briefing-${item.id}`} aria-label={`${copy.details[lang]}: ${content.title}`} className="shrink-0 font-bold text-brand-gold-400">{copy.details[lang]}</a>
                   </div>
+                  </>; })()}
                 </div>
               </article>
             ))}

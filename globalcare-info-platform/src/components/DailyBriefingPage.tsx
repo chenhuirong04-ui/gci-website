@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ExternalLink } from "lucide-react";
-import type { DailyBriefingResponse } from "../data/dailyBriefing";
+import { localizeBriefingItem, type DailyBriefingResponse } from "../data/dailyBriefing";
+import { resolveDailyBriefingImage } from "../data/insightImages";
 import type { LanguageCode } from "../data/corporateData";
 
 type Lang = LanguageCode;
@@ -15,10 +16,10 @@ export default function DailyBriefingPage({ lang }: { lang: Lang }) {
   }, [date]);
 
   const ui = {
-    EN: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Source" },
-    ZH: { title: "GCI 每日商业情报", back: "返回首页", label: "DAILY BRIEFING", published: "发布时间", browse: "浏览日期", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Source" },
-    AR: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Source" },
-    ES: { title: "Inteligencia diaria de mercado de GCI", back: "Volver al inicio", label: "INFORME DIARIO", published: "Publicado", browse: "Consultar fecha", why: "POR QUÉ ES IMPORTANTE", opportunity: "OPORTUNIDAD PARA GCI", source: "Fuente" }
+    EN: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Original Source" },
+    ZH: { title: "GCI 每日商业情报", back: "返回首页", label: "DAILY BRIEFING", published: "发布时间", browse: "浏览日期", why: "重要性", opportunity: "GCI 机会判断", source: "原始来源" },
+    AR: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Original Source" },
+    ES: { title: "Inteligencia diaria de mercado de GCI", back: "Volver al inicio", label: "INFORME DIARIO", published: "Publicado", browse: "Consultar fecha", why: "POR QUÉ ES IMPORTANTE", opportunity: "OPORTUNIDAD PARA GCI", source: "Fuente original" }
   }[lang];
 
   return (
@@ -44,7 +45,10 @@ export default function DailyBriefingPage({ lang }: { lang: Lang }) {
 
         <div className="mt-6 space-y-3">
           {data?.items.map((item, index) => (
-            <article key={item.id} className="rounded-xl border border-brand-gold-500/12 bg-[#071022] p-4 md:p-5">
+            <article id={`briefing-${item.id}`} key={item.id} className="scroll-mt-24 overflow-hidden rounded-xl border border-brand-gold-500/12 bg-[#071022]">
+              <img src={resolveDailyBriefingImage(item.country, item.sector, item.image_url)} alt="" className="h-40 w-full object-cover opacity-75 md:h-52" />
+              <div className="p-4 md:p-5">
+              {(() => { const content = localizeBriefingItem(item, lang); return <>
               <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-brand-gold-400/75">
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {item.country && <span>{item.country}</span>}
@@ -52,13 +56,15 @@ export default function DailyBriefingPage({ lang }: { lang: Lang }) {
                 {item.category && <span>{item.category}</span>}
                 {item.stage && <span>{item.stage}</span>}
               </div>
-              <h2 className="mt-3 text-xl md:text-2xl font-serif font-bold text-brand-gold-100">{item.title}</h2>
-              {item.summary && <p className="mt-3 text-sm leading-relaxed text-slate-300">{item.summary}</p>}
+              <h2 className="mt-3 text-xl md:text-2xl font-serif font-bold text-brand-gold-100">{content.title}</h2>
+              {content.summary && <p className="mt-3 text-sm leading-relaxed text-slate-300">{content.summary}</p>}
               <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {item.why_it_matters && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.why}</p><p className="mt-2 text-sm leading-relaxed text-slate-400">{item.why_it_matters}</p></div>}
-                {item.gci_opportunity && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.opportunity}</p><p className="mt-2 text-sm leading-relaxed text-brand-gold-200/85">{item.gci_opportunity}</p></div>}
+                {content.why_it_matters && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.why}</p><p className="mt-2 text-sm leading-relaxed text-slate-400">{content.why_it_matters}</p></div>}
+                {content.gci_opportunity && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.opportunity}</p><p className="mt-2 text-sm leading-relaxed text-brand-gold-200/85">{content.gci_opportunity}</p></div>}
               </div>
-              {item.source_url && <a href={item.source_url} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs text-brand-gold-400 hover:text-brand-gold-300">{item.source_name || ui.source}<ExternalLink className="h-3.5 w-3.5" /></a>}
+              {item.source_url && <a href={item.source_url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs text-brand-gold-400 hover:text-brand-gold-300">{ui.source}{item.source_name ? ` · ${item.source_name}` : ""}<ExternalLink className="h-3.5 w-3.5" /></a>}
+              </>; })()}
+              </div>
             </article>
           ))}
         </div>
