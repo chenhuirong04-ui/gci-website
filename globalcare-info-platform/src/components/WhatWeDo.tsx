@@ -109,7 +109,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-stretch">
           {copy.services.map((svc) => {
             const Icon = svc.icon;
             const primaryBullets = svc.bullets.slice(0, 5);
@@ -117,19 +117,19 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
             return (
             <div
               key={svc.idx}
-              className="relative p-4 sm:p-5 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
+              className="relative h-full p-4 sm:p-5 xl:p-4 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
             >
               <span className="absolute -right-2 -top-6 text-[7rem] font-display text-brand-gold-500/[0.035] select-none">{svc.idx}</span>
               <div className="relative flex-1">
-                <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-start justify-between gap-4 mb-4 xl:mb-3">
                   <div className="p-2.5 bg-brand-gold-500/5 rounded-xl border border-brand-gold-500/15">
                     <Icon className="w-5 h-5 text-brand-gold-400" />
                   </div>
                   <span className="text-xs font-mono text-brand-gold-500/70">{svc.idx}</span>
                 </div>
-                <h3 className="text-lg font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">{svc.title}</h3>
-                <p className="text-[13px] text-brand-gold-200/80 font-light leading-snug mt-3 mb-4">{svc.desc}</p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2 border-t border-brand-gold-500/10 pt-4 text-xs font-medium text-brand-gold-100/85">
+                <h3 className="text-lg xl:text-base font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">{svc.title}</h3>
+                <p className="text-[13px] xl:text-xs text-brand-gold-200/80 font-light leading-snug mt-3 mb-4 xl:mb-3">{svc.desc}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-2 xl:gap-y-1.5 border-t border-brand-gold-500/10 pt-4 xl:pt-3 text-xs xl:text-[11px] font-medium text-brand-gold-100/85">
                   {primaryBullets.map((bullet) => (
                     <li key={bullet} className="flex gap-2 items-start leading-snug">
                       <CheckCircle2 className="w-3.5 h-3.5 text-brand-gold-500 shrink-0 mt-0.5" />
@@ -137,9 +137,9 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 pt-3 border-t border-brand-gold-500/[0.07]">
+                <div className="mt-4 xl:mt-3 pt-3 border-t border-brand-gold-500/[0.07]">
                   <p className="mb-2 text-[9px] uppercase tracking-[0.16em] text-brand-gold-500/40">{copy.supportingLabel}</p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] leading-snug text-brand-gold-300/45">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-1.5 xl:gap-y-1 text-[11px] xl:text-[10px] leading-snug text-brand-gold-300/45">
                     {supportingBullets.map((bullet) => (
                       <li key={bullet} className="flex gap-2 items-start leading-relaxed">
                         <span className="w-1 h-1 rounded-full bg-brand-gold-500/35 shrink-0 mt-1.5" />
