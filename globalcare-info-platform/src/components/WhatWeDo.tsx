@@ -67,6 +67,12 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
     AR: "استكشف أنظمة الأعمال 25H ←",
     ES: "Explorar sistemas empresariales 25H →"
   }[lang];
+  const productShowroomLinkText = {
+    EN: "Explore Product Showroom →",
+    ZH: "查看产品展厅 →",
+    AR: "استكشف معرض المنتجات →",
+    ES: "Explorar catálogo de productos →"
+  }[lang];
 
   return (
     <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
@@ -131,6 +137,11 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
               <p className="relative mt-3 pt-3 border-t border-brand-gold-500/10 text-[10px] leading-snug text-brand-gold-300/60 flex gap-2">
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 mt-0.5" />{svc.note}
               </p>
+              {svc.idx === "02" && (
+                <a href="https://living.globalcareinfo.com/showroom" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                  {productShowroomLinkText}
+                </a>
+              )}
               {svc.idx === "03" && (
                 <a href="https://25h.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
                   {aiSystemsLinkText}
