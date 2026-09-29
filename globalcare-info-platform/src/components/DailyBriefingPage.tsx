@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { localizeBriefingItem, type DailyBriefingResponse } from "../data/dailyBriefing";
 import { resolveDailyBriefingImage } from "../data/insightImages";
 import type { LanguageCode } from "../data/corporateData";
@@ -16,10 +16,10 @@ export default function DailyBriefingPage({ lang }: { lang: Lang }) {
   }, [date]);
 
   const ui = {
-    EN: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Original Source" },
-    ZH: { title: "GCI 每日商业情报", back: "返回首页", label: "DAILY BRIEFING", published: "发布时间", browse: "浏览日期", why: "重要性", opportunity: "GCI 机会判断", source: "原始来源" },
-    AR: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY", source: "Original Source" },
-    ES: { title: "Inteligencia diaria de mercado de GCI", back: "Volver al inicio", label: "INFORME DIARIO", published: "Publicado", browse: "Consultar fecha", why: "POR QUÉ ES IMPORTANTE", opportunity: "OPORTUNIDAD PARA GCI", source: "Fuente original" }
+    EN: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY" },
+    ZH: { title: "GCI 每日商业情报", back: "返回首页", label: "DAILY BRIEFING", published: "发布时间", browse: "浏览日期", why: "重要性", opportunity: "GCI 机会判断" },
+    AR: { title: "GCI Daily Market Intelligence", back: "Back to Home", label: "DAILY BRIEFING", published: "Published", browse: "Browse date", why: "WHY IT MATTERS", opportunity: "GCI OPPORTUNITY" },
+    ES: { title: "Inteligencia diaria de mercado de GCI", back: "Volver al inicio", label: "INFORME DIARIO", published: "Publicado", browse: "Consultar fecha", why: "POR QUÉ ES IMPORTANTE", opportunity: "OPORTUNIDAD PARA GCI" }
   }[lang];
 
   return (
@@ -62,7 +62,6 @@ export default function DailyBriefingPage({ lang }: { lang: Lang }) {
                 {content.why_it_matters && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.why}</p><p className="mt-2 text-sm leading-relaxed text-slate-400">{content.why_it_matters}</p></div>}
                 {content.gci_opportunity && <div><p className="text-[10px] font-mono font-bold tracking-wider text-brand-gold-400">{ui.opportunity}</p><p className="mt-2 text-sm leading-relaxed text-brand-gold-200/85">{content.gci_opportunity}</p></div>}
               </div>
-              {item.source_url && <a href={item.source_url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs text-brand-gold-400 hover:text-brand-gold-300">{ui.source}{item.source_name ? ` · ${item.source_name}` : ""}<ExternalLink className="h-3.5 w-3.5" /></a>}
               </>; })()}
               </div>
             </article>
