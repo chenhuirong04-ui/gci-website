@@ -91,7 +91,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
 
   return (
     <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
-      <div className="w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
         <div className={`max-w-3xl mb-4 ${isRtl ? "text-right" : "text-left"}`}>
@@ -109,7 +109,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 min-[1280px]:grid-cols-4 gap-4 items-stretch">
           {copy.services.map((svc) => {
             const Icon = svc.icon;
             const primaryBullets = svc.bullets.slice(0, 5);
@@ -117,7 +117,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
             return (
             <div
               key={svc.idx}
-              className="relative h-full p-4 sm:p-5 xl:p-4 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
+              className="relative h-full min-w-0 p-4 sm:p-5 xl:p-4 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
             >
               <span className="absolute -right-2 -top-6 text-[7rem] font-display text-brand-gold-500/[0.035] select-none">{svc.idx}</span>
               <div className="relative flex-1">
