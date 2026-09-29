@@ -91,6 +91,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
 
   return (
     <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
+      <style>{`@media (min-width: 1280px) { #what-we-do .core-capabilities-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }`}</style>
       <div className="w-full max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
@@ -109,7 +110,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 min-[1280px]:grid-cols-4 gap-4 items-stretch">
+        <div className="core-capabilities-grid grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
           {copy.services.map((svc) => {
             const Icon = svc.icon;
             const primaryBullets = svc.bullets.slice(0, 5);
