@@ -10,7 +10,8 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "gci-insights": "tsx scripts/gci-insights/generate.ts",
-    "gci-daily-briefing": "tsx scripts/gci-daily-briefing/ingest.ts"
+    "gci-daily-briefing": "tsx scripts/gci-daily-briefing/ingest.ts",
+    "test:daily-briefing-publisher": "tsx --test tests/daily-briefing-publish.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
