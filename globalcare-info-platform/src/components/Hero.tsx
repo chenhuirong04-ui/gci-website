@@ -182,38 +182,38 @@ export default function Hero({ lang, pack }: HeroProps) {
   };
 
   return (
-    <section id="home" className="relative pt-8 pb-4 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
+    <section id="home" className="relative pt-5 pb-3 lg:py-5 bg-gradient-to-b from-[#030611] to-[#070b18] overflow-hidden border-b border-brand-gold-500/10">
       
       {/* Decorative Atmosphere glow arcs */}
       <div className="absolute top-0 left-[20%] w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-[10%] w-[400px] h-[400px] rounded-full bg-brand-navy-600/10 blur-[130px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10" dir={isRtl ? "rtl" : "ltr"}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Left Side: Editorial positioning and CTAs */}
           <div className="lg:col-span-5 text-left flex flex-col justify-center">
             
             {/* Platform Badge */}
-            <div className="inline-flex items-center gap-5 mb-8 px-6 py-5 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl shadow-2xl backdrop-blur-md select-none">
+            <div className="inline-flex items-center gap-4 mb-5 px-4 py-3 bg-[#050a15]/90 border border-brand-gold-500/20 rounded-2xl shadow-2xl backdrop-blur-md select-none">
               <img
                 src={gciDoorIcon}
                 alt="GCI Door Icon"
-                className="h-14 w-auto object-contain shrink-0"
+                className="h-11 w-auto object-contain shrink-0"
                 draggable={false}
               />
               <div className="flex flex-col gap-0.5">
-                <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
+                <span className="text-lg font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
                   Cross-Border Business
                 </span>
-                <span className="text-xl font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
+                <span className="text-lg font-sans font-bold tracking-[0.12em] text-brand-gold-100 uppercase leading-tight">
                   Execution Platform
                 </span>
               </div>
             </div>
 
             {/* Elegant Corporate Tagbadge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-brand-gold-500/10 border border-brand-gold-500/20 rounded-full mr-auto mb-8">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-brand-gold-500/10 border border-brand-gold-500/20 rounded-full mr-auto mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-gold-500 animate-pulse" />
               <span className="text-xs font-sans text-brand-gold-300 font-medium tracking-wide">
                 {pack.heroBadge}
@@ -226,21 +226,21 @@ export default function Hero({ lang, pack }: HeroProps) {
             </h1>
 
             {/* Supporting line */}
-            <h2 className="text-lg sm:text-xl font-serif text-brand-gold-300 font-light italic tracking-wide mt-4 mb-6 leading-relaxed">
+            <h2 className="text-lg sm:text-xl font-serif text-brand-gold-300 font-light italic tracking-wide mt-3 mb-4 leading-snug">
               {pack.heroSubtitle}
             </h2>
 
             {/* Clear, straightforward paragraphs without stacking Jargons - warm ivory text */}
-            <p className="text-base text-brand-gold-100/90 font-light leading-relaxed mb-10">
+            <p className="text-base text-brand-gold-100/90 font-light leading-relaxed mb-6">
               {pack.heroDesc}
             </p>
 
             {/* High-end CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <a
                 onClick={(e) => handleCtaClick(e, "what-we-do")}
                 href="#what-we-do"
-                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] text-sm font-sans font-bold tracking-wide py-3.5 px-8 rounded-lg shadow-xl shadow-brand-gold-500/15 transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-gold-500 to-brand-gold-600 hover:from-brand-gold-400 hover:to-brand-gold-500 text-[#030611] text-sm font-sans font-bold tracking-wide py-3 px-6 rounded-lg shadow-xl shadow-brand-gold-500/15 transition-all duration-300 cursor-pointer active:scale-95"
               >
                 <span>{pack.heroCtaPrimary}</span>
                 <ArrowRight className={`w-4 h-4 stroke-[2.5] ${isRtl ? "rotate-180" : ""}`} />
@@ -249,7 +249,7 @@ export default function Hero({ lang, pack }: HeroProps) {
               <a
                 onClick={(e) => handleCtaClick(e, "contact-section")}
                 href="#contact-section"
-                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-[#090f20]/90 hover:bg-[#0c152e] border border-brand-gold-500/30 text-[#fdfaf2] text-sm font-sans font-semibold tracking-wide py-3.5 px-8 rounded-lg transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full sm:w-auto text-center inline-flex items-center justify-center gap-2 bg-[#090f20]/90 hover:bg-[#0c152e] border border-brand-gold-500/30 text-[#fdfaf2] text-sm font-sans font-semibold tracking-wide py-3 px-6 rounded-lg transition-all duration-300 cursor-pointer active:scale-95"
               >
                 <span>{pack.heroCtaSecondary}</span>
               </a>
@@ -261,7 +261,7 @@ export default function Hero({ lang, pack }: HeroProps) {
           <div className="lg:col-span-7 w-full relative flex flex-col items-center">
             
             {/* Visual Header bar */}
-            <div className="w-full max-w-2xl mx-auto flex items-center justify-between border-b border-brand-gold-500/15 pb-3 mb-5 text-xs font-sans text-brand-gold-300 select-none">
+            <div className="w-full max-w-2xl mx-auto flex items-center justify-between border-b border-brand-gold-500/15 pb-2 mb-3 text-xs font-sans text-brand-gold-300 select-none">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="font-medium tracking-wide">{lang === "ES" ? "China · Oriente Medio · África · Europa" : "China · Middle East · Africa · Europe"}</span>
@@ -276,7 +276,7 @@ export default function Hero({ lang, pack }: HeroProps) {
             </div>
 
             {/* Earth Drawing Plate */}
-            <div className="relative w-full max-w-3xl aspect-[1.38/1] flex items-center justify-center overflow-hidden rounded-2xl border border-brand-gold-500/15 bg-[#02040c] shadow-2xl">
+            <div className="relative w-full max-w-3xl aspect-[1.5/1] lg:aspect-auto lg:h-[420px] flex items-center justify-center overflow-hidden rounded-2xl border border-brand-gold-500/15 bg-[#02040c] shadow-2xl">
               
               {/* Atmospheric Background Art */}
               <div className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none">
@@ -589,7 +589,7 @@ export default function Hero({ lang, pack }: HeroProps) {
             </div>
 
             {/* Instruction footnote */}
-            <p className="text-xs font-sans text-brand-gold-300/60 mt-4 tracking-wide text-center select-none">
+            <p className="text-xs font-sans text-brand-gold-300/60 mt-2 tracking-wide text-center select-none">
               {pack.heroHoverTip}
             </p>
 

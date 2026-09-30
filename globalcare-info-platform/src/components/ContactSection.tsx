@@ -130,7 +130,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
 
   return (
     <>
-      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-8 md:py-9">
+      <section id="market-path-selector" className="relative overflow-hidden border-b border-brand-gold-500/10 bg-[#071021] py-5 md:py-7">
         <div className="absolute inset-0 pointer-events-none opacity-70" aria-hidden="true">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_26%,rgba(194,156,83,.12),transparent_24%),radial-gradient(circle_at_82%_64%,rgba(80,118,157,.12),transparent_28%)]" />
           <svg viewBox="0 0 1440 620" className="h-full w-full" preserveAspectRatio="none">
@@ -140,7 +140,7 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
 
         <div className="relative w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
-          <div className="grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end mb-6">
+          <div className="grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end mb-4">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[.2em] text-brand-gold-400">
                 <Waypoints className="h-4 w-4" />
@@ -195,11 +195,11 @@ export default function ContactSection({ lang, pack }: ContactSectionProps) {
         </div>
       </section>
 
-    <section id="contact-section" className="py-8 md:py-9 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="contact-section" className="py-5 md:py-7 bg-[#030611] border-b border-brand-gold-500/10">
       <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-6 lg:px-8 font-sans" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Head */}
-        <div className="max-w-3xl mb-6 text-left">
+        <div className="max-w-3xl mb-5 text-left">
           <div className="flex items-center gap-2 mb-3">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">

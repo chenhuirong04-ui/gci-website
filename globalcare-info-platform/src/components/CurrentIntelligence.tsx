@@ -71,16 +71,16 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
   const isRtl = lang === "AR";
 
   return (
-    <section id="current-intelligence" className="border-t border-brand-gold-500/10 bg-[#030712] py-8 md:py-9 overflow-hidden">
+    <section id="current-intelligence" className="border-t border-brand-gold-500/10 bg-[#030712] py-5 md:py-7 overflow-hidden">
       <div className="w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-7">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5">
           <div className="max-w-4xl">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <span className="h-px w-8 bg-brand-gold-500" />
               <span className="text-xs font-mono font-bold tracking-[0.18em] text-brand-gold-400">{copy.label[lang]}</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold leading-none tracking-tight text-brand-gold-100">{copy.title[lang]}</h2>
-            <p className="mt-3 text-sm md:text-base text-brand-gold-200/75">{copy.subtitle[lang]}</p>
+            <p className="mt-2 text-sm md:text-base text-brand-gold-200/75">{copy.subtitle[lang]}</p>
           </div>
           <div className="shrink-0 text-xs font-mono text-slate-400">
             <span className="block text-brand-gold-400/70">{copy.latest[lang]}</span>
@@ -89,24 +89,24 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {featured.map((item) => (
             <article key={item.id} className="group overflow-hidden rounded-xl border border-brand-gold-500/15 bg-[#071022]">
-              <div className="h-32 overflow-hidden">
+              <div className="h-28 overflow-hidden">
                 <img src={itemImage(item)} alt="" className="h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-90" />
               </div>
-              <div className="p-5">
+              <div className="p-4">
                 {(() => { const content = localizeBriefingItem(item, lang); return <>
                 <Meta item={item} />
-                <h3 className="mt-3 text-lg font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
-                {content.summary && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-300">{content.summary}</p>}
+                <h3 className="mt-2 text-base font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
+                {content.summary && <p className="mt-1.5 line-clamp-3 text-sm leading-snug text-slate-300">{content.summary}</p>}
                 {content.gci_opportunity && (
-                  <p className="mt-4 border-l border-brand-gold-500/40 pl-3 text-xs leading-relaxed text-brand-gold-200/85">
+                  <p className="mt-3 border-l border-brand-gold-500/40 pl-3 text-xs leading-snug text-brand-gold-200/85">
                     <span className="block mb-1 font-mono font-bold text-brand-gold-400">{copy.opportunity[lang]}</span>
                     {content.gci_opportunity}
                   </p>
                 )}
-                <div className="mt-4 flex items-center justify-between gap-3 border-t border-brand-gold-500/10 pt-3 text-xs">
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-brand-gold-500/10 pt-2 text-xs">
                   {item.stage ? <span className="text-slate-400">{copy.stage[lang]} · {item.stage}</span> : <span />}
                   <a href={`/intelligence/daily#briefing-${item.id}`} className="inline-flex items-center gap-1 font-bold text-brand-gold-400 hover:text-brand-gold-300">{copy.details[lang]}<ArrowRight className="h-3 w-3" /></a>
                 </div>
@@ -117,14 +117,14 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
         </div>
 
         {compact.length > 0 && (
-          <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-2.5">
             {compact.map((item) => (
-              <article key={item.id} className="grid grid-cols-[88px_1fr] gap-4 rounded-xl border border-brand-gold-500/10 bg-[#060c1a] p-3">
-                <img src={itemImage(item)} alt="" className="h-full min-h-24 w-full rounded-lg object-cover opacity-75" />
+              <article key={item.id} className="grid grid-cols-[80px_1fr] gap-3 rounded-xl border border-brand-gold-500/10 bg-[#060c1a] p-2.5">
+                <img src={itemImage(item)} alt="" className="h-full min-h-20 w-full rounded-lg object-cover opacity-75" />
                 <div className="min-w-0 py-1">
                   {(() => { const content = localizeBriefingItem(item, lang); return <>
                   <Meta item={item} />
-                  <h3 className="mt-2 text-sm font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
+                  <h3 className="mt-1.5 text-sm font-serif font-bold leading-snug text-brand-gold-100">{content.title}</h3>
                   {content.summary && <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-400">{content.summary}</p>}
                   <div className="mt-2 flex items-center justify-between gap-2 text-[11px]">
                     <span className="truncate text-brand-gold-300/75">{content.gci_opportunity}</span>
@@ -137,7 +137,7 @@ export default function CurrentIntelligence({ lang }: { lang: Lang }) {
           </div>
         )}
 
-        <div className="mt-6 flex justify-end">
+        <div className="mt-4 flex justify-end">
           <a href="/intelligence/daily" className="inline-flex items-center gap-2 text-xs font-bold tracking-wider text-brand-gold-400 hover:text-brand-gold-300">{copy.all[lang]}<ArrowRight className="h-4 w-4" /></a>
         </div>
       </div>

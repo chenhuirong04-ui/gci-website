@@ -401,7 +401,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
   }[lang];
 
   return (
-    <section id="media-section" className="py-8 md:py-9 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
+    <section id="media-section" className="py-5 md:py-7 bg-[#050a15] border-b border-brand-gold-500/10 relative overflow-hidden">
       {/* Decorative corporate laser light beams or spot glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/5 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
@@ -409,8 +409,8 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Modern Corporate Header Block */}
-        <div className={`max-w-4xl mb-8 ${isRtl ? "text-right" : "text-left"}`}>
-          <div className="flex items-center gap-2 mb-3 justify-start">
+        <div className={`max-w-4xl mb-5 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-2 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className={`text-sm font-sans text-brand-gold-400 font-medium uppercase font-mono ${lang === "EN" ? "tracking-widest" : "tracking-normal"}`}>
               {labelText}
@@ -419,14 +419,14 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
           <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-brand-gold-100 tracking-tight leading-none uppercase">
             {titleText}
           </h2>
-          <p className="mt-3 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
+          <p className="mt-2 text-base text-brand-gold-200/80 font-light leading-snug">
             {subtitleText}
           </p>
         </div>
 
         {/* Premium Executive Selector Controls */}
-        <div className="mb-6">
-          <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-3 bg-[#030611]/50 border border-brand-gold-500/10 p-2 sm:p-3 rounded-2xl backdrop-blur-md">
+        <div className="mb-4">
+          <div className="flex flex-wrap items-center justify-start gap-2 bg-[#030611]/50 border border-brand-gold-500/10 p-1.5 sm:p-2 rounded-2xl backdrop-blur-md">
             {COUNTRIES_DATA.map((country) => {
               const isActive = country.key === selectedKey;
               const countryName = {
@@ -441,7 +441,7 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
                   key={country.key}
                   id={`btn-network-${country.key}`}
                   onClick={() => setSelectedKey(country.key)}
-                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-98 flex items-center gap-2 border ${
+                  className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-98 flex items-center gap-2 border ${
                     isActive
                       ? "bg-brand-gold-500 text-[#030611] border-brand-gold-400 font-bold shadow-md shadow-brand-gold-500/10"
                       : "bg-[#030611]/60 text-slate-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-brand-gold-300"
@@ -456,11 +456,11 @@ export default function CommercialNetwork({ lang, pack }: CommercialNetworkProps
         </div>
 
         {/* Main Landscape Cinematic Media Area & Information Sub-Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
           
           {/* Main Large-scale Video/Image Showcase (Visual Center) - cols 7 */}
           <div className="lg:col-span-8 flex flex-col justify-between">
-            <div className="relative aspect-video md:aspect-[21/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center group shadow-2xl transition-all duration-300">
+            <div className="relative aspect-video md:aspect-[24/10] w-full rounded-2xl overflow-hidden border border-brand-gold-500/15 bg-[#030611] flex items-center justify-center group shadow-2xl transition-all duration-300">
 
               {youtubeId ? (
                 <>

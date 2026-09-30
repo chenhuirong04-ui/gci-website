@@ -90,13 +90,13 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
   }[lang];
 
   return (
-    <section id="what-we-do" className="py-8 bg-[#030611] border-b border-brand-gold-500/10">
+    <section id="what-we-do" className="py-5 md:py-7 bg-[#030611] border-b border-brand-gold-500/10">
       <style>{`@media (min-width: 1280px) { #what-we-do .core-capabilities-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }`}</style>
       <div className="w-full max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
         
         {/* Section Header */}
-        <div className={`max-w-3xl mb-4 ${isRtl ? "text-right" : "text-left"}`}>
-          <div className="flex items-center gap-2 mb-3 justify-start">
+        <div className={`max-w-3xl mb-3 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-2 justify-start">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm tracking-wide font-sans text-brand-gold-400 font-medium uppercase">
               {copy.label}
@@ -105,7 +105,7 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
           <h2 id="whatwedo-title" className="text-3xl md:text-4xl font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">
             {copy.title}
           </h2>
-          <p className="mt-3 text-base text-brand-gold-200/80 max-w-2xl font-light leading-relaxed">
+          <p className="mt-2 text-base text-brand-gold-200/80 max-w-2xl font-light leading-snug">
             {copy.subtitle}
           </p>
         </div>
@@ -118,19 +118,19 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
             return (
             <div
               key={svc.idx}
-              className="relative h-full min-w-0 p-4 sm:p-5 xl:p-4 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
+              className="relative h-full min-w-0 p-4 xl:p-3.5 bg-[#050a15] rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/35 transition-all duration-300 flex flex-col group overflow-hidden"
             >
               <span className="absolute -right-2 -top-6 text-[7rem] font-display text-brand-gold-500/[0.035] select-none">{svc.idx}</span>
               <div className="relative flex-1">
-                <div className="flex items-start justify-between gap-4 mb-4 xl:mb-3">
-                  <div className="p-2.5 bg-brand-gold-500/5 rounded-xl border border-brand-gold-500/15">
+                <div className="flex items-start justify-between gap-4 mb-3 xl:mb-2">
+                  <div className="p-2 bg-brand-gold-500/5 rounded-xl border border-brand-gold-500/15">
                     <Icon className="w-5 h-5 text-brand-gold-400" />
                   </div>
                   <span className="text-xs font-mono text-brand-gold-500/70">{svc.idx}</span>
                 </div>
                 <h3 className="text-lg xl:text-base font-display font-semibold text-brand-gold-100 tracking-wide leading-snug">{svc.title}</h3>
-                <p className="text-[13px] xl:text-xs text-brand-gold-200/80 font-light leading-snug mt-3 mb-4 xl:mb-3">{svc.desc}</p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-2 xl:gap-y-1.5 border-t border-brand-gold-500/10 pt-4 xl:pt-3 text-xs xl:text-[11px] font-medium text-brand-gold-100/85">
+                <p className="text-[13px] xl:text-[11px] text-brand-gold-200/80 font-light leading-snug mt-2 mb-3 xl:mb-2.5">{svc.desc}</p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-1.5 xl:gap-y-1 border-t border-brand-gold-500/10 pt-3 xl:pt-2.5 text-xs xl:text-[11px] font-medium text-brand-gold-100/85">
                   {primaryBullets.map((bullet) => (
                     <li key={bullet} className="flex gap-2 items-start leading-snug">
                       <CheckCircle2 className="w-3.5 h-3.5 text-brand-gold-500 shrink-0 mt-0.5" />
@@ -138,9 +138,9 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 xl:mt-3 pt-3 border-t border-brand-gold-500/[0.07]">
-                  <p className="mb-2 text-[9px] uppercase tracking-[0.16em] text-brand-gold-500/40">{copy.supportingLabel}</p>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-1.5 xl:gap-y-1 text-[11px] xl:text-[10px] leading-snug text-brand-gold-300/45">
+                <div className="mt-3 xl:mt-2 pt-2.5 xl:pt-2 border-t border-brand-gold-500/[0.07]">
+                  <p className="mb-1 text-[9px] uppercase tracking-[0.16em] text-brand-gold-500/40">{copy.supportingLabel}</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-x-4 gap-y-1 xl:gap-y-0.5 text-[11px] xl:text-[10px] leading-snug text-brand-gold-300/45">
                     {supportingBullets.map((bullet) => (
                       <li key={bullet} className="flex gap-2 items-start leading-relaxed">
                         <span className="w-1 h-1 rounded-full bg-brand-gold-500/35 shrink-0 mt-1.5" />
@@ -150,21 +150,21 @@ export default function WhatWeDo({ lang }: WhatWeDoProps) {
                   </ul>
                 </div>
               </div>
-              <p className="relative mt-3 pt-3 border-t border-brand-gold-500/10 text-[10px] leading-snug text-brand-gold-300/60 flex gap-2">
+              <p className="relative mt-2 pt-2 border-t border-brand-gold-500/10 text-[9px] leading-[1.25] text-brand-gold-300/60 flex gap-2">
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 mt-0.5" />{svc.note}
               </p>
               {svc.idx === "02" && (
-                <a href="https://living.globalcareinfo.com/showroom" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                <a href="https://living.globalcareinfo.com/showroom" target="_blank" rel="noopener noreferrer" className="relative mt-1.5 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
                   {productShowroomLinkText}
                 </a>
               )}
               {svc.idx === "03" && (
-                <a href="https://workforce.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                <a href="https://workforce.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-1.5 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
                   {workforceLinkText}
                 </a>
               )}
               {svc.idx === "04" && (
-                <a href="https://25h.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
+                <a href="https://25h.globalcareinfo.com" target="_blank" rel="noopener noreferrer" className="relative mt-1.5 inline-flex text-[11px] font-medium text-brand-gold-400 transition-colors hover:text-brand-gold-300">
                   {aiSystemsLinkText}
                 </a>
               )}

@@ -267,15 +267,15 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
   };
 
   return (
-    <section id="business-opportunities" className="py-8 md:py-9 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
+    <section id="business-opportunities" className="py-5 md:py-7 bg-[#050a15] border-t border-brand-gold-500/10 relative overflow-hidden">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-gold-500/4 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-navy-500/5 blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8" dir={isRtl ? "rtl" : "ltr"}>
 
         {/* Section header */}
-        <div className={`max-w-4xl mb-8 ${isRtl ? "text-right" : "text-left"}`}>
-          <div className="flex items-center gap-2 mb-3">
+        <div className={`max-w-4xl mb-5 ${isRtl ? "text-right" : "text-left"}`}>
+          <div className="flex items-center gap-2 mb-2">
             <span className="h-[1px] w-8 bg-brand-gold-500" />
             <span className="text-sm font-mono text-brand-gold-400 font-medium uppercase tracking-widest">
               {t.sectionLabel[lang]}
@@ -284,7 +284,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
           <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-brand-gold-100 tracking-tight leading-none uppercase">
             {t.sectionTitle[lang]}
           </h2>
-          <p className="mt-3 text-base md:text-lg text-brand-gold-200/80 font-light leading-relaxed">
+          <p className="mt-2 text-base text-brand-gold-200/80 font-light leading-snug">
             {t.subtitle[lang]}
           </p>
         </div>
@@ -294,15 +294,15 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
         ) : (
           <>
             {/* Tab selector */}
-            <div className="mb-6">
-              <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-3 bg-[#030611]/50 border border-brand-gold-500/10 p-2 sm:p-3 rounded-2xl backdrop-blur-md">
+            <div className="mb-4">
+              <div className="flex flex-wrap items-center justify-start gap-2 bg-[#030611]/50 border border-brand-gold-500/10 p-1.5 sm:p-2 rounded-2xl backdrop-blur-md">
                 {OPPORTUNITIES.map((opp) => {
                   const isActive = opp.id === selectedId;
                   return (
                     <button
                       key={opp.id}
                       onClick={() => handleTabClick(opp.id)}
-                      className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center gap-2 border ${
+                      className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-sans font-semibold tracking-wide transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center gap-2 border ${
                         isActive
                           ? "bg-brand-gold-500 text-[#030611] border-brand-gold-400 font-bold shadow-md shadow-brand-gold-500/10"
                           : "bg-[#030611]/60 text-slate-300 border-brand-gold-500/5 hover:border-brand-gold-500/20 hover:text-brand-gold-300"
@@ -317,7 +317,7 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
             </div>
 
             {/* Main content area */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
 
               {/* Left: video / image area */}
               <div className="lg:col-span-8 flex flex-col">
@@ -386,13 +386,13 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
               </div>
 
               {/* Right: info panel */}
-              <div className="lg:col-span-4 flex flex-col justify-between p-4 sm:p-5 bg-[#070e20] rounded-2xl border border-brand-gold-500/10 shadow-xl relative overflow-hidden backdrop-blur-md">
+              <div className="lg:col-span-4 flex flex-col justify-between p-3.5 sm:p-4 bg-[#070e20] rounded-2xl border border-brand-gold-500/10 shadow-xl relative overflow-hidden backdrop-blur-md">
                 <div className="absolute top-0 right-0 w-32 h-32 border-r border-t border-brand-gold-500/5 pointer-events-none rounded-tr-2xl" />
 
                 <div className="flex flex-col h-full" dir={isRtl ? "rtl" : "ltr"}>
                   <div className="flex-1">
                     {/* Country + status badges */}
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="text-[10px] font-mono text-brand-gold-400 uppercase bg-brand-gold-500/5 border border-brand-gold-500/15 px-3 py-1 rounded-lg font-bold tracking-widest">
                         {getCountry(activeOpp, lang)}
                       </span>
@@ -404,17 +404,17 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-serif text-brand-gold-100 font-extrabold tracking-tight mb-3 leading-snug">
+                    <h3 className="text-lg font-serif text-brand-gold-100 font-extrabold tracking-tight mb-2 leading-snug">
                       {getTitle(activeOpp, lang)}
                     </h3>
 
-                    <div className="mb-4 border-l-2 border-brand-gold-500/20 pl-4">
-                      <p className={`text-sm text-brand-gold-200/95 font-light leading-relaxed ${expanded ? "" : "line-clamp-3"}`}>
+                    <div className="mb-3 border-l-2 border-brand-gold-500/20 pl-3">
+                      <p className={`text-xs text-brand-gold-200/95 font-light leading-relaxed ${expanded ? "" : "line-clamp-3"}`}>
                         {getOverview(activeOpp, lang)}
                       </p>
                       <button
                         onClick={() => setExpanded(!expanded)}
-                        className="mt-2 text-xs text-brand-gold-400 hover:text-brand-gold-300 font-medium transition-colors duration-200"
+                        className="mt-1.5 text-xs text-brand-gold-400 hover:text-brand-gold-300 font-medium transition-colors duration-200"
                       >
                         {expanded
                           ? (lang === "ZH" ? "收起 ↑" : lang === "AR" ? "↑ طي" : lang === "ES" ? "Ver menos ↑" : "Read Less ↑")
@@ -424,15 +424,15 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                   </div>
 
                   {/* Tags */}
-                  <div className="border-t border-brand-gold-500/10 pt-4 mb-4">
+                  <div className="border-t border-brand-gold-500/10 pt-3 mb-3">
                     <span className="text-[10px] uppercase font-mono tracking-wider text-brand-gold-400 block mb-2 font-semibold">
                       {t.tagsLabel[lang]}
                     </span>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {getTags(activeOpp, lang).map((tag, idx) => (
                         <span
                           key={idx}
-                          className="text-[11px] font-sans text-brand-gold-200 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/12 rounded-lg px-2.5 py-1.5"
+                          className="text-[10px] font-sans text-brand-gold-200 font-semibold bg-brand-gold-500/5 border border-brand-gold-500/12 rounded-lg px-2 py-1"
                         >
                           {tag}
                         </span>
@@ -441,16 +441,16 @@ export default function BusinessOpportunities({ lang }: BusinessOpportunitiesPro
                   </div>
 
                   {/* CTA buttons */}
-                  <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-col gap-2">
                     <button
                       onClick={handleViewDetail}
-                      className="w-full border border-brand-gold-500/30 hover:border-brand-gold-500/60 text-brand-gold-400 hover:text-brand-gold-300 px-5 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-all duration-300 text-center"
+                      className="w-full border border-brand-gold-500/30 hover:border-brand-gold-500/60 text-brand-gold-400 hover:text-brand-gold-300 px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-300 text-center"
                     >
                       {t.detailBtn[lang]}
                     </button>
                     <button
                       onClick={handleContactClick}
-                      className="w-full bg-gradient-to-r from-brand-gold-600 to-brand-gold-400 hover:from-brand-gold-500 hover:to-brand-gold-300 text-[#030611] px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all duration-300 shadow-md shadow-brand-gold-500/10 active:scale-95 text-center"
+                      className="w-full bg-gradient-to-r from-brand-gold-600 to-brand-gold-400 hover:from-brand-gold-500 hover:to-brand-gold-300 text-[#030611] px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition-all duration-300 shadow-md shadow-brand-gold-500/10 active:scale-95 text-center"
                     >
                       {t.contactBtn[lang]}
                     </button>
