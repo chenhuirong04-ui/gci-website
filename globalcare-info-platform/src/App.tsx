@@ -3,7 +3,6 @@ import { LANGUAGES, LanguagePack, LanguageCode } from "./data/corporateData";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import WhatWeDo from "./components/WhatWeDo";
-import BusinessOpportunities from "./components/BusinessOpportunities";
 import CurrentIntelligence from "./components/CurrentIntelligence";
 import RegulatoryUpdates from "./components/RegulatoryUpdates";
 import CommercialNetwork from "./components/CommercialNetwork";
@@ -30,11 +29,8 @@ export default function App() {
         {/* 1. Hero with connected trade sphere */}
         <Hero lang={lang} pack={pack} />
 
-        {/* 2. Three core execution capabilities */}
+        {/* 2. Four core execution capabilities */}
         <WhatWeDo lang={lang} pack={pack} />
-
-        {/* 3. Live business opportunities */}
-        <BusinessOpportunities lang={lang} />
 
         {/* Confirmed daily briefing only — draft/approved rows never reach this API */}
         <CurrentIntelligence lang={lang} />
