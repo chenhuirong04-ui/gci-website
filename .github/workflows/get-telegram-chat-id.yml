@@ -44,7 +44,7 @@ jobs:
             [
               .result[]
               | (.channel_post // .edited_channel_post // .message // .edited_message // empty)
-              | select((.chat.type == "channel" or .chat.type == "supergroup") and ((.chat.title // "") | test("gci.*intelligence.*desk"; "i")))
+              | select(.text == "GCI RADAR TEST 2026")
               | { id: .chat.id, title: .chat.title, type: .chat.type }
             ]
             | unique_by(.id)
