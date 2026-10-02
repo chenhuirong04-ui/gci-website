@@ -1,4 +1,4 @@
-name: TEMP Telegram Bot Diagnostic
+name: TEMP Telegram Get Channel ID
 
 on:
   workflow_dispatch:
@@ -7,10 +7,10 @@ permissions:
   contents: read
 
 jobs:
-  diagnose:
+  get-chat:
     runs-on: ubuntu-latest
     steps:
-      - name: Diagnose Telegram bot connection
+      - name: Read public channel identity
         shell: bash
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -22,79 +22,23 @@ jobs:
             exit 1
           fi
 
-          me_file="$(mktemp)"
-          webhook_file="$(mktemp)"
-          updates_file="$(mktemp)"
+          response_file="$(mktemp)"
           result_file="$(mktemp)"
-          trap 'rm -f "$me_file" "$webhook_file" "$updates_file" "$result_file"' EXIT
+          trap 'rm -f "$response_file" "$result_file"' EXIT
 
-          me_status="$(curl --silent --show-error --output "$me_file" --write-out '%{http_code}' "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getMe")"
-          webhook_status="$(curl --silent --show-error --output "$webhook_file" --write-out '%{http_code}' "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getWebhookInfo")"
-          updates_status="$(curl --silent --show-error --output "$updates_file" --write-out '%{http_code}' --get --data-urlencode 'timeout=0' "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates")"
+          http_status="$(
+            curl --silent --show-error \
+              --output "$response_file" \
+              --write-out '%{http_code}' \
+              --get \
+              --data-urlencode 'chat_id=@GCI_Intelligence_Desk_2026' \
+              "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getChat"
+          )"
 
-          ME_FILE="$me_file" \
-          WEBHOOK_FILE="$webhook_file" \
-          UPDATES_FILE="$updates_file" \
-          RESULT_FILE="$result_file" \
-          ME_STATUS="$me_status" \
-          WEBHOOK_STATUS="$webhook_status" \
-          UPDATES_STATUS="$updates_status" \
-          node <<'NODE'
-          const fs = require("node:fs");
+          if [[ "$http_status" != "200" ]] || ! jq -e '.ok == true' "$response_file" >/dev/null; then
+            exit 1
+          fi
 
-          const readJson = (path) => {
-            try { return JSON.parse(fs.readFileSync(path, "utf8")); }
-            catch { return null; }
-          };
-
-          const me = readJson(process.env.ME_FILE);
-          const webhook = readJson(process.env.WEBHOOK_FILE);
-          const updates = readJson(process.env.UPDATES_FILE);
-          const meOk = process.env.ME_STATUS === "200" && me?.ok === true;
-          const webhookOk = process.env.WEBHOOK_STATUS === "200" && webhook?.ok === true;
-          const updatesOk = process.env.UPDATES_STATUS === "200" && updates?.ok === true;
-
-          const webhookUrl = webhookOk ? String(webhook.result?.url || "") : "";
-          let webhookValue = webhookUrl ? "YES" : "NO";
-          if (webhookUrl) {
-            try {
-              const host = new URL(webhookUrl).hostname;
-              const service = host === "make.com" || host.endsWith(".make.com") ? "Make" : "external service";
-              webhookValue += ` (${host}; ${service})`;
-            } catch {
-              webhookValue += " (domain unavailable)";
-            }
-          } else if (!webhookOk) {
-            webhookValue = `UNAVAILABLE (HTTP ${process.env.WEBHOOK_STATUS})`;
-          }
-
-          const rows = updatesOk && Array.isArray(updates.result) ? updates.result : [];
-          const updateTypes = [...new Set(rows.flatMap((row) => Object.keys(row).filter((key) => key !== "update_id")))].sort();
-          const channelPosts = rows
-            .map((row) => row.channel_post)
-            .filter(Boolean);
-          const target = channelPosts.find((post) => post?.chat?.title === "GCI Intelligence Desk");
-
-          const lines = [
-            `BOT USERNAME: ${meOk ? me.result?.username || "" : `UNAVAILABLE (HTTP ${process.env.ME_STATUS})`}`,
-            `BOT ID: ${meOk ? me.result?.id || "" : "UNAVAILABLE"}`,
-            `WEBHOOK: ${webhookValue}`,
-            `PENDING UPDATE COUNT: ${webhookOk ? Number(webhook.result?.pending_update_count || 0) : "UNAVAILABLE"}`,
-            `GETUPDATES RESULT COUNT: ${updatesOk ? rows.length : `UNAVAILABLE (HTTP ${process.env.UPDATES_STATUS})`}`,
-            `UPDATE TYPES FOUND: ${updateTypes.length ? updateTypes.join(", ") : "NONE"}`,
-            `CHANNEL_POST FOUND: ${channelPosts.length ? "YES" : "NO"}`,
-          ];
-
-          if (target) {
-            lines.push(
-              `CHAT ID: ${target.chat.id}`,
-              `CHAT TITLE: ${target.chat.title}`,
-              `CHAT TYPE: ${target.chat.type}`,
-            );
-          }
-
-          fs.writeFileSync(process.env.RESULT_FILE, `${lines.join("\n")}\n`);
-          NODE
-
+          jq -r '"chat.id=\(.result.id)\ntitle=\(.result.title)\ntype=\(.result.type)"' "$response_file" > "$result_file"
           cat "$result_file"
           cat "$result_file" >> "$GITHUB_STEP_SUMMARY"
