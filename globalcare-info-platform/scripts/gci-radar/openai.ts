@@ -35,7 +35,7 @@ const RESPONSE_SCHEMA = {
   properties: {
     items: {
       type: "array",
-      maxItems: 3,
+      maxItems: 2,
       items: {
         type: "object",
         additionalProperties: false,
@@ -59,7 +59,7 @@ Commercial focus:
 Prefer these official/high-quality domains, but use another reputable primary or major business source when necessary:
 ${search.prioritySources.join(", ")}
 
-This is NOT a general news digest. Return at most 3 candidates that could create a realistic client lead, supplier lead, project, relationship, market-entry action or operational risk for GCI. Quality is more important than quantity; return an empty items array when nothing qualifies.
+This is NOT a general news digest. Return at most 2 candidates that could create a realistic client lead, supplier lead, project, relationship, market-entry action or operational risk for GCI. Quality is more important than quantity; return an empty items array when nothing qualifies.
 
 Priority: real investment > new project > tender/procurement > factory/expansion > JV > market entry > supplier requirement > logistics/supply-chain change > enterprise AI/digitalisation demand > trade/customs change. Reject routine politics, macro commentary and conference promotion.
 
@@ -111,9 +111,10 @@ export async function generateRadarBatch(
 ): Promise<GeneratedBatch> {
   const body = {
     model: OPENAI_MODEL,
+    reasoning: { effort: "low" },
     tools: [{ type: "web_search", search_context_size: "low" }],
     parallel_tool_calls: false,
-    max_output_tokens: 5500,
+    max_output_tokens: 7000,
     input: prompt(search, today, recent),
     text: {
       format: {
