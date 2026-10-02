@@ -32,7 +32,7 @@ jobs:
               --write-out '%{http_code}' \
               --get \
               --data-urlencode 'timeout=0' \
-              --data-urlencode 'allowed_updates=["channel_post"]' \
+              --data-urlencode 'allowed_updates=["message","edited_message","channel_post","edited_channel_post"]' \
               "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates"
           )"
 
@@ -43,7 +43,7 @@ jobs:
           jq -r '
             [
               .result[]
-              | (.channel_post // .edited_channel_post // empty)
+              | (.channel_post // .edited_channel_post // .message // .edited_message // empty)
               | select(.chat.title == "GCI Intelligence Desk")
               | { id: .chat.id, title: .chat.title, type: .chat.type }
             ]
