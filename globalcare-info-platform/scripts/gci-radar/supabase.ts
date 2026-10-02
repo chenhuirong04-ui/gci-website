@@ -137,11 +137,12 @@ export class RadarDatabase {
       `${this.baseUrl}/rest/v1/gci_business_radar?id=in.${encodeURIComponent(this.idFilter(ids))}&telegram_delivery_status=eq.pending`,
       {
         method: "PATCH",
-        headers: this.headers({ "Content-Type": "application/json" }),
+        headers: this.headers({ "Content-Type": "application/json", Prefer: "return=representation" }),
         body: JSON.stringify({ telegram_delivery_status: "sending" }),
       },
     );
-    if (!response.ok) throw new Error(`Radar sending lock failed: HTTP ${response.status}`);
+    const rows = await this.json<Array<{ id: string }>>(response, "Radar sending lock");
+    if (rows.length !== ids.length) throw new Error(`Radar sending lock mismatch: expected ${ids.length}, updated ${rows.length}`);
   }
 
   async markDelivered(ids: string[], messageId: number, publishedAt: string): Promise<void> {
@@ -150,7 +151,7 @@ export class RadarDatabase {
       `${this.baseUrl}/rest/v1/gci_business_radar?id=in.${encodeURIComponent(this.idFilter(ids))}&telegram_delivery_status=eq.sending`,
       {
         method: "PATCH",
-        headers: this.headers({ "Content-Type": "application/json" }),
+        headers: this.headers({ "Content-Type": "application/json", Prefer: "return=representation" }),
         body: JSON.stringify({
           telegram_delivery_status: "delivered",
           telegram_message_id: messageId,
@@ -158,7 +159,8 @@ export class RadarDatabase {
         }),
       },
     );
-    if (!response.ok) throw new Error(`Radar delivery record failed: HTTP ${response.status}`);
+    const rows = await this.json<Array<{ id: string }>>(response, "Radar delivery record");
+    if (rows.length !== ids.length) throw new Error(`Radar delivery record mismatch: expected ${ids.length}, updated ${rows.length}`);
   }
 
   async markFailed(ids: string[]): Promise<void> {

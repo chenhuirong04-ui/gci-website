@@ -48,7 +48,8 @@ export function validateCandidate(candidate: RadarCandidate, today: string): str
   } catch {
     return "invalid source_url";
   }
-  if (/conference|forum|summit|expo|webinar/i.test(candidate.milestone_type) && candidate.opportunity_score < 75) {
+  const eventText = `${candidate.title} ${candidate.what_happened} ${candidate.milestone_type}`;
+  if (/conference|forum|summit|expo|webinar|roadshow|events? schedule/i.test(eventText) && candidate.opportunity_score < 75) {
     return "conference-only item below high-priority threshold";
   }
   if (candidate.opportunity_score < 60 && RISK_RANK[candidate.risk_level] < RISK_RANK.HIGH) {

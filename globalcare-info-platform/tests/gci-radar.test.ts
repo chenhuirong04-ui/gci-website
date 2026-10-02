@@ -69,7 +69,7 @@ test("6 low-value news is rejected", () => {
 });
 
 test("7 conference-only low-value item is rejected", () => {
-  const item = candidate({ opportunity_score: 65, milestone_type: "conference announcement" });
+  const item = candidate({ opportunity_score: 65, title: "October events schedule", milestone_type: "market update" });
   assert.match(validateCandidate(item, TODAY) || "", /conference-only/);
 });
 
