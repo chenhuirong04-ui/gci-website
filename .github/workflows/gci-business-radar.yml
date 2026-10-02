@@ -1,0 +1,57 @@
+name: GCI Global Business Radar
+
+on:
+  schedule:
+    # 04:30 UTC = 08:30 Asia/Dubai.
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Radar execution mode"
+        required: true
+        type: choice
+        default: dry-run
+        options:
+          - dry-run
+          - connection-test
+          - real
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gci-global-business-radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: globalcare-info-platform
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: globalcare-info-platform/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run focused Radar tests
+        run: npm run test:gci-radar
+
+      - name: Run GCI Global Business Radar
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RADAR_MODE: ${{ github.event_name == 'schedule' && 'real' || inputs.mode }}
+        run: npm run gci-radar

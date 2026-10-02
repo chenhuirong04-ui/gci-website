@@ -12,7 +12,9 @@
     "gci-insights": "tsx scripts/gci-insights/generate.ts",
     "gci-daily-briefing": "tsx scripts/gci-daily-briefing/ingest.ts",
     "test:daily-briefing-publisher": "tsx --test tests/daily-briefing-publish.test.ts",
-    "publish-daily-briefing-final": "node \"./node_modules/tsx/dist/cli.mjs\" scripts/publish-daily-briefing-final.ts"
+    "publish-daily-briefing-final": "node \"./node_modules/tsx/dist/cli.mjs\" scripts/publish-daily-briefing-final.ts",
+    "gci-radar": "node \"./node_modules/tsx/dist/cli.mjs\" scripts/gci-radar/run.ts",
+    "test:gci-radar": "node \"./node_modules/tsx/dist/cli.mjs\" --test tests/gci-radar.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
