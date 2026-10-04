@@ -1,4 +1,3 @@
-const EXPECTED_SUPABASE_ORIGIN = "https://efrkvwhzpgahjgfukjth.supabase.co";
 const CLOSED_STATUSES = new Set(["已关闭", "已完成", "closed", "done"]);
 const TELEGRAM_LIMIT = 4096;
 const MESSAGE_BUDGET = 3900;
@@ -57,8 +56,8 @@ export function buildMessage(todayRows, overdueRows, today, uatName = "") {
   const title = uatName ? "[TEST-UAT] GCI CRM Daily Reminder" : "GCI CRM Daily Reminder";
   const sections = [title, `Dubai Date: ${today}`, ""];
   const items = [
-    { heading: `Today (${todayRows.length})`, rows: todayRows, overdue: false },
-    { heading: `Overdue (${overdueRows.length})`, rows: overdueRows, overdue: true },
+    { heading: `今日跟进 Today (${todayRows.length})`, rows: todayRows, overdue: false },
+    { heading: `已逾期 Overdue (${overdueRows.length})`, rows: overdueRows, overdue: true },
   ];
   let omitted = 0;
 
@@ -85,28 +84,23 @@ export function buildMessage(todayRows, overdueRows, today, uatName = "") {
   return message;
 }
 
-async function fetchCandidates(origin, apiKey, today, uatName) {
-  const params = new URLSearchParams({
-    select: "customer_name,next_follow_up_at,next_action,status,priority,owner,is_active",
-    is_active: "eq.true",
-    next_follow_up_at: `lte.${today}`,
-    order: "next_follow_up_at.asc,customer_name.asc",
-  });
-  if (uatName) params.set("customer_name", `eq.${uatName}`);
-
+async function fetchReminder(endpoint, secret, uatName) {
   let response;
   try {
-    response = await fetch(`${origin}/rest/v1/crm_customers?${params}`, {
-      headers: { apikey: apiKey, Authorization: `Bearer ${apiKey}` },
+    response = await fetch(endpoint, {
+      headers: { Authorization: `Bearer ${secret}` },
       signal: AbortSignal.timeout(30_000),
     });
   } catch {
-    throw new Error("CRM query network failure");
+    throw new Error("CRM reminder endpoint network failure");
   }
-  if (!response.ok) throw new Error(`CRM query failed with HTTP ${response.status}`);
-  const rows = await response.json();
-  if (!Array.isArray(rows)) throw new Error("CRM query returned an unexpected payload");
-  return rows;
+  if (!response.ok) throw new Error(`CRM reminder endpoint failed with HTTP ${response.status}`);
+  const payload = await response.json();
+  if (payload?.ok !== true || !Array.isArray(payload.today) || !Array.isArray(payload.overdue)) {
+    throw new Error("CRM reminder endpoint returned an unexpected payload");
+  }
+  const exact = (rows) => uatName ? rows.filter((row) => row.customer_name === uatName) : rows;
+  return { date: payload.date, today: exact(payload.today), overdue: exact(payload.overdue) };
 }
 
 async function sendTelegram(token, chatId, text) {
@@ -130,11 +124,11 @@ async function sendTelegram(token, chatId, text) {
 }
 
 export async function main() {
-  const origin = requiredEnv("GCI_CRM_SUPABASE_URL").replace(/\/$/, "");
-  if (origin !== EXPECTED_SUPABASE_ORIGIN) {
-    throw new Error("GCI_CRM_SUPABASE_URL does not target the approved CRM Production project");
+  const endpoint = requiredEnv("GCI_CRM_REMINDER_ENDPOINT");
+  if (endpoint !== "https://app.globalcareinfo.com/api/crm/daily-reminder") {
+    throw new Error("GCI_CRM_REMINDER_ENDPOINT is not the approved GCI APP Production endpoint");
   }
-  const apiKey = requiredEnv("GCI_CRM_SUPABASE_READ_KEY");
+  const reminderSecret = requiredEnv("GCI_CRM_REMINDER_SECRET");
   const telegramToken = requiredEnv("TELEGRAM_BOT_TOKEN");
   const telegramChatId = requiredEnv("TELEGRAM_CHAT_ID");
   const today = process.env.DUBAI_TODAY?.trim() || dubaiDate();
@@ -143,12 +137,13 @@ export async function main() {
     throw new Error("UAT_CUSTOMER_NAME must be the approved TEST-UAT CRM Reminder customer");
   }
 
-  const rows = await fetchCandidates(origin, apiKey, today, uatName);
-  const groups = splitCustomers(rows, today);
+  const endpointResult = await fetchReminder(endpoint, reminderSecret, uatName);
+  if (endpointResult.date !== today) throw new Error("CRM reminder endpoint Dubai date mismatch");
+  const groups = { today: endpointResult.today, overdue: endpointResult.overdue };
   console.log(`CRM query complete: today=${groups.today.length}, overdue=${groups.overdue.length}`);
 
-  if (uatName && rows.length !== 1) {
-    throw new Error(`TEST-UAT query expected exactly 1 customer, received ${rows.length}`);
+  if (uatName && groups.today.length + groups.overdue.length !== 1) {
+    throw new Error(`TEST-UAT query expected exactly 1 customer, received ${groups.today.length + groups.overdue.length}`);
   }
   if (groups.today.length === 0 && groups.overdue.length === 0) {
     console.log("No due CRM follow-ups; Telegram send skipped.");

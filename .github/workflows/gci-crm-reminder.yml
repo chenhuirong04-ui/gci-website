@@ -60,8 +60,8 @@ jobs:
         id: reminder
         if: steps.delivery-guard.outputs.cache-hit != 'true'
         env:
-          GCI_CRM_SUPABASE_URL: ${{ secrets.GCI_CRM_SUPABASE_URL }}
-          GCI_CRM_SUPABASE_READ_KEY: ${{ secrets.GCI_CRM_SUPABASE_READ_KEY }}
+          GCI_CRM_REMINDER_ENDPOINT: https://app.globalcareinfo.com/api/crm/daily-reminder
+          GCI_CRM_REMINDER_SECRET: ${{ secrets.GCI_CRM_REMINDER_SECRET }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           DUBAI_TODAY: ${{ steps.context.outputs.dubai_today }}

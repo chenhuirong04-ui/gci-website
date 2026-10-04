@@ -43,6 +43,7 @@ test("message contains required fields, overdue days, and stays below Telegram l
   };
   const message = buildMessage([], [row], "2026-10-04", row.customer_name);
   assert.match(message, /TEST-UAT/);
+  assert.match(message, /今日跟进/);
   assert.match(message, /状态：跟进中 · 逾期 2 天/);
   assert.match(message, /下一步：Call on WhatsApp/);
   assert.ok(message.length <= 4096);
