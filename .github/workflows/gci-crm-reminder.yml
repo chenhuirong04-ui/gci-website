@@ -1,0 +1,96 @@
+name: GCI CRM Daily Reminder
+
+on:
+  schedule:
+    # 04:35 UTC = 08:35 Asia/Dubai.
+    - cron: "35 4 * * *"
+  workflow_dispatch:
+    inputs:
+      uat_customer_name:
+        description: "Optional exact TEST-UAT CRM Reminder name; isolates manual UAT from real CRM rows"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gci-crm-reminder-${{ github.event_name == 'schedule' && 'daily' || inputs.uat_customer_name || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: globalcare-info-platform
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve Dubai date and delivery key
+        id: context
+        shell: bash
+        env:
+          UAT_CUSTOMER_NAME: ${{ inputs.uat_customer_name }}
+        run: |
+          set -euo pipefail
+          dubai_today="$(TZ=Asia/Dubai date +%F)"
+          if [[ -n "${UAT_CUSTOMER_NAME:-}" ]]; then
+            if [[ "$UAT_CUSTOMER_NAME" != "TEST-UAT CRM Reminder" ]]; then
+              echo "Invalid UAT customer name" >&2
+              exit 1
+            fi
+            delivery_key="gci-crm-reminder-uat-${UAT_CUSTOMER_NAME}"
+          else
+            delivery_key="gci-crm-reminder-daily-${dubai_today}"
+          fi
+          echo "dubai_today=$dubai_today" >> "$GITHUB_OUTPUT"
+          echo "delivery_key=$delivery_key" >> "$GITHUB_OUTPUT"
+
+      - name: Restore delivery guard
+        id: delivery-guard
+        uses: actions/cache/restore@v4
+        with:
+          path: globalcare-info-platform/.cache/gci-crm-reminder
+          key: ${{ steps.context.outputs.delivery_key }}
+          lookup-only: true
+
+      - name: Send CRM reminder
+        id: reminder
+        if: steps.delivery-guard.outputs.cache-hit != 'true'
+        env:
+          GCI_CRM_SUPABASE_URL: ${{ secrets.GCI_CRM_SUPABASE_URL }}
+          GCI_CRM_SUPABASE_READ_KEY: ${{ secrets.GCI_CRM_SUPABASE_READ_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DUBAI_TODAY: ${{ steps.context.outputs.dubai_today }}
+          UAT_CUSTOMER_NAME: ${{ inputs.uat_customer_name }}
+        run: node scripts/gci-crm-reminder/run.mjs
+
+      - name: Create delivery guard
+        if: steps.reminder.outputs.sent == 'true'
+        shell: bash
+        run: mkdir -p .cache/gci-crm-reminder && touch .cache/gci-crm-reminder/sent
+
+      - name: Save delivery guard
+        if: steps.reminder.outputs.sent == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: globalcare-info-platform/.cache/gci-crm-reminder
+          key: ${{ steps.context.outputs.delivery_key }}
+
+      - name: Summary
+        if: always()
+        shell: bash
+        env:
+          MESSAGE_ID: ${{ steps.reminder.outputs.message_id }}
+          CACHE_HIT: ${{ steps.delivery-guard.outputs.cache-hit }}
+        run: |
+          if [[ "$CACHE_HIT" == "true" ]]; then
+            echo "CRM reminder already delivered for this key; duplicate send skipped." >> "$GITHUB_STEP_SUMMARY"
+          elif [[ -n "${MESSAGE_ID:-}" ]]; then
+            echo "Telegram message_id: $MESSAGE_ID" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No Telegram message was sent." >> "$GITHUB_STEP_SUMMARY"
+          fi

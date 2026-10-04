@@ -14,7 +14,8 @@
     "test:daily-briefing-publisher": "tsx --test tests/daily-briefing-publish.test.ts",
     "publish-daily-briefing-final": "node \"./node_modules/tsx/dist/cli.mjs\" scripts/publish-daily-briefing-final.ts",
     "gci-radar": "node \"./node_modules/tsx/dist/cli.mjs\" scripts/gci-radar/run.ts",
-    "test:gci-radar": "node \"./node_modules/tsx/dist/cli.mjs\" --test tests/gci-radar.test.ts"
+    "test:gci-radar": "node \"./node_modules/tsx/dist/cli.mjs\" --test tests/gci-radar.test.ts",
+    "test:gci-crm-reminder": "node --test tests/gci-crm-reminder.test.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
