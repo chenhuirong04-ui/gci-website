@@ -6,6 +6,10 @@ on:
     - cron: "35 4 * * *"
   workflow_dispatch:
     inputs:
+      test_mode:
+        description: "Send Telegram connectivity test only"
+        required: false
+        default: "false"
       uat_customer_name:
         description: "Optional exact TEST-UAT CRM Reminder name; isolates manual UAT from real CRM rows"
         required: false
@@ -28,8 +32,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Send Telegram connectivity test
+        id: telegram-test
+        if: github.event_name == 'workflow_dispatch' && inputs.test_mode == 'true'
+        shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          payload="$(jq -nc \
+            --arg chat_id "$TELEGRAM_CHAT_ID" \
+            --arg text $'GCI CRM Reminder Test\nTelegram delivery is working.\nNo action required.' \
+            '{chat_id: $chat_id, text: $text, disable_web_page_preview: true}')"
+          response="$(curl --silent --show-error --fail-with-body \
+            --request POST \
+            --header 'content-type: application/json' \
+            --data "$payload" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage")"
+          jq -e '.ok == true and (.result.message_id | type == "number")' <<<"$response" >/dev/null
+          message_id="$(jq -r '.result.message_id' <<<"$response")"
+          echo "message_id=$message_id" >> "$GITHUB_OUTPUT"
+          echo "Telegram message_id: $message_id" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Resolve Dubai date and delivery key
         id: context
+        if: github.event_name != 'workflow_dispatch' || inputs.test_mode != 'true'
         shell: bash
         env:
           UAT_CUSTOMER_NAME: ${{ inputs.uat_customer_name }}
@@ -50,6 +78,7 @@ jobs:
 
       - name: Restore delivery guard
         id: delivery-guard
+        if: github.event_name != 'workflow_dispatch' || inputs.test_mode != 'true'
         uses: actions/cache/restore@v4
         with:
           path: globalcare-info-platform/.cache/gci-crm-reminder
@@ -58,7 +87,7 @@ jobs:
 
       - name: Send CRM reminder
         id: reminder
-        if: steps.delivery-guard.outputs.cache-hit != 'true'
+        if: (github.event_name != 'workflow_dispatch' || inputs.test_mode != 'true') && steps.delivery-guard.outputs.cache-hit != 'true'
         env:
           GCI_CRM_REMINDER_ENDPOINT: https://app.globalcareinfo.com/api/crm/daily-reminder
           GCI_CRM_REMINDER_SECRET: ${{ secrets.GCI_CRM_REMINDER_SECRET }}
@@ -81,7 +110,7 @@ jobs:
           key: ${{ steps.context.outputs.delivery_key }}
 
       - name: Summary
-        if: always()
+        if: always() && (github.event_name != 'workflow_dispatch' || inputs.test_mode != 'true')
         shell: bash
         env:
           MESSAGE_ID: ${{ steps.reminder.outputs.message_id }}
