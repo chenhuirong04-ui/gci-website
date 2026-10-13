@@ -42,39 +42,45 @@ function clean(value, fallback = "未填写") {
   return text || fallback;
 }
 
-function itemLine(row, today, overdue) {
-  const suffix = overdue ? ` · 逾期 ${daysBetween(row.next_follow_up_at, today)} 天` : "";
+function itemLine(row, today, overdue, nameField) {
+  const suffix = overdue ? ` · ⚠️ 逾期 ${daysBetween(row.next_follow_up_at, today)} 天` : "";
   return [
-    `• ${clean(row.customer_name)}`,
-    `  状态：${clean(row.status)}${suffix}`,
-    `  下一步：${clean(row.next_action)}`,
-    `  Owner：${clean(row.owner)} · Priority：${clean(row.priority)}`,
+    `• ${clean(row[nameField])}`,
+    `  到期日期：${clean(row.next_follow_up_at)}${suffix}`,
+    `  下一步行动：${clean(row.next_action)}`,
   ].join("\n");
 }
 
-export function buildMessage(todayRows, overdueRows, today, uatName = "") {
+export function buildMessage(customerGroups, supplierGroups, today, uatName = "") {
   const title = uatName ? "[TEST-UAT] GCI CRM Daily Reminder" : "GCI CRM Daily Reminder";
   const sections = [title, `Dubai Date: ${today}`, ""];
-  const items = [
-    { heading: `今日跟进 Today (${todayRows.length})`, rows: todayRows, overdue: false },
-    { heading: `已逾期 Overdue (${overdueRows.length})`, rows: overdueRows, overdue: true },
+  const entities = [
+    { heading: "① 客户跟进｜Clients", groups: customerGroups, nameField: "customer_name" },
+    { heading: "② 供应商跟进｜Suppliers", groups: supplierGroups, nameField: "supplier_name_display" },
   ];
   let omitted = 0;
 
-  for (const section of items) {
-    sections.push(section.heading);
-    if (section.rows.length === 0) {
-      sections.push("None", "");
-      continue;
-    }
-    for (let index = 0; index < section.rows.length; index += 1) {
-      const block = itemLine(section.rows[index], today, section.overdue);
-      const candidate = [...sections, block, ""].join("\n");
-      if (candidate.length > MESSAGE_BUDGET) {
-        omitted += section.rows.length - index;
-        break;
+  for (const entity of entities) {
+    sections.push(entity.heading);
+    const items = [
+      { heading: `今日到期 Today (${entity.groups.today.length})`, rows: entity.groups.today, overdue: false },
+      { heading: `已逾期 Overdue (${entity.groups.overdue.length})`, rows: entity.groups.overdue, overdue: true },
+    ];
+    for (const section of items) {
+      sections.push(section.heading);
+      if (section.rows.length === 0) {
+        sections.push("None", "");
+        continue;
       }
-      sections.push(block, "");
+      for (let index = 0; index < section.rows.length; index += 1) {
+        const block = itemLine(section.rows[index], today, section.overdue, entity.nameField);
+        const candidate = [...sections, block, ""].join("\n");
+        if (candidate.length > MESSAGE_BUDGET) {
+          omitted += section.rows.length - index;
+          break;
+        }
+        sections.push(block, "");
+      }
     }
   }
 
@@ -84,7 +90,7 @@ export function buildMessage(todayRows, overdueRows, today, uatName = "") {
   return message;
 }
 
-async function fetchReminder(endpoint, secret, uatName) {
+async function fetchReminder(endpoint, secret, label, exactCustomerName = "") {
   let response;
   try {
     response = await fetch(endpoint, {
@@ -92,14 +98,14 @@ async function fetchReminder(endpoint, secret, uatName) {
       signal: AbortSignal.timeout(30_000),
     });
   } catch {
-    throw new Error("CRM reminder endpoint network failure");
+    throw new Error(`${label} reminder endpoint network failure`);
   }
-  if (!response.ok) throw new Error(`CRM reminder endpoint failed with HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`${label} reminder endpoint failed with HTTP ${response.status}`);
   const payload = await response.json();
   if (payload?.ok !== true || !Array.isArray(payload.today) || !Array.isArray(payload.overdue)) {
-    throw new Error("CRM reminder endpoint returned an unexpected payload");
+    throw new Error(`${label} reminder endpoint returned an unexpected payload`);
   }
-  const exact = (rows) => uatName ? rows.filter((row) => row.customer_name === uatName) : rows;
+  const exact = (rows) => exactCustomerName ? rows.filter((row) => row.customer_name === exactCustomerName) : rows;
   return { date: payload.date, today: exact(payload.today), overdue: exact(payload.overdue) };
 }
 
@@ -124,9 +130,13 @@ async function sendTelegram(token, chatId, text) {
 }
 
 export async function main() {
-  const endpoint = requiredEnv("GCI_CRM_REMINDER_ENDPOINT");
-  if (endpoint !== "https://app.globalcareinfo.com/api/crm/daily-reminder") {
+  const customerEndpoint = requiredEnv("GCI_CRM_REMINDER_ENDPOINT");
+  if (customerEndpoint !== "https://app.globalcareinfo.com/api/crm/daily-reminder") {
     throw new Error("GCI_CRM_REMINDER_ENDPOINT is not the approved GCI APP Production endpoint");
+  }
+  const supplierEndpoint = requiredEnv("GCI_SUPPLIER_REMINDER_ENDPOINT");
+  if (supplierEndpoint !== "https://app.globalcareinfo.com/api/suppliers/daily-reminder") {
+    throw new Error("GCI_SUPPLIER_REMINDER_ENDPOINT is not the approved GCI APP Production endpoint");
   }
   const reminderSecret = requiredEnv("GCI_CRM_REMINDER_SECRET");
   const telegramToken = requiredEnv("TELEGRAM_BOT_TOKEN");
@@ -137,20 +147,24 @@ export async function main() {
     throw new Error("UAT_CUSTOMER_NAME must be the approved TEST-UAT CRM Reminder customer");
   }
 
-  const endpointResult = await fetchReminder(endpoint, reminderSecret, uatName);
-  if (endpointResult.date !== today) throw new Error("CRM reminder endpoint Dubai date mismatch");
-  const groups = { today: endpointResult.today, overdue: endpointResult.overdue };
-  console.log(`CRM query complete: today=${groups.today.length}, overdue=${groups.overdue.length}`);
+  const customers = await fetchReminder(customerEndpoint, reminderSecret, "CRM", uatName);
+  const suppliers = uatName
+    ? { date: today, today: [], overdue: [] }
+    : await fetchReminder(supplierEndpoint, reminderSecret, "Supplier");
+  if (customers.date !== today) throw new Error("CRM reminder endpoint Dubai date mismatch");
+  if (suppliers.date !== today) throw new Error("Supplier reminder endpoint Dubai date mismatch");
+  console.log(`Reminder query complete: clients=${customers.today.length + customers.overdue.length}, suppliers=${suppliers.today.length + suppliers.overdue.length}`);
 
-  if (uatName && groups.today.length + groups.overdue.length !== 1) {
-    throw new Error(`TEST-UAT query expected exactly 1 customer, received ${groups.today.length + groups.overdue.length}`);
+  if (uatName && customers.today.length + customers.overdue.length !== 1) {
+    throw new Error(`TEST-UAT query expected exactly 1 customer, received ${customers.today.length + customers.overdue.length}`);
   }
-  if (groups.today.length === 0 && groups.overdue.length === 0) {
-    console.log("No due CRM follow-ups; Telegram send skipped.");
+  const dueCount = customers.today.length + customers.overdue.length + suppliers.today.length + suppliers.overdue.length;
+  if (dueCount === 0) {
+    console.log("No due client or supplier follow-ups; Telegram send skipped.");
     return;
   }
 
-  const message = buildMessage(groups.today, groups.overdue, today, uatName);
+  const message = buildMessage(customers, suppliers, today, uatName);
   const messageId = await sendTelegram(telegramToken, telegramChatId, message);
   console.log(`Telegram sent successfully: message_id=${messageId}`);
   if (process.env.GITHUB_OUTPUT) {

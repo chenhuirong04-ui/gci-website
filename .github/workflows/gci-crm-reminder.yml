@@ -90,6 +90,7 @@ jobs:
         if: (github.event_name != 'workflow_dispatch' || inputs.test_mode != 'true') && steps.delivery-guard.outputs.cache-hit != 'true'
         env:
           GCI_CRM_REMINDER_ENDPOINT: https://app.globalcareinfo.com/api/crm/daily-reminder
+          GCI_SUPPLIER_REMINDER_ENDPOINT: https://app.globalcareinfo.com/api/suppliers/daily-reminder
           GCI_CRM_REMINDER_SECRET: ${{ secrets.GCI_CRM_REMINDER_SECRET }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
