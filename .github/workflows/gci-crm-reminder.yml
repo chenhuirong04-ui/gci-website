@@ -2,8 +2,8 @@ name: GCI CRM Daily Reminder
 
 on:
   schedule:
-    # 04:35 UTC = 08:35 Asia/Dubai.
-    - cron: "35 4 * * *"
+    # 01:17 UTC = 05:17 Asia/Dubai.
+    - cron: "17 1 * * *"
   workflow_dispatch:
     inputs:
       test_mode:
